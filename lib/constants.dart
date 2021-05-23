@@ -9,7 +9,7 @@ final InputDecoration kTextFieldInputDecoration = InputDecoration(
   filled: true,
   focusColor: myPrimaryColor,
   focusedBorder: const OutlineInputBorder(
-      borderRadius: BorderRadius.all(Radius.circular(20)),
+      borderRadius: BorderRadius.all(Radius.circular(15)),
       borderSide: const BorderSide(
         color: Color(0xFFFFc529),
       )),
@@ -21,12 +21,12 @@ final InputDecoration kTextFieldInputDecoration = InputDecoration(
       borderRadius: BorderRadius.all(Radius.circular(20))),
   border: OutlineInputBorder(
     borderSide: const BorderSide(color: Color(0xFFFFc529)),
-    borderRadius: BorderRadius.circular(20),
+    borderRadius: BorderRadius.circular(15),
   ),
   prefixIcon: Icon(
     Icons.search,
     color: myPrimaryColor,
   ),
-  hintStyle: TextStyle(color: Colors.grey),
+  hintStyle: TextStyle(color: Colors.grey, fontSize: 13),
   hintText: 'Search for Recipes',
 );
