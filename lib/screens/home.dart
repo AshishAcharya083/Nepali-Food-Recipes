@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:nepali_food_recipes/components/icon_with_name_card.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 
@@ -8,7 +11,16 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+enum Category { fastFood, fruitItem, vegetable }
+
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+
+  Category? _category;
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).size.height);
@@ -47,9 +59,17 @@ class _HomeState extends State<Home> {
           ),
         ),
         body: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 18),
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.only(left: 10),
           children: [
+            Text(
+              'Food Recipes \nin Nepali 😋',
+              style: TextStyle(
+                fontFamily: 'Dosis',
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+            ),
             SizedBox(
               height: 10,
             ),
@@ -61,24 +81,66 @@ class _HomeState extends State<Home> {
                 Expanded(
                   flex: 4,
                   child: TextField(
-                      style: TextStyle(color: myDarkColor),
+                      style: TextStyle(color: kDarkColor),
                       cursorColor: myPrimaryColor,
-                      decoration: kTextFieldInputDecoration),
+                      decoration: kInputDecoration),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 15),
+                  margin: const EdgeInsets.only(left: 15, right: 15),
                   decoration: BoxDecoration(
-                      color: myPrimaryColor.withOpacity(0.3),
+                      color: myPrimaryColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(15)),
                   child: IconButton(
-                      color: myPrimaryColor,
+                      color: kOrangeColor,
                       onPressed: () {},
-                      icon: Icon(Icons.settings)),
+                      icon: Icon(
+                        Icons.settings_input_component_rounded,
+                        // color: myPrimaryColor,
+                      )),
                 ),
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 18,
+            ),
+            Container(
+              height: 45,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  IconWithNameCard(
+                    assetImagePath: 'images/burger.png',
+                    foodCategory: 'Fast Food',
+                    onTap: () {
+                      print('burger pressed');
+                    },
+                  ),
+                  IconWithNameCard(
+                    assetImagePath: 'images/drink.png',
+                    foodCategory: 'Drinks',
+                    onTap: () {
+                      print('burger pressed');
+                    },
+                  ),
+                  IconWithNameCard(
+                    assetImagePath: 'images/fruit.png',
+                    foodCategory: 'Fruit item',
+                    onTap: () {
+                      print('fruit pressed');
+                    },
+                  ),
+                  IconWithNameCard(
+                    assetImagePath: 'images/broccoli.png',
+                    foodCategory: 'Vegetable',
+                    onTap: () {
+                      print('veg pressed');
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 18,
             ),
             Text(
               'Top Recipes',
@@ -89,7 +151,7 @@ class _HomeState extends State<Home> {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: 30,
+              height: 0,
             ),
             Container(
               decoration: BoxDecoration(
@@ -103,6 +165,7 @@ class _HomeState extends State<Home> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Container(
+                        // color: Colors.red,
                         width: 180,
                         child: Stack(
                           alignment: Alignment.bottomCenter,
@@ -114,23 +177,24 @@ class _HomeState extends State<Home> {
                               child: Container(
                                 decoration: BoxDecoration(
                                   color:
-                                      Colors.lightBlueAccent.withOpacity(0.35),
+                                      kCardColors[index % 3].withOpacity(0.23),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 15),
+                                      horizontal: 8, vertical: 5),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       SizedBox(
-                                        height: ScreenSize.getHeight(context) *
-                                            0.09,
+                                        height: (ScreenSize.getHeight(context) *
+                                            0.17 /
+                                            2.2),
                                       ),
                                       Text(
-                                        'Mexican Egg Mix',
+                                        'Mexican Egg Mix ',
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontFamily: 'Dosis',
@@ -193,9 +257,9 @@ class _HomeState extends State<Home> {
                             ),
                             Positioned(
                               right: 10,
-                              height: ScreenSize.getHeight(context) * 0.19,
-                              width: ScreenSize.getWidth(context) * 0.3,
-                              top: 1,
+                              height: ScreenSize.getHeight(context) * 0.17,
+                              width: ScreenSize.getWidth(context) * 0.35,
+                              top: 10,
                               child: Container(
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
@@ -207,26 +271,28 @@ class _HomeState extends State<Home> {
                             Positioned(
                                 right: 10,
                                 bottom: 10,
-                                child: Container(
-                                  padding: EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.favorite,
-                                        size: 15,
-                                        color: Colors.red,
-                                      ),
-                                      Text(
-                                        ' Save',
-                                        style: TextStyle(
-                                            fontFamily: 'Dosis',
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
+                                child: InkWell(
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.favorite,
+                                          size: 15,
+                                          color: Colors.red,
+                                        ),
+                                        Text(
+                                          ' Save',
+                                          style: TextStyle(
+                                              fontFamily: 'Dosis',
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ))
                           ],

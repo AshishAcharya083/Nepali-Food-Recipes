@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 
 void main() {
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Dosis',
+        accentColor: myPrimaryColor,
         primaryIconTheme: IconThemeData(
           color: Colors.black,
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:nepali_food_recipes/components/bottom_navigation.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
+import 'package:nepali_food_recipes/screens/recipe_form.dart';
 
 class NavBarController extends StatefulWidget {
   @override
@@ -11,9 +11,10 @@ class NavBarController extends StatefulWidget {
 class _NavBarControllerState extends State<NavBarController> {
   List<Widget> body = [
     Home(),
+    RecipeForm(),
     Container(
       child: Center(
-        child: Text('Add recipe Screen'),
+        child: Text('another feature'),
       ),
     ),
     Container(

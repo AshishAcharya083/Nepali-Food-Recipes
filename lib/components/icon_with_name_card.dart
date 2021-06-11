@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/constants.dart';
+
+class IconWithNameCard extends StatelessWidget {
+  final String assetImagePath;
+  final String foodCategory;
+  final VoidCallback? onTap;
+  IconWithNameCard(
+      {this.assetImagePath = 'images/burger.png',
+      this.foodCategory = '',
+      this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      splashColor: myPrimaryColor,
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.symmetric(
+          horizontal: 5,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: myPrimaryColor.withOpacity(0.5), width: 3),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage(assetImagePath),
+              height: 30,
+            ),
+            Text(
+              '  $foodCategory',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
