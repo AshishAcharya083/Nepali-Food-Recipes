@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/bottom_navigation.dart';
+import 'package:nepali_food_recipes/screens/food_list.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/recipe_form.dart';
 
@@ -12,16 +13,7 @@ class _NavBarControllerState extends State<NavBarController> {
   List<Widget> body = [
     Home(),
     RecipeForm(),
-    Container(
-      child: Center(
-        child: Text('another feature'),
-      ),
-    ),
-    Container(
-      child: Center(
-        child: Text('another feature'),
-      ),
-    ),
+    ListScreen(),
   ];
   int _currentIndex = 0;
   @override

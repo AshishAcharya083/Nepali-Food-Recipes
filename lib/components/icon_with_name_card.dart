@@ -13,7 +13,7 @@ class IconWithNameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      splashColor: myPrimaryColor,
+      splashColor: kPrimaryColor,
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -21,7 +21,7 @@ class IconWithNameCard extends StatelessWidget {
           horizontal: 5,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: myPrimaryColor.withOpacity(0.5), width: 3),
+          border: Border.all(color: kPrimaryColor.withOpacity(0.5), width: 3),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

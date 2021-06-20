@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.only(left: 10),
           children: [
             Text(
-              'Food Recipes \nin Nepali 😋',
+              'Nepali Food \nRecipes 😋',
               style: TextStyle(
                 fontFamily: 'Dosis',
                 fontWeight: FontWeight.bold,
@@ -82,13 +82,13 @@ class _HomeState extends State<Home> {
                   flex: 4,
                   child: TextField(
                       style: TextStyle(color: kDarkColor),
-                      cursorColor: myPrimaryColor,
-                      decoration: kInputDecoration),
+                      cursorColor: kPrimaryColor,
+                      decoration: kSearchInputDecoration),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 15, right: 15),
                   decoration: BoxDecoration(
-                      color: myPrimaryColor.withOpacity(0.2),
+                      color: kPrimaryColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(15)),
                   child: IconButton(
                       color: kOrangeColor,
