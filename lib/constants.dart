@@ -9,18 +9,39 @@ const Color kPinkColor = Color(0xFFFF94A1);
 ///new color pallets
 const Color kPrimaryColor = Color(0xFFFFC400);
 const Color kDarkGreenColor = Color(0xFF003C2D);
-const Color kLightGreenColor = Color(0xFF609970);
+const Color kLightGreenColor = Color(0xFF1FCC79);
 const Color kOrangeColor = Color(0xFFFF9B33);
 const Color kSecondaryColor = Color(0xFFFD7A50);
+const Color kSecondaryTextColor = Color(0xFF9FA5C0);
 
-const List<Color> kCardColors = [kPrimaryColor, kSecondaryColor, kPinkColor];
+const List<Color> kCardColors = [
+  kPrimaryColor,
+  kSecondaryColor,
+  kPinkColor,
+  kLightGreenColor,
+];
+
+///textStyles
 const TextStyle kFormHeadingStyle =
     TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.black);
-const TextStyle kTextFieldStyle = TextStyle(
-    height: 1.5, letterSpacing: 1.2, fontFamily: 'Dosis-Bold', fontSize: 18);
+const TextStyle kTextFieldStyle =
+    TextStyle(letterSpacing: 1.2, fontFamily: 'Dosis-Bold', fontSize: 18);
+
+const TextStyle kSecondaryTextStyle = TextStyle(
+    letterSpacing: 1.2,
+    height: 1.2,
+    fontSize: 18,
+    color: kSecondaryTextColor,
+    fontFamily: 'Dosis-SemiBold');
 
 SizedBox kFixedSizedBox = SizedBox(
   height: 18,
+);
+
+/// divider used in cooking screen
+final kDivider = Divider(
+  thickness: 1,
+  color: kSecondaryTextColor.withOpacity(0.5),
 );
 
 ///Input Decoration constants

@@ -189,9 +189,10 @@ class _RecipeFormState extends State<RecipeForm> {
                           children: [
                             Expanded(
                               child: CircleAvatar(
-                                child: Text(
-                                  (index + 1).toString(),
-                                ),
+                                child: Text((index + 1).toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
                                 backgroundColor: kLightGreenColor,
                               ),
                             ),
@@ -285,6 +286,9 @@ class _RecipeFormState extends State<RecipeForm> {
                               child: CircleAvatar(
                                 child: Text(
                                   (index + 1).toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 backgroundColor: kLightGreenColor,
                               ),
@@ -412,6 +416,12 @@ class _RecipeFormState extends State<RecipeForm> {
                           ),
                         );
                       });
+                  setState(() {
+                    ingredients = ['', ''];
+                    steps = ['', '', ''];
+                    errorText = '';
+                    cookTime = 30;
+                  });
                 },
                 child: Container(
                   padding: EdgeInsets.all(15),

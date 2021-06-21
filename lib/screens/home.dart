@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nepali_food_recipes/components/icon_with_name_card.dart';
+import 'package:nepali_food_recipes/components/user.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:nepali_food_recipes/screens/profile.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -35,16 +39,21 @@ class _HomeState extends State<Home> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('images/lenna.png'),
-                        fit: BoxFit.cover),
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10)),
+              InkWell(
+                onTap: () {
+                  Navigation.changeScreen(context, Profile());
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('images/lenna.png'),
+                          fit: BoxFit.cover),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10)),
+                ),
               ),
             ],
           ),
@@ -162,140 +171,148 @@ class _HomeState extends State<Home> {
                   itemCount: 10,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Container(
-                        // color: Colors.red,
-                        width: 180,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Positioned(
-                              height: 220,
-                              width: 180,
-                              bottom: 20,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color:
-                                      kCardColors[index % 3].withOpacity(0.23),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 5),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        height: (ScreenSize.getHeight(context) *
-                                            0.17 /
-                                            2.2),
-                                      ),
-                                      Text(
-                                        'Mexican Egg Mix ',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontFamily: 'Dosis',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 3),
-                                            padding: EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Colors.grey
-                                                    .withOpacity(0.45)),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.star,
-                                                  size: 15,
-                                                  color: Colors.deepOrange,
-                                                ),
-                                                Text(' 4.5')
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 5),
-                                            padding: EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Colors.grey
-                                                    .withOpacity(0.45)),
-                                            child: Text("easy"),
-                                          )
-                                        ],
-                                      ),
-                                      Text('⏱' + ' 15 min',
-                                          style: TextStyle(
-                                              fontFamily: 'Dosis',
-                                              color: Colors.blueGrey,
-                                              fontWeight: FontWeight.w600)),
-                                      Expanded(
-                                        child: Text(
-                                          'A gentle combination of Carefully choosen veggies with a Mexican taste ',
-                                          style: TextStyle(
-                                              fontFamily: 'Dosis',
-                                              color: Colors.blueGrey,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      )
-                                    ],
+                    return InkWell(
+                      onTap: () {
+                        Navigation.changeScreen(context, CookingScreen());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          // color: Colors.red,
+                          width: 180,
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              Positioned(
+                                height: 220,
+                                width: 180,
+                                bottom: 20,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: kCardColors[index % 4]
+                                        .withOpacity(0.23),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              right: 10,
-                              height: ScreenSize.getHeight(context) * 0.17,
-                              width: ScreenSize.getWidth(context) * 0.35,
-                              top: 10,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage('images/lenna.png')),
-                                    color: Colors.red,
-                                    shape: BoxShape.circle),
-                              ),
-                            ),
-                            Positioned(
-                                right: 10,
-                                bottom: 10,
-                                child: InkWell(
-                                  child: Container(
-                                    padding: EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
-                                          Icons.favorite,
-                                          size: 15,
-                                          color: Colors.red,
+                                        SizedBox(
+                                          height:
+                                              (ScreenSize.getHeight(context) *
+                                                  0.17 /
+                                                  2.2),
                                         ),
                                         Text(
-                                          ' Save',
+                                          'Mexican Egg Mix ',
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontFamily: 'Dosis',
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 3),
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.45)),
+                                              child: Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.star,
+                                                    size: 15,
+                                                    color: Colors.deepOrange,
+                                                  ),
+                                                  Text(' 4.5')
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 3, horizontal: 5),
+                                              padding: EdgeInsets.all(5),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.grey
+                                                      .withOpacity(0.45)),
+                                              child: Text("easy"),
+                                            )
+                                          ],
+                                        ),
+                                        Text('⏱' + ' 15 min',
+                                            style: TextStyle(
+                                                fontFamily: 'Dosis',
+                                                color: Colors.blueGrey,
+                                                fontWeight: FontWeight.w600)),
+                                        Expanded(
+                                          child: Text(
+                                            'A gentle combination of Carefully choosen veggies with a Mexican taste ',
+                                            style: TextStyle(
+                                                fontFamily: 'Dosis',
+                                                color: Colors.blueGrey,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
-                                ))
-                          ],
+                                ),
+                              ),
+                              Positioned(
+                                right: 10,
+                                height: ScreenSize.getHeight(context) * 0.17,
+                                width: ScreenSize.getWidth(context) * 0.35,
+                                top: 10,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image:
+                                              AssetImage('images/lenna.png')),
+                                      color: Colors.red,
+                                      shape: BoxShape.circle),
+                                ),
+                              ),
+                              Positioned(
+                                  right: 10,
+                                  bottom: 10,
+                                  child: InkWell(
+                                    child: Container(
+                                      padding: EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.favorite,
+                                            size: 15,
+                                            color: Colors.red,
+                                          ),
+                                          Text(
+                                            ' Save',
+                                            style: TextStyle(
+                                                fontFamily: 'Dosis',
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ),
                       ),
                     );
