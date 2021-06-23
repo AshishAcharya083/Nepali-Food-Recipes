@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nepali_food_recipes/components/icon_with_name_card.dart';
+import 'package:nepali_food_recipes/components/my_drawer.dart';
 import 'package:nepali_food_recipes/components/user.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
@@ -58,15 +59,7 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              CircleAvatar(
-                backgroundImage: AssetImage('images/lenna.png'),
-              ),
-            ],
-          ),
-        ),
+        drawer: MyDrawer(),
         body: ListView(
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.only(left: 10),

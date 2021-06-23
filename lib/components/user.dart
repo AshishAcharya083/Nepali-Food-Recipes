@@ -58,7 +58,7 @@ class Info extends StatelessWidget {
                   email,
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
-                      color: Color(0xFF8492A2),
+                      color: kSecondaryTextColor,
                       letterSpacing: 1.3),
                 )
               ],
