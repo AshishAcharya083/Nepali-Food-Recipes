@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 
@@ -6,7 +7,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = ScreenSize.getWidth(context);
-    double height = ScreenSize.getHeight(context);
+    double height = ScreenSize.getHeight(context) - 80;
     print(width);
     print(height);
     return Container(
@@ -62,6 +63,19 @@ class MyDrawer extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: AssetImage('images/lenna.png'))),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 150),
+                      child: Column(
+                        children: [
+                          DrawerTile('Home', Icons.home_filled),
+                          DrawerTile('Explore', Icons.search),
+                          DrawerTile('Settings', Icons.settings),
+                          DrawerTile('About', Icons.info),
+                          Spacer(),
+                          DrawerTile('Log out', Icons.logout)
+                        ],
                       ),
                     )
                   ],

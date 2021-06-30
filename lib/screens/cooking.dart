@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:timelines/timelines.dart';
 
 class CookingScreen extends StatefulWidget {
   const CookingScreen({Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class CookingScreen extends StatefulWidget {
 }
 
 class _CookingScreenState extends State<CookingScreen> {
+  String sampleText =
+      'This is one of the most popular food in Mexico. It is not only the case of mexico, it is also famous all around the world which is really nice thing. The main Thing that makes special about this food is that it costs very less';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +77,7 @@ class _CookingScreenState extends State<CookingScreen> {
                     height: 10,
                   ),
                   Text(
-                    'This is one of the most popular food in Mexico. It is not only the case of mexico, it is also famous all around the world which is really nice thing. The main Thing that makes special about this food is that it costs very less',
+                    sampleText,
                     style: kSecondaryTextStyle,
                   ),
                   kDivider,
@@ -136,43 +139,41 @@ class _CookingScreenState extends State<CookingScreen> {
               ),
             ),
           ),
-          SliverList(
-              delegate: SliverChildListDelegate(List.generate(
-                  5,
-                  (index) => Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.black),
-                                child: Center(
-                                  child: Text(
-                                    index.toString(),
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              flex: 7,
-                              child: Text(
-                                ' you can see it on youYour recipe has been uploaded, you can see it on your profile. YYour recipe has been uploaded, you can see it on your profile. Your recipe has been uploaded, you can see it on yourour recipe has been uploaded, you can see it on yourr profile. ',
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                    fontSize: 18, fontFamily: 'Dosis-SemiBold'),
-                              ),
-                            )
-                          ],
-                        ),
-                      ))))
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            sliver: SliverToBoxAdapter(
+                child: FixedTimeline.tileBuilder(
+              theme: TimelineThemeData(
+                nodePosition: 0,
+                color: Colors.red,
+                indicatorTheme: IndicatorThemeData(
+                  position: 0.5,
+                  size: 15.0,
+                ),
+                connectorTheme: ConnectorThemeData(
+                  thickness: 2.5,
+                ),
+              ),
+              mainAxisSize: MainAxisSize.max,
+              builder: TimelineTileBuilder.connectedFromStyle(
+                oppositeContentsBuilder: (context, index) => Container(
+                  width: 5,
+                ),
+                contentsAlign: ContentsAlign.basic,
+                contentsBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '08:54 PM',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+                connectorStyleBuilder: (context, index) =>
+                    ConnectorStyle.solidLine,
+                indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
+                itemCount: 50,
+              ),
+            )),
+          ),
         ],
       ),
     );
