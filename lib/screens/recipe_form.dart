@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
@@ -61,9 +62,9 @@ class _RecipeFormState extends State<RecipeForm> {
                   Text(
                     'Publish Your Own\nRecipe.',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: kPrimaryTextColor),
                   ),
                 ],
               ),
@@ -423,17 +424,8 @@ class _RecipeFormState extends State<RecipeForm> {
                     cookTime = 30;
                   });
                 },
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Text(
-                    'Submit',
-                    textAlign: TextAlign.center,
-                    style: kFormHeadingStyle.copyWith(color: Colors.white),
-                  ),
-                ),
+                child: FlatButtonWithText(
+                    text: 'Submit', buttonColor: kPrimaryColor),
               ),
             ],
           ),

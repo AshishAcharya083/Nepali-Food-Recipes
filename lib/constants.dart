@@ -13,6 +13,7 @@ const Color kLightGreenColor = Color(0xFF1FCC79);
 const Color kOrangeColor = Color(0xFFFF9B33);
 const Color kSecondaryColor = Color(0xFFFD7A50);
 const Color kSecondaryTextColor = Color(0xFF9FA5C0);
+const Color kPrimaryTextColor = Color(0xFF3E5481);
 
 const List<Color> kCardColors = [
   kPrimaryColor,
@@ -22,8 +23,8 @@ const List<Color> kCardColors = [
 ];
 
 ///textStyles
-const TextStyle kFormHeadingStyle =
-    TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.black);
+const TextStyle kFormHeadingStyle = TextStyle(
+    fontSize: 24, fontWeight: FontWeight.w700, color: kPrimaryTextColor);
 const TextStyle kTextFieldStyle =
     TextStyle(letterSpacing: 1.2, fontFamily: 'Dosis-Bold', fontSize: 18);
 

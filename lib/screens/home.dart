@@ -69,6 +69,7 @@ class _HomeState extends State<Home> {
               style: TextStyle(
                 fontFamily: 'Dosis',
                 fontWeight: FontWeight.bold,
+                // color: kPrimaryTextColor,
                 fontSize: 30,
               ),
             ),
