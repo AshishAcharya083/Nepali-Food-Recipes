@@ -139,40 +139,59 @@ class _CookingScreenState extends State<CookingScreen> {
               ),
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            sliver: SliverToBoxAdapter(
-                child: FixedTimeline.tileBuilder(
-              theme: TimelineThemeData(
-                nodePosition: 0,
-                color: Colors.red,
-                indicatorTheme: IndicatorThemeData(
-                  position: 0.5,
-                  size: 15.0,
-                ),
-                connectorTheme: ConnectorThemeData(
-                  thickness: 2.5,
-                ),
-              ),
-              mainAxisSize: MainAxisSize.max,
-              builder: TimelineTileBuilder.connectedFromStyle(
-                oppositeContentsBuilder: (context, index) => Container(
-                  width: 5,
-                ),
-                contentsAlign: ContentsAlign.basic,
-                contentsBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '08:54 PM',
-                    style: TextStyle(color: Colors.green),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                FixedTimeline.tileBuilder(
+                  theme: TimelineThemeData(
+                    nodePosition: 0.04,
+                    color: Colors.red,
+                    indicatorTheme: IndicatorThemeData(
+                      position: 0.5,
+                      size: 20.0,
+                    ),
+                    connectorTheme: ConnectorThemeData(
+                      color: kPrimaryColor,
+                      thickness: 4,
+                    ),
+                  ),
+                  mainAxisSize: MainAxisSize.max,
+                  builder: TimelineTileBuilder.connectedFromStyle(
+                    oppositeContentsBuilder: (context, index) => Container(
+                      width: 5,
+                    ),
+                    contentsAlign: ContentsAlign.basic,
+                    contentsBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 10,
+                                  offset: Offset(5, 5))
+                            ]),
+                        child: Text(
+                          sampleText,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              letterSpacing: 1.5),
+                        ),
+                      ),
+                    ),
+                    connectorStyleBuilder: (context, index) =>
+                        ConnectorStyle.solidLine,
+                    indicatorStyleBuilder: (context, index) =>
+                        IndicatorStyle.outlined,
+                    itemCount: 50,
                   ),
                 ),
-                connectorStyleBuilder: (context, index) =>
-                    ConnectorStyle.solidLine,
-                indicatorStyleBuilder: (context, index) => IndicatorStyle.dot,
-                itemCount: 50,
-              ),
-            )),
+              ],
+            ),
           ),
         ],
       ),

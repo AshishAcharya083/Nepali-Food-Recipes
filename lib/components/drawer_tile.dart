@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/constants.dart';
 
 class DrawerTile extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class DrawerTile extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        color: Colors.grey,
+        color: kSecondaryColor,
         size: 28,
       ),
       title: Text(
