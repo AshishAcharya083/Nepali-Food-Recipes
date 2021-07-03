@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "622943046917",
+    "project_id": "nepali-food-recipes-1ece6",
+    "storage_bucket": "nepali-food-recipes-1ece6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622943046917:android:d7f06985b538dcbd807b6c",
+        "android_client_info": {
+          "package_name": "com.example.nepali_food_recipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622943046917-ccl2gnecmege0hcsmcaink9ofrh6v6vg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrVpP_3H5HpFpT0Fu61zvs9t7dKmVNKuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622943046917-ccl2gnecmege0hcsmcaink9ofrh6v6vg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
