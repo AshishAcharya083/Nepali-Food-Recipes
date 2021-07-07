@@ -3,8 +3,8 @@ import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Container(
         alignment: Alignment.center,
         child: ListView(
+          physics: BouncingScrollPhysics(),
           shrinkWrap: true,
           padding: EdgeInsets.all(24),
           children: [
@@ -56,6 +57,11 @@ class WelcomeScreen extends StatelessWidget {
             TextField(
               decoration:
                   kTextFieldInputDecoration(hintText: 'Password').copyWith(
+                suffixIcon: Icon(
+                  Icons.remove_red_eye_outlined,
+                  size: 30,
+                  color: Colors.black,
+                ),
                 filled: false,
                 prefixIcon: Icon(
                   Icons.lock_outline,
@@ -90,8 +96,9 @@ class WelcomeScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Or Sign up with Google',
+                'Or Sign up with',
                 style: TextStyle(
+                    letterSpacing: 0.8,
                     color: kSecondaryTextColor,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
@@ -103,6 +110,7 @@ class WelcomeScreen extends StatelessWidget {
             Container(
               width: ScreenSize.getWidth(context),
               child: FlatButtonWithText(
+                imagePath: 'images/google.png',
                 text: 'Google',
                 buttonColor: Color(0xFFFF5842),
               ),
