@@ -11,14 +11,14 @@ import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
 import 'package:nepali_food_recipes/screens/profile.dart';
 
-class Home extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
 enum Category { fastFood, fruitItem, vegetable }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/helpers/navigation.dart';
+import 'package:nepali_food_recipes/screens/signup_screen.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -74,7 +76,12 @@ class MyDrawer extends StatelessWidget {
                           DrawerTile('Settings', Icons.settings),
                           DrawerTile('About', Icons.info),
                           Spacer(),
-                          DrawerTile('Log out', Icons.logout)
+                          InkWell(
+                              onTap: () {
+                                Navigation.changeScreenWithReplacement(
+                                    context, SignUpScreen());
+                              },
+                              child: DrawerTile('Log out', Icons.logout))
                         ],
                       ),
                     )

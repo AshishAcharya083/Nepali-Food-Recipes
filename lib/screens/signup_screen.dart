@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/screens/home.dart';
+import 'package:nepali_food_recipes/screens/nav_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       body: Container(
         alignment: Alignment.center,
-        child: ListView(
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          padding: EdgeInsets.all(24),
+        child: Column(
           children: [
-            // SizedBox(
-            //   height: ScreenSize.getHeight(context) * 0.08,
-            // ),
+            SizedBox(
+              height: 20,
+            ),
             Center(
               child: Text(
                 'Welcome!',
@@ -31,64 +29,18 @@ class SignUpScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Please Enter your account here',
+                'Please Signup to get started',
                 style: TextStyle(
                     color: kSecondaryTextColor,
                     fontSize: 15,
                     fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            TextField(
-              decoration:
-                  kTextFieldInputDecoration(hintText: 'Phone Number').copyWith(
-                filled: false,
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: kPrimaryTextColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            TextField(
-              decoration:
-                  kTextFieldInputDecoration(hintText: 'Password').copyWith(
-                suffixIcon: Icon(
-                  Icons.remove_red_eye_outlined,
-                  size: 30,
-                  color: Colors.black,
-                ),
-                filled: false,
-                prefixIcon: Icon(
-                  Icons.lock_outline,
-                  color: kPrimaryTextColor,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Text(
-                'Forgot Password?',
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                    color: kPrimaryTextColor),
-              ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Container(
-              width: ScreenSize.getWidth(context),
-              child: FlatButtonWithText(
-                text: 'Sign Up',
+            Expanded(
+              child: Image(
+                height: 200,
+                width: 200,
+                image: AssetImage('images/recipe-book.png'),
               ),
             ),
             SizedBox(
@@ -96,7 +48,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             Center(
               child: Text(
-                'Or Sign up with',
+                'Continue with',
                 style: TextStyle(
                     letterSpacing: 0.8,
                     color: kSecondaryTextColor,
@@ -104,16 +56,23 @@ class SignUpScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
+            InkWell(
+              onTap: () {
+                Navigation.changeScreenWithReplacement(
+                    context, NavBarController());
+              },
+              child: Container(
+                padding: EdgeInsets.all(20),
+                width: ScreenSize.getWidth(context),
+                child: FlatButtonWithText(
+                  imagePath: 'images/google.png',
+                  text: 'Google',
+                  buttonColor: Color(0xFFFF5842),
+                ),
+              ),
+            ),
             SizedBox(
               height: 20,
-            ),
-            Container(
-              width: ScreenSize.getWidth(context),
-              child: FlatButtonWithText(
-                imagePath: 'images/google.png',
-                text: 'Google',
-                buttonColor: Color(0xFFFF5842),
-              ),
             ),
           ],
         ),

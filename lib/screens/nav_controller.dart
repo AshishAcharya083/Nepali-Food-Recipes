@@ -12,10 +12,10 @@ class NavBarController extends StatefulWidget {
 
 class _NavBarControllerState extends State<NavBarController> {
   List<Widget> body = [
-    Home(),
+    HomePage(),
     RecipeForm(),
-    // ListScreen(),
-    SignUpScreen(),
+    ListScreen(),
+    // SignUpScreen(),
   ];
 
   int _currentIndex = 0;

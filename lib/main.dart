@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:nepali_food_recipes/screens/signup_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-      home: NavBarController(),
+      home: SignUpScreen(),
     );
   }
 }
