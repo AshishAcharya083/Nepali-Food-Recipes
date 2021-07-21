@@ -3,8 +3,10 @@ import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override
@@ -58,8 +60,11 @@ class SignUpScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigation.changeScreenWithReplacement(
-                    context, NavBarController());
+                Provider.of<AuthProvider>(context, listen: false)
+                    .signInWithGoogle(
+                        'imashish083@gmail.com', 'hero123', context);
+                // Navigation.changeScreenWithReplacement(
+                //     context, NavBarController());
               },
               child: Container(
                 padding: EdgeInsets.all(20),
