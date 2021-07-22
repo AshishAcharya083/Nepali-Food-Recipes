@@ -23,7 +23,16 @@ class AuthProvider with ChangeNotifier {
       currentUser = await googleSignIn.signIn();
       print('The current user is ${currentUser!.displayName}');
       if (currentUser != null) {
-        Navigation.changeScreenWithReplacement(context, NavBarController());
+        final googleAuth = await currentUser!.authentication;
+        await _auth
+            .signInWithCredential(GoogleAuthProvider.credential(
+              accessToken: googleAuth.accessToken,
+              idToken: googleAuth.idToken,
+            ))
+            .then((value) => {
+                  Navigation.changeScreenWithReplacement(
+                      context, NavBarController())
+                });
       }
       notifyListeners();
     } catch (e) {
