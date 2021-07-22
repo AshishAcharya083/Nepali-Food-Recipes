@@ -3,7 +3,9 @@ import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/signup_screen.dart';
+import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -78,8 +80,11 @@ class MyDrawer extends StatelessWidget {
                           Spacer(),
                           InkWell(
                               onTap: () {
-                                Navigation.changeScreenWithReplacement(
-                                    context, SignUpScreen());
+                                Provider.of<AuthProvider>(context,
+                                        listen: false)
+                                    .signOut(context);
+                                // Navigation.changeScreenWithReplacement(
+                                //     context, SignUpScreen());
                               },
                               child: DrawerTile('Log out', Icons.logout))
                         ],

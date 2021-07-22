@@ -16,18 +16,21 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'Dosis',
-        accentColor: kPrimaryColor,
-        primaryIconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-      ),
-      home: MultiProvider(providers: [
+    return MultiProvider(
+      providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ], child: SignUpScreen()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          fontFamily: 'Dosis',
+          accentColor: kPrimaryColor,
+          primaryIconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+        ),
+        home: SignUpScreen(),
+      ),
     );
   }
 }
