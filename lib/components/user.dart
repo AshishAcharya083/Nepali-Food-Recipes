@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 
@@ -5,10 +6,10 @@ class Info extends StatelessWidget {
   const Info({
     this.name = 'John Doe',
     this.email = 'xyz@gmail.com',
-    this.image =
+    this.imageURL =
         'https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png',
   });
-  final String name, email, image;
+  final String name, email, imageURL;
   @override
   Widget build(BuildContext context) {
     double defaultSize = 15;
@@ -27,22 +28,27 @@ class Info extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(bottom: defaultSize), //10
-                  height: defaultSize * 14, //140
-                  width: defaultSize * 14,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: defaultSize * 0.8, //8
-                    ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('images/lenna.png'),
-                    ),
-                  ),
-                ),
+                CachedNetworkImage(
+                    placeholder: (context, url) =>
+                        Image.asset('images/profile_loading.png'),
+                    imageBuilder: (context, imageProvider) => Container(
+                          margin: EdgeInsets.only(bottom: defaultSize), //10
+                          height: defaultSize * 14, //140
+                          width: defaultSize * 14,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: defaultSize * 0.8, //8
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider,
+                            ),
+                          ),
+                        ),
+                    imageUrl: imageURL),
+
                 Text(
                   name,
                   style: TextStyle(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
@@ -58,17 +59,26 @@ class MyDrawer extends StatelessWidget {
                       top: -width * 0.2,
                     ),
                     Positioned(
-                      left: 15,
-                      right: 200,
-                      top: 30,
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage('images/lenna.png'))),
-                      ),
-                    ),
+                        left: 15,
+                        right: 200,
+                        top: 30,
+                        child: CachedNetworkImage(
+                          imageBuilder: (context, imageProvider) => Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                )),
+                          ),
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              Image.asset('images/profile_loading.gif'),
+                          imageUrl:
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .currentUser!
+                                  .photoUrl!,
+                        )),
                     Container(
                       margin: EdgeInsets.only(top: 150),
                       child: Column(
