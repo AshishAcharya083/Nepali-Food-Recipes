@@ -20,9 +20,9 @@ class _ProfileState extends State<Profile> {
             child: Column(
               children: [
                 Info(
-                  imageURL: authProvider.currentUser!.photoUrl!,
-                  email: authProvider.currentUser!.email,
-                  name: authProvider.currentUser!.displayName!,
+                  imageURL: authProvider.auth.currentUser!.photoURL!,
+                  email: authProvider.auth.currentUser!.email!,
+                  name: authProvider.auth.currentUser!.displayName!,
                 ),
                 kFixedSizedBox,
                 Row(

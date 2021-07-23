@@ -5,7 +5,7 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
-import 'package:nepali_food_recipes/screens/signup_screen.dart';
+import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -76,8 +76,9 @@ class MyDrawer extends StatelessWidget {
                               Image.asset('images/profile_loading.gif'),
                           imageUrl:
                               Provider.of<AuthProvider>(context, listen: false)
+                                  .auth
                                   .currentUser!
-                                  .photoUrl!,
+                                  .photoURL!,
                         )),
                     Container(
                       margin: EdgeInsets.only(top: 150),

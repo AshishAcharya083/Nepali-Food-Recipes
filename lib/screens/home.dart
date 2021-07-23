@@ -57,7 +57,8 @@ class _HomePageState extends State<HomePage> {
                       child: CachedNetworkImage(
                         placeholder: (context, url) =>
                             Image.asset('images/profile_loading.gif'),
-                        imageUrl: authProvider.currentUser!.photoUrl!,
+                        imageUrl: authProvider.auth.currentUser!.photoURL ??
+                            "https://image.flaticon.com/icons/png/512/1077/1077012.png",
                         fit: BoxFit.cover,
                       ),
                     ),

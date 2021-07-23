@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/login_checker.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
-import 'package:nepali_food_recipes/screens/signup_screen.dart';
+import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        home: SignUpScreen(),
+        home: LogInChecker(),
       ),
     );
   }
