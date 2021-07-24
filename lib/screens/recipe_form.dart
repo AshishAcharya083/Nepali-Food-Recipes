@@ -130,35 +130,74 @@ class _RecipeFormState extends State<RecipeForm> {
                   ],
                 ),
               ),
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: kSecondaryColor,
-                  inactiveTrackColor: Colors.red[100],
-                  trackShape: RoundedRectSliderTrackShape(),
-                  trackHeight: 4.0,
-                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                  thumbColor: kPrimaryColor,
-                  overlayColor: kPrimaryColor.withAlpha(32),
-                  overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-                  tickMarkShape: RoundSliderTickMarkShape(),
-                  activeTickMarkColor: kPrimaryColor,
-                  inactiveTickMarkColor: kDarkGreenColor,
-                  valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                  valueIndicatorColor: kSecondaryColor,
-                  valueIndicatorTextStyle: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-                child: Slider(
-                    label: "$cookTime",
-                    divisions: 14,
-                    max: 80,
-                    min: 10,
-                    value: cookTime,
-                    onChanged: (newCookingTime) => setState(() {
+
+              /// slider
+              Column(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '<10',
+                          style: kSliderText.copyWith(color: kPrimaryColor),
+                        ),
+                        Text('30',
+                            style: cookTime > 24
+                                ? kSliderText.copyWith(color: kPrimaryColor)
+                                : kSliderText),
+                        Text(
+                          '50',
+                          style: cookTime > 40
+                              ? kSliderText.copyWith(color: kPrimaryColor)
+                              : kSliderText,
+                        ),
+                        Text(
+                          '>60',
+                          style: cookTime > 55
+                              ? kSliderText.copyWith(color: kPrimaryColor)
+                              : kSliderText,
+                        )
+                      ],
+                    ),
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: kSecondaryColor,
+                      inactiveTrackColor: Colors.red[100],
+                      trackShape: RoundedRectSliderTrackShape(),
+                      trackHeight: 4.0,
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                      thumbColor: kPrimaryColor,
+                      overlayColor: kPrimaryColor.withAlpha(32),
+                      overlayShape:
+                          RoundSliderOverlayShape(overlayRadius: 28.0),
+                      tickMarkShape: RoundSliderTickMarkShape(),
+                      activeTickMarkColor: kPrimaryColor,
+                      inactiveTickMarkColor: kDarkGreenColor,
+                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                      valueIndicatorColor: kSecondaryColor,
+                      valueIndicatorTextStyle: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    child: Slider(
+                      label: "$cookTime",
+                      max: 60,
+                      min: 10,
+                      value: cookTime,
+                      onChanged: (newCookingTime) => setState(
+                        () {
                           cookTime = newCookingTime;
-                        })),
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Text(
                 'Ingredients',
@@ -433,4 +472,10 @@ class _RecipeFormState extends State<RecipeForm> {
       ),
     );
   }
+
+  var kSliderText = TextStyle(
+      color: Colors.grey,
+      fontSize: 18,
+      letterSpacing: 1.2,
+      fontWeight: FontWeight.bold);
 }

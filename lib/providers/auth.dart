@@ -37,6 +37,10 @@ class AuthProvider with ChangeNotifier {
                       .set({
                     'name': auth.currentUser!.displayName.toString(),
                     'userId': auth.currentUser!.uid,
+                    'email': auth.currentUser!.email,
+                    'recipes': '',
+                    'followers': '',
+                    'following': '',
                   }, SetOptions(merge: true)),
                   Navigation.changeScreenWithReplacement(
                       context, NavBarController())
