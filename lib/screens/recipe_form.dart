@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
@@ -6,10 +8,9 @@ import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RecipeForm extends StatefulWidget {
-  const RecipeForm({Key? key}) : super(key: key);
-
   @override
   _RecipeFormState createState() => _RecipeFormState();
 }
@@ -19,10 +20,19 @@ class _RecipeFormState extends State<RecipeForm> {
   List<String> steps = ['', '', ''];
   String? errorText;
   double cookTime = 30;
+  XFile? image;
+  ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void imagePicker(ImageSource source) async {
+    var temp = await _picker.pickImage(source: source);
+    setState(() {
+      image = temp;
+    });
   }
 
   @override
@@ -50,9 +60,6 @@ class _RecipeFormState extends State<RecipeForm> {
             physics: BouncingScrollPhysics(),
             children: [
               Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.baseline,
-                // textBaseline: TextBaseline.ideographic,
                 children: [
                   Image(
                     // height: 0,
@@ -68,23 +75,28 @@ class _RecipeFormState extends State<RecipeForm> {
                   ),
                 ],
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
-                height: 180,
-                width: ScreenSize.getWidth(context),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(image: AssetImage('images/gallery.png')),
-                    Text(
-                      'Add Cover Photo',
-                      style: kFormHeadingStyle.copyWith(fontSize: 18),
-                    ),
-                  ],
+              InkWell(
+                onTap: () async {
+                  await alertDialog(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  height: 180,
+                  width: ScreenSize.getWidth(context),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(image: AssetImage('images/gallery.png')),
+                      Text(
+                        'Add Cover Photo',
+                        style: kFormHeadingStyle.copyWith(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(20)),
                 ),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.circular(20)),
               ),
               Text(
                 'Food name',
@@ -164,27 +176,7 @@ class _RecipeFormState extends State<RecipeForm> {
                     ),
                   ),
                   SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: kSecondaryColor,
-                      inactiveTrackColor: Colors.red[100],
-                      trackShape: RoundedRectSliderTrackShape(),
-                      trackHeight: 4.0,
-                      thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                      thumbColor: kPrimaryColor,
-                      overlayColor: kPrimaryColor.withAlpha(32),
-                      overlayShape:
-                          RoundSliderOverlayShape(overlayRadius: 28.0),
-                      tickMarkShape: RoundSliderTickMarkShape(),
-                      activeTickMarkColor: kPrimaryColor,
-                      inactiveTickMarkColor: kDarkGreenColor,
-                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                      valueIndicatorColor: kSecondaryColor,
-                      valueIndicatorTextStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    data: sliderThemeData(context),
                     child: Slider(
                       label: "$cookTime",
                       max: 60,
@@ -470,6 +462,57 @@ class _RecipeFormState extends State<RecipeForm> {
           ),
         ),
       ),
+    );
+  }
+
+  Future alertDialog(BuildContext context) {
+    TextStyle buttonTextStyle = TextStyle(fontSize: 18, letterSpacing: 1.1);
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                'Image Source...',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    imagePicker(ImageSource.gallery);
+                  },
+                  child: Text(
+                    'Gallery',
+                    style: buttonTextStyle,
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {
+                      imagePicker(ImageSource.camera);
+                    },
+                    child: Text(
+                      'Camera',
+                      style: buttonTextStyle,
+                    ))
+              ],
+            ));
+  }
+
+  SliderThemeData sliderThemeData(BuildContext context) {
+    return SliderTheme.of(context).copyWith(
+      activeTrackColor: kSecondaryColor,
+      inactiveTrackColor: Colors.red[100],
+      trackShape: RoundedRectSliderTrackShape(),
+      trackHeight: 4.0,
+      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+      thumbColor: kPrimaryColor,
+      overlayColor: kPrimaryColor.withAlpha(32),
+      overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+      tickMarkShape: RoundSliderTickMarkShape(),
+      activeTickMarkColor: kPrimaryColor,
+      inactiveTickMarkColor: kDarkGreenColor,
+      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+      valueIndicatorColor: kSecondaryColor,
+      valueIndicatorTextStyle: TextStyle(
+          fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
     );
   }
 
