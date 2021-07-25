@@ -9,6 +9,7 @@ import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipeForm extends StatefulWidget {
   @override
@@ -19,9 +20,12 @@ class _RecipeFormState extends State<RecipeForm> {
   List<String> ingredients = ['', ''];
   List<String> steps = ['', '', ''];
   String? errorText;
-  double cookTime = 30;
+  double cookTime = 20;
   XFile? image;
   ImagePicker _picker = ImagePicker();
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  TextEditingController _foodNameController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -106,6 +110,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 height: 5,
               ),
               TextField(
+                controller: _foodNameController,
                 style: kTextFieldStyle,
                 decoration:
                     kTextFieldInputDecoration(hintText: 'Enter Food Name'),
@@ -119,6 +124,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 height: 5,
               ),
               TextField(
+                controller: _descriptionController,
                 style: kTextFieldStyle,
                 maxLines: 3,
                 decoration: kTextFieldInputDecoration(
@@ -389,7 +395,20 @@ class _RecipeFormState extends State<RecipeForm> {
               kFixedSizedBox,
               InkWell(
                 splashColor: kPrimaryColor,
-                onTap: () {
+                onTap: () async {
+                  setState(() {
+                    steps = steps.where((step) => step != '').toList();
+                    ingredients = ingredients
+                        .where((ingredient) => ingredient != '')
+                        .toList();
+                  });
+                  await _firestore.collection('recipes').add({
+                    'name': _foodNameController.text,
+                    'Description': _descriptionController.text,
+                    'ingredients': ingredients,
+                    'steps': steps,
+                  });
+
                   showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -485,13 +504,14 @@ class _RecipeFormState extends State<RecipeForm> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {
-                      imagePicker(ImageSource.camera);
-                    },
-                    child: Text(
-                      'Camera',
-                      style: buttonTextStyle,
-                    ))
+                  onPressed: () {
+                    imagePicker(ImageSource.camera);
+                  },
+                  child: Text(
+                    'Camera',
+                    style: buttonTextStyle,
+                  ),
+                )
               ],
             ));
   }
