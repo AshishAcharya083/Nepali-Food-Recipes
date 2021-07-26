@@ -402,71 +402,78 @@ class _RecipeFormState extends State<RecipeForm> {
                         .where((ingredient) => ingredient != '')
                         .toList();
                   });
-                  await _firestore.collection('recipes').add({
-                    'name': _foodNameController.text,
-                    'Description': _descriptionController.text,
-                    'ingredients': ingredients,
-                    'steps': steps,
-                  });
 
-                  showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Upload Success',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  letterSpacing: 1.2,
-                                  fontWeight: FontWeight.bold,
-                                  color: kLightGreenColor)),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              const Image(
-                                image: AssetImage('images/party.png'),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.0),
-                                child: Text(
-                                  'Your Recipe has been uploaded,\nyou can see it on your profile',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Dosis-Bold',
-                                  ),
+                  if (_foodNameController.text.isNotEmpty && steps.length > 0) {
+                    await _firestore.collection('recipes').add({
+                      'name': _foodNameController.text,
+                      'Description': _descriptionController.text,
+                      'duration': cookTime,
+                      'ingredients': ingredients,
+                      'steps': steps,
+                    }).then((value) => showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Upload Success',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    letterSpacing: 1.2,
+                                    fontWeight: FontWeight.bold,
+                                    color: kLightGreenColor)),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const Image(
+                                  image: AssetImage('images/party.png'),
                                 ),
-                              ),
-                              TextButton(
-                                child: Container(
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      color: kLightGreenColor,
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: Center(
-                                    child: Text(
-                                      'Back to Home',
-                                      style: kFormHeadingStyle.copyWith(
-                                          color: Colors.yellow),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Text(
+                                    'Your Recipe has been uploaded,\nyou can see it on your profile',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Dosis-Bold',
                                     ),
                                   ),
                                 ),
-                                onPressed: () {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            NavBarController(),
+                                TextButton(
+                                  child: Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                        color: kLightGreenColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                      child: Text(
+                                        'Back to Home',
+                                        style: kFormHeadingStyle.copyWith(
+                                            color: Colors.yellow),
                                       ),
-                                      (route) => false);
-                                  // Navigation.changeScreen(context, Home());
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      });
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              NavBarController(),
+                                        ),
+                                        (route) => false);
+                                    // Navigation.changeScreen(context, Home());
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        }));
+                  } else {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('error')));
+                  }
+
                   setState(() {
                     ingredients = ['', ''];
                     steps = ['', '', ''];
