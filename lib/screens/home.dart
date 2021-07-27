@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,7 @@ class HomePage extends StatefulWidget {
 enum Category { fastFood, fruitItem, vegetable }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
   @override
   void initState() {
     super.initState();
@@ -74,263 +76,317 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           drawer: MyDrawer(),
-          body: ListView(
-            physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.only(left: 10),
-            children: [
-              Text(
-                'Nepali Food \nRecipes 😋',
-                style: TextStyle(
-                  fontFamily: 'Dosis',
-                  fontWeight: FontWeight.bold,
-                  // color: kPrimaryTextColor,
-                  fontSize: 30,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: TextField(
-                        style: TextStyle(color: kDarkColor),
-                        cursorColor: kPrimaryColor,
-                        decoration: kSearchInputDecoration),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 15, right: 15),
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: IconButton(
-                        color: kOrangeColor,
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.settings_input_component_rounded,
-                          // color: myPrimaryColor,
-                        )),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 18,
-              ),
-              Container(
-                height: 45,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+          body: StreamBuilder<QuerySnapshot>(
+              stream: fireStore.collection('recipes').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return CircularProgressIndicator();
+                var recipes = snapshot.data!.docs;
+                return ListView(
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(left: 10),
                   children: [
-                    IconWithNameCard(
-                      assetImagePath: 'images/burger.png',
-                      foodCategory: 'Fast Food',
-                      onTap: () {
-                        print('burger pressed');
-                      },
+                    Text(
+                      'Nepali Food \nRecipes 😋',
+                      style: TextStyle(
+                        fontFamily: 'Dosis',
+                        fontWeight: FontWeight.bold,
+                        // color: kPrimaryTextColor,
+                        fontSize: 30,
+                      ),
                     ),
-                    IconWithNameCard(
-                      assetImagePath: 'images/drink.png',
-                      foodCategory: 'Drinks',
-                      onTap: () {
-                        print('burger pressed');
-                      },
+                    SizedBox(
+                      height: 10,
                     ),
-                    IconWithNameCard(
-                      assetImagePath: 'images/fruit.png',
-                      foodCategory: 'Fruit item',
-                      onTap: () {
-                        print('fruit pressed');
-                      },
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: TextField(
+                              style: TextStyle(color: kDarkColor),
+                              cursorColor: kPrimaryColor,
+                              decoration: kSearchInputDecoration),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(left: 15, right: 15),
+                          decoration: BoxDecoration(
+                              color: kPrimaryColor.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(15)),
+                          child: IconButton(
+                              color: kOrangeColor,
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.settings_input_component_rounded,
+                                // color: myPrimaryColor,
+                              )),
+                        ),
+                      ],
                     ),
-                    IconWithNameCard(
-                      assetImagePath: 'images/broccoli.png',
-                      foodCategory: 'Vegetable',
-                      onTap: () {
-                        print('veg pressed');
-                      },
+                    SizedBox(
+                      height: 18,
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 18,
-              ),
-              Text(
-                'Top Recipes',
-                style: TextStyle(
-                    fontFamily: 'Dosis',
-                    fontSize: 24,
-                    letterSpacing: 1.3,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 0,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                height: ScreenSize.getHeight(context) * 0.45,
-                child: ListView.builder(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigation.changeScreen(context, CookingScreen());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Container(
-                            // color: Colors.red,
-                            width: 180,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Positioned(
-                                  height: 220,
+                    Container(
+                      height: 45,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          IconWithNameCard(
+                            assetImagePath: 'images/burger.png',
+                            foodCategory: 'Fast Food',
+                            onTap: () {
+                              print('burger pressed');
+                            },
+                          ),
+                          IconWithNameCard(
+                            assetImagePath: 'images/drink.png',
+                            foodCategory: 'Drinks',
+                            onTap: () {
+                              print('burger pressed');
+                            },
+                          ),
+                          IconWithNameCard(
+                            assetImagePath: 'images/fruit.png',
+                            foodCategory: 'Fruit item',
+                            onTap: () {
+                              print('fruit pressed');
+                            },
+                          ),
+                          IconWithNameCard(
+                            assetImagePath: 'images/broccoli.png',
+                            foodCategory: 'Vegetable',
+                            onTap: () {
+                              print('veg pressed');
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Text(
+                      'Top Recipes',
+                      style: TextStyle(
+                          fontFamily: 'Dosis',
+                          fontSize: 24,
+                          letterSpacing: 1.3,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 0,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      height: ScreenSize.getHeight(context) * 0.45,
+                      child: ListView.builder(
+                          itemCount: recipes.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigation.changeScreen(
+                                    context, CookingScreen());
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  // color: Colors.red,
                                   width: 180,
-                                  bottom: 20,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: kCardColors[index % 4]
-                                          .withOpacity(0.23),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 5),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          SizedBox(
-                                            height:
-                                                (ScreenSize.getHeight(context) *
-                                                    0.17 /
-                                                    2.2),
+                                  child: Stack(
+                                    alignment: Alignment.bottomCenter,
+                                    children: [
+                                      Positioned(
+                                        height: 220,
+                                        width: 180,
+                                        bottom: 20,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: kCardColors[index % 4]
+                                                .withOpacity(0.23),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
-                                          Text(
-                                            'Mexican Egg Mix ',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontFamily: 'Dosis',
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 3),
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Colors.grey
-                                                        .withOpacity(0.45)),
-                                                child: Row(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 5),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                SizedBox(
+                                                  height: (ScreenSize.getHeight(
+                                                          context) *
+                                                      0.17 /
+                                                      2.2),
+                                                ),
+                                                Text(
+                                                  recipes[index]['name']
+                                                      .toString(),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontFamily: 'Dosis',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18),
+                                                ),
+                                                Row(
                                                   children: [
-                                                    Icon(
-                                                      Icons.star,
-                                                      size: 15,
-                                                      color: Colors.deepOrange,
+                                                    Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 3),
+                                                      padding:
+                                                          EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.45)),
+                                                      child: Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons.star,
+                                                            size: 15,
+                                                            color: Colors
+                                                                .deepOrange,
+                                                          ),
+                                                          Text(' 4.5')
+                                                        ],
+                                                      ),
                                                     ),
-                                                    Text(' 4.5')
+                                                    Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 3,
+                                                              horizontal: 5),
+                                                      padding:
+                                                          EdgeInsets.all(5),
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          color: Colors.grey
+                                                              .withOpacity(
+                                                                  0.45)),
+                                                      child: Text("easy"),
+                                                    )
                                                   ],
                                                 ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 3, horizontal: 5),
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Colors.grey
-                                                        .withOpacity(0.45)),
-                                                child: Text("easy"),
-                                              )
-                                            ],
+                                                Text(
+                                                    '⏱  ' +
+                                                        recipes[index]
+                                                                ['duration']
+                                                            .toString() +
+                                                        ' min',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Dosis',
+                                                        color: Colors.blueGrey,
+                                                        fontWeight:
+                                                            FontWeight.w600)),
+                                                Expanded(
+                                                  child: Text(
+                                                    recipes[index]
+                                                        ['description'],
+                                                    maxLines: 4,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontFamily: 'Dosis',
+                                                        color: Colors.blueGrey,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          Text('⏱' + ' 15 min',
-                                              style: TextStyle(
-                                                  fontFamily: 'Dosis',
-                                                  color: Colors.blueGrey,
-                                                  fontWeight: FontWeight.w600)),
-                                          Expanded(
-                                            child: Text(
-                                              'A gentle combination of Carefully choosen veggies with a Mexican taste ',
-                                              style: TextStyle(
-                                                  fontFamily: 'Dosis',
-                                                  color: Colors.blueGrey,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  right: 10,
-                                  height: ScreenSize.getHeight(context) * 0.17,
-                                  width: ScreenSize.getWidth(context) * 0.35,
-                                  top: 10,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image:
-                                                AssetImage('images/lenna.png')),
-                                        color: Colors.red,
-                                        shape: BoxShape.circle),
-                                  ),
-                                ),
-                                Positioned(
-                                    right: 10,
-                                    bottom: 10,
-                                    child: InkWell(
-                                      child: Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.favorite,
-                                              size: 15,
-                                              color: Colors.red,
-                                            ),
-                                            Text(
-                                              ' Save',
-                                              style: TextStyle(
-                                                  fontFamily: 'Dosis',
-                                                  fontWeight: FontWeight.bold),
-                                            )
-                                          ],
                                         ),
                                       ),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-            ],
-          ),
+                                      Positioned(
+                                        right: 10,
+                                        height: ScreenSize.getHeight(context) *
+                                            0.17,
+                                        width:
+                                            ScreenSize.getWidth(context) * 0.35,
+                                        top: 10,
+                                        child: Container(
+                                          child: CachedNetworkImage(
+                                            imageBuilder: (BuildContext context,
+                                                imageProvider) {
+                                              return Container(
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            'images/lenna.png'))),
+                                              );
+                                            },
+                                            imageUrl: recipes[index]['photo'],
+                                            placeholder:
+                                                (BuildContext context, img) {
+                                              return Image(
+                                                image: AssetImage(
+                                                    'images/profile_loading.gif'),
+                                              );
+                                            },
+                                          ),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 5),
+                                              color: Colors.red,
+                                              shape: BoxShape.circle),
+                                        ),
+                                      ),
+                                      Positioned(
+                                          right: 10,
+                                          bottom: 10,
+                                          child: InkWell(
+                                            child: Container(
+                                              padding: EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.white),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    Icons.favorite,
+                                                    size: 15,
+                                                    color: Colors.red,
+                                                  ),
+                                                  Text(
+                                                    ' Save',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Dosis',
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ],
+                );
+              }),
         );
       }),
     );

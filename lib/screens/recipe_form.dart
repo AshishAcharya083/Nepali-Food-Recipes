@@ -424,8 +424,8 @@ class _RecipeFormState extends State<RecipeForm> {
                     });
                     await _firestore.collection('recipes').add({
                       'name': _foodNameController.text,
-                      'Description': _descriptionController.text,
-                      'duration': cookTime,
+                      'description': _descriptionController.text,
+                      'duration': cookTime.toString().substring(0, 2),
                       'ingredients': ingredients,
                       'steps': steps,
                       'photo': imageUrl,
