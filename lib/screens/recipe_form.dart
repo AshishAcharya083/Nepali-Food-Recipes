@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
@@ -23,20 +24,24 @@ class _RecipeFormState extends State<RecipeForm> {
   double cookTime = 20;
   XFile? image;
   ImagePicker _picker = ImagePicker();
+  String? imageUrl;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  File? imageFile;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void imagePicker(ImageSource source) async {
+  void imagePicker(ImageSource source, BuildContext context) async {
     var temp = await _picker.pickImage(source: source);
     setState(() {
       image = temp;
+      imageFile = File(temp!.path);
     });
+    Navigator.pop(context);
   }
 
   @override
@@ -87,16 +92,24 @@ class _RecipeFormState extends State<RecipeForm> {
                   margin: EdgeInsets.symmetric(vertical: 20),
                   height: 180,
                   width: ScreenSize.getWidth(context),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(image: AssetImage('images/gallery.png')),
-                      Text(
-                        'Add Cover Photo',
-                        style: kFormHeadingStyle.copyWith(fontSize: 18),
-                      ),
-                    ],
-                  ),
+                  child: imageFile == null
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(image: AssetImage('images/gallery.png')),
+                            Text(
+                              'Add Cover Photo',
+                              style: kFormHeadingStyle.copyWith(fontSize: 18),
+                            ),
+                          ],
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.file(
+                            imageFile!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey, width: 1),
                       borderRadius: BorderRadius.circular(20)),
@@ -404,12 +417,18 @@ class _RecipeFormState extends State<RecipeForm> {
                   });
 
                   if (_foodNameController.text.isNotEmpty && steps.length > 0) {
+                    final downloadURL = await uploadAndGetImageURL(
+                        image!, _foodNameController.text.toString());
+                    setState(() {
+                      imageUrl = downloadURL;
+                    });
                     await _firestore.collection('recipes').add({
                       'name': _foodNameController.text,
                       'Description': _descriptionController.text,
                       'duration': cookTime,
                       'ingredients': ingredients,
                       'steps': steps,
+                      'photo': imageUrl,
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,
@@ -503,7 +522,7 @@ class _RecipeFormState extends State<RecipeForm> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    imagePicker(ImageSource.gallery);
+                    imagePicker(ImageSource.gallery, context);
                   },
                   child: Text(
                     'Gallery',
@@ -512,7 +531,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 ),
                 TextButton(
                   onPressed: () {
-                    imagePicker(ImageSource.camera);
+                    imagePicker(ImageSource.camera, context);
                   },
                   child: Text(
                     'Camera',
