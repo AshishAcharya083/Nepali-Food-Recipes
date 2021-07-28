@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(
-              size: 0,
+              color: Colors.black,
             ),
             elevation: 0,
             backgroundColor: Colors.transparent,

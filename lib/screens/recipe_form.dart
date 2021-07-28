@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
+import 'package:nepali_food_recipes/components/toggle_box.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
@@ -29,6 +30,7 @@ class _RecipeFormState extends State<RecipeForm> {
   TextEditingController _foodNameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   File? imageFile;
+  bool isVeg = false;
 
   @override
   void initState() {
@@ -129,6 +131,40 @@ class _RecipeFormState extends State<RecipeForm> {
                     kTextFieldInputDecoration(hintText: 'Enter Food Name'),
               ),
               kFixedSizedBox,
+              Text(
+                'Food type',
+                style: kFormHeadingStyle,
+              ),
+
+              Center(
+                child: ToggleButtons(
+                    borderRadius: BorderRadius.circular(20),
+                    // splashColor: kPrimaryColor,
+                    children: [
+                      ToggleBoxButton(
+                        title: 'Veg',
+                        assetImagePath: 'images/broccoli.png',
+                      ),
+                      ToggleBoxButton(
+                        title: 'Non-veg',
+                        assetImagePath: 'images/meat.png',
+                      ),
+                    ],
+                    isSelected: [isVeg, !isVeg],
+                    onPressed: (a) {
+                      if (a == 0)
+                        setState(() {
+                          isVeg = true;
+                        });
+                      else
+                        setState(() {
+                          isVeg = false;
+                        });
+                    },
+
+                    // renderBorder: false,
+                    fillColor: isVeg ? kLightGreenColor : Colors.redAccent),
+              ),
               Text(
                 'Description',
                 style: kFormHeadingStyle,
@@ -429,6 +465,7 @@ class _RecipeFormState extends State<RecipeForm> {
                       'ingredients': ingredients,
                       'steps': steps,
                       'photo': imageUrl,
+                      'veg': isVeg,
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,

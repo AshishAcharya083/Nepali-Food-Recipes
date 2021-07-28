@@ -13,8 +13,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = ScreenSize.getWidth(context);
     double height = ScreenSize.getHeight(context) - 80;
-    print(width);
-    print(height);
+
     return Container(
       width: width * 0.7,
       child: Drawer(
