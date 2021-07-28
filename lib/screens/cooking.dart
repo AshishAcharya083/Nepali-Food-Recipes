@@ -1,21 +1,45 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:timelines/timelines.dart';
 
 class CookingScreen extends StatefulWidget {
-  const CookingScreen({Key? key}) : super(key: key);
+  QueryDocumentSnapshot? snapshot;
+  CookingScreen({this.snapshot});
 
   @override
   _CookingScreenState createState() => _CookingScreenState();
 }
 
 class _CookingScreenState extends State<CookingScreen> {
-  String sampleText =
-      'This is one of the most popular food in Mexico. It is not only the case of mexico, it is also famous all around the world which is really nice thing. The main Thing that makes special about this food is that it costs very less';
+  var recipeDetail;
+  String foodName = 'Food Name';
+  String cookingDuration = '30';
+  String description = 'Taste of Asia';
+  List ingredients = ['butter', 'chilli'];
+  List steps = ['fry', ' cook it 15 minutes'];
+  bool isVeg = false;
+  String? imgUrl;
+  @override
+  void initState() {
+    super.initState();
+
+    recipeDetail = widget.snapshot;
+    foodName = recipeDetail['name'];
+    cookingDuration = recipeDetail['duration'].toString();
+    description = recipeDetail['description'];
+    ingredients = recipeDetail['ingredients'];
+    steps = recipeDetail['steps'];
+    isVeg = recipeDetail['veg'];
+    imgUrl = recipeDetail['photo'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverAppBar(
             backgroundColor: Colors.white,
@@ -37,7 +61,7 @@ class _CookingScreenState extends State<CookingScreen> {
                     children: <Widget>[
                       /// food title
                       Text(
-                        'Mexican Egg Mix',
+                        foodName,
                         style: kFormHeadingStyle.copyWith(color: Colors.white),
                       )
                     ],
@@ -50,7 +74,9 @@ class _CookingScreenState extends State<CookingScreen> {
                         bottomRight: Radius.circular(30),
                         bottomLeft: Radius.circular(30)),
                     image: DecorationImage(
-                        image: AssetImage('images/lenna.png'),
+                        image: CachedNetworkImageProvider(
+                          imgUrl!,
+                        ),
                         fit: BoxFit.cover),
                   ),
                 )),
@@ -64,7 +90,7 @@ class _CookingScreenState extends State<CookingScreen> {
                 children: [
                   kFixedSizedBox,
                   Text(
-                    'Food. 60 mins',
+                    '${isVeg ? 'Veg' : 'Non-veg'}. ${cookingDuration.toString()} mins',
                     style: kSecondaryTextStyle,
                   ),
                   kFixedSizedBox,
@@ -77,7 +103,7 @@ class _CookingScreenState extends State<CookingScreen> {
                     height: 10,
                   ),
                   Text(
-                    sampleText,
+                    description,
                     style: kSecondaryTextStyle,
                   ),
                   kDivider,
@@ -97,7 +123,7 @@ class _CookingScreenState extends State<CookingScreen> {
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 List.generate(
-                  3,
+                  ingredients.length,
                   (index) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(
@@ -119,7 +145,7 @@ class _CookingScreenState extends State<CookingScreen> {
                           width: 10,
                         ),
                         Text(
-                          '1/2 butter',
+                          ingredients[index],
                           style: TextStyle(
                               fontFamily: 'Dosis-SemiBold', letterSpacing: 1.1),
                         )
@@ -175,7 +201,7 @@ class _CookingScreenState extends State<CookingScreen> {
                                   offset: Offset(5, 5))
                             ]),
                         child: Text(
-                          sampleText,
+                          steps[index],
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 15,
@@ -187,7 +213,7 @@ class _CookingScreenState extends State<CookingScreen> {
                         ConnectorStyle.solidLine,
                     indicatorStyleBuilder: (context, index) =>
                         IndicatorStyle.outlined,
-                    itemCount: 50,
+                    itemCount: steps.length,
                   ),
                 ),
               ],

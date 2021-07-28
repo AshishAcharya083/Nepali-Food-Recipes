@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'Dosis',
-          accentColor: kPrimaryColor,
+          // accentColor: kPrimaryColor,
           primaryIconTheme: IconThemeData(
             color: Colors.black,
           ),

@@ -189,7 +189,10 @@ class _HomePageState extends State<HomePage> {
                             return InkWell(
                               onTap: () {
                                 Navigation.changeScreen(
-                                    context, CookingScreen());
+                                    context,
+                                    CookingScreen(
+                                      snapshot: snapshot.data!.docs[index],
+                                    ));
                               },
                               child: Padding(
                                 padding:
