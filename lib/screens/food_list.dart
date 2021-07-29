@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'dart:core';
 
+import 'package:nepali_food_recipes/helpers/navigation.dart';
+import 'package:nepali_food_recipes/screens/cooking.dart';
+
 class ListScreen extends StatefulWidget {
   @override
   _ListScreenState createState() => _ListScreenState();
@@ -93,7 +96,13 @@ class _ListScreenState extends State<ListScreen> {
                               return Opacity(
                                 opacity: scale,
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigation.changeScreen(
+                                        context,
+                                        CookingScreen(
+                                          snapshot: docs[index],
+                                        ));
+                                  },
                                   child: Transform(
                                     transform: Matrix4.identity()
                                       ..scale(scale, scale),

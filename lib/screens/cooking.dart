@@ -5,7 +5,7 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:timelines/timelines.dart';
 
 class CookingScreen extends StatefulWidget {
-  QueryDocumentSnapshot? snapshot;
+  final QueryDocumentSnapshot? snapshot;
   CookingScreen({this.snapshot});
 
   @override

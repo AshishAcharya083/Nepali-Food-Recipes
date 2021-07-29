@@ -8,10 +8,12 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class RecipeForm extends StatefulWidget {
   @override
@@ -137,6 +139,7 @@ class _RecipeFormState extends State<RecipeForm> {
               ),
 
               Center(
+                heightFactor: 1.3,
                 child: ToggleButtons(
                     borderRadius: BorderRadius.circular(20),
                     // splashColor: kPrimaryColor,
@@ -466,6 +469,10 @@ class _RecipeFormState extends State<RecipeForm> {
                       'steps': steps,
                       'photo': imageUrl,
                       'veg': isVeg,
+                      'chef': Provider.of<AuthProvider>(context, listen: false)
+                          .auth
+                          .currentUser!
+                          .displayName,
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,

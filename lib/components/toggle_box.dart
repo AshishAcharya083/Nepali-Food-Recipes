@@ -12,6 +12,7 @@ class ToggleBoxButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: ScreenSize.getWidth(context) * 0.35,
       color: Colors.grey.withOpacity(0.28),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
