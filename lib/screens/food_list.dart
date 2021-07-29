@@ -147,12 +147,12 @@ class _ListScreenState extends State<ListScreen> {
                                                             TextAlign.center,
                                                         style:
                                                             kFormHeadingStyle),
-                                                    IconButton(
-                                                        icon: Icon(
-                                                          Icons.star,
-                                                          color: Colors.red,
-                                                        ),
-                                                        onPressed: () {})
+                                                    // IconButton(
+                                                    //     icon: Icon(
+                                                    //       Icons.star,
+                                                    //       color: Colors.red,
+                                                    //     ),
+                                                    //     onPressed: () {})
                                                   ],
                                                 ),
                                               ),

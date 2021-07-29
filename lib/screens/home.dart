@@ -9,9 +9,11 @@ import 'package:nepali_food_recipes/components/user.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
 import 'package:nepali_food_recipes/screens/profile.dart';
+import 'package:nepali_food_recipes/screens/recipe_form.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -105,6 +107,11 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           flex: 4,
                           child: TextField(
+                              onTap: () {
+                                showSearch(
+                                    context: context,
+                                    delegate: CustomSearchDelegate());
+                              },
                               style: TextStyle(color: kDarkColor),
                               cursorColor: kPrimaryColor,
                               decoration: kSearchInputDecoration),
