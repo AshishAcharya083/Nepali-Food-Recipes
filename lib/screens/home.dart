@@ -346,9 +346,13 @@ class _HomePageState extends State<HomePage> {
                                             imageUrl: recipes[index]['photo'],
                                             placeholder:
                                                 (BuildContext context, img) {
-                                              return Image(
-                                                image: AssetImage(
-                                                    'images/loader.gif'),
+                                              return Container(
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                        image: AssetImage(
+                                                            'images/loader.gif'),
+                                                        fit: BoxFit.cover)),
                                               );
                                             },
                                           ),

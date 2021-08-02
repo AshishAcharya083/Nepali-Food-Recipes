@@ -33,6 +33,8 @@ class _RecipeFormState extends State<RecipeForm> {
   TextEditingController _descriptionController = TextEditingController();
   File? imageFile;
   bool isVeg = false;
+  String category = 'Casual';
+  List<bool> categoryBool = [false, false, false, true];
 
   @override
   void initState() {
@@ -146,11 +148,13 @@ class _RecipeFormState extends State<RecipeForm> {
                     children: [
                       ToggleBoxButton(
                         title: 'Veg',
-                        assetImagePath: 'images/broccoli.png',
+                        imgPath: 'images/broccoli.png',
+                        width: ScreenSize.getWidth(context) * 0.35,
                       ),
                       ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.35,
                         title: 'Non-veg',
-                        assetImagePath: 'images/meat.png',
+                        imgPath: 'images/meat.png',
                       ),
                     ],
                     isSelected: [isVeg, !isVeg],
@@ -167,6 +171,66 @@ class _RecipeFormState extends State<RecipeForm> {
 
                     // renderBorder: false,
                     fillColor: isVeg ? kLightGreenColor : Colors.redAccent),
+              ),
+
+              Text(
+                'Category',
+                style: kFormHeadingStyle,
+              ),
+              Center(
+                heightFactor: 1.3,
+                child: ToggleButtons(
+                  fillColor: kPrimaryColor,
+                  isSelected: categoryBool,
+                  borderRadius: BorderRadius.circular(20),
+                  onPressed: (b) {
+                    setState(() {
+                      categoryBool.setAll(0, [false, false, false, false]);
+                      categoryBool[b] = true;
+                    });
+                    switch (b) {
+                      case 0:
+                        setState(() {
+                          category = 'Fast Food';
+                        });
+                        break;
+                      case 1:
+                        setState(() {
+                          category = 'Drinks';
+                        });
+                        break;
+                      case 2:
+                        setState(() {
+                          category = 'Fruit';
+                        });
+                        break;
+                      case 3:
+                        setState(() {
+                          category = 'casual';
+                        });
+                        break;
+                    }
+                    print(categoryBool);
+                  },
+                  children: [
+                    ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.25,
+                        title: 'Fast Food',
+                        imgPath: 'images/burger.png'),
+                    ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.2,
+                        title: 'Drink',
+                        imgPath: 'images/drink.png'),
+                    ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.2,
+                        title: 'Fruit',
+                        imgPath: 'images/fruit.png'),
+                    ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.2,
+                        title: 'Casual',
+                        imgPath: 'images/casual-food.png')
+                  ],
+                ),
               ),
               Text(
                 'Description',
@@ -469,6 +533,7 @@ class _RecipeFormState extends State<RecipeForm> {
                       'steps': steps,
                       'photo': imageUrl,
                       'veg': isVeg,
+                      'category': category,
                       'chef': Provider.of<AuthProvider>(context, listen: false)
                           .auth
                           .currentUser!

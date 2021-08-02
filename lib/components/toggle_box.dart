@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 
 class ToggleBoxButton extends StatelessWidget {
-  final String? assetImagePath;
+  final String? imgPath;
   final String? title;
-
+  final double? width;
   ToggleBoxButton(
-      {this.title = 'Veg', this.assetImagePath = 'images/broccoli.png'});
+      {this.title = 'Veg',
+      this.imgPath = 'images/broccoli.png',
+      this.width = 120});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenSize.getWidth(context) * 0.35,
+      width: width,
       color: Colors.grey.withOpacity(0.28),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
         child: Column(
           children: [
             Image(
-              image: AssetImage(assetImagePath!),
+              image: AssetImage(imgPath!),
               height: ScreenSize.getHeight(context) * 0.05,
             ),
             Text(
