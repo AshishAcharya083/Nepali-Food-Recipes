@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'dart:core';
-
+import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
 
@@ -63,6 +63,11 @@ class _ListScreenState extends State<ListScreen> {
                       padding:
                           const EdgeInsets.only(left: 15, right: 15, top: 20),
                       child: TextField(
+                        onTap: () {
+                          showSearch(
+                              context: context,
+                              delegate: CustomSearchDelegate());
+                        },
                         decoration: kSearchInputDecoration,
                       ),
                     ),
@@ -120,10 +125,11 @@ class _ListScreenState extends State<ListScreen> {
                                             color: Colors.white,
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.green,
-                                                spreadRadius: 0.5,
-                                                blurRadius: 7,
-                                              )
+                                                  color: Colors.black
+                                                      .withOpacity(0.25),
+                                                  spreadRadius: 0,
+                                                  blurRadius: 10,
+                                                  offset: Offset(0, 5))
                                             ]),
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -165,7 +171,7 @@ class _ListScreenState extends State<ListScreen> {
                                                               15),
                                                       child: FadeInImage(
                                                         placeholder: AssetImage(
-                                                            'images/lenna.png'),
+                                                            'images/loader.gif'),
                                                         image: NetworkImage(
                                                             docs[index]
                                                                 ['photo']),

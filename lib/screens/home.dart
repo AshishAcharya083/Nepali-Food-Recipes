@@ -322,6 +322,8 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                       ),
+
+                                      ///food image
                                       Positioned(
                                         right: 10,
                                         height: ScreenSize.getHeight(context) *
@@ -337,8 +339,8 @@ class _HomePageState extends State<HomePage> {
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     image: DecorationImage(
-                                                        image: AssetImage(
-                                                            'images/lenna.png'))),
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover)),
                                               );
                                             },
                                             imageUrl: recipes[index]['photo'],
@@ -346,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                                                 (BuildContext context, img) {
                                               return Image(
                                                 image: AssetImage(
-                                                    'images/profile_loading.gif'),
+                                                    'images/loader.gif'),
                                               );
                                             },
                                           ),

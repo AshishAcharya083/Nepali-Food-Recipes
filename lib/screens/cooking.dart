@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:timelines/timelines.dart';
 
 class CookingScreen extends StatefulWidget {
@@ -13,6 +14,10 @@ class CookingScreen extends StatefulWidget {
 }
 
 class _CookingScreenState extends State<CookingScreen> {
+  List<IndicatorStyle> indicatorValues = [
+    IndicatorStyle.outlined,
+    IndicatorStyle.dot
+  ];
   var recipeDetail;
   String foodName = 'Food Name';
   String cookingDuration = '30';
@@ -60,14 +65,23 @@ class _CookingScreenState extends State<CookingScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       /// food title
-                      Text(
-                        foodName,
-                        style: kFormHeadingStyle.copyWith(color: Colors.white),
+                      Container(
+                        width: ScreenSize.getWidth(context) * 0.6,
+                        child: Center(
+                          child: Text(
+                            foodName,
+                            style:
+                                kFormHeadingStyle.copyWith(color: Colors.white),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       )
                     ],
                   ),
                 ),
                 collapseMode: CollapseMode.parallax,
+
+                /// food image
                 background: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -174,7 +188,7 @@ class _CookingScreenState extends State<CookingScreen> {
                     color: Colors.red,
                     indicatorTheme: IndicatorThemeData(
                       position: 0.5,
-                      size: 20.0,
+                      size: 25.0,
                     ),
                     connectorTheme: ConnectorThemeData(
                       color: kPrimaryColor,
@@ -211,8 +225,9 @@ class _CookingScreenState extends State<CookingScreen> {
                     ),
                     connectorStyleBuilder: (context, index) =>
                         ConnectorStyle.solidLine,
-                    indicatorStyleBuilder: (context, index) =>
-                        IndicatorStyle.outlined,
+                    indicatorStyleBuilder: (context, index) {
+                      return IndicatorStyle.outlined;
+                    },
                     itemCount: steps.length,
                   ),
                 ),
