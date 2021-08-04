@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
@@ -182,54 +183,74 @@ class _CookingScreenState extends State<CookingScreen> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                FixedTimeline.tileBuilder(
-                  theme: TimelineThemeData(
-                    nodePosition: 0.04,
-                    color: Colors.red,
-                    indicatorTheme: IndicatorThemeData(
-                      position: 0.5,
-                      size: 25.0,
-                    ),
-                    connectorTheme: ConnectorThemeData(
-                      color: kPrimaryColor,
-                      thickness: 4,
-                    ),
-                  ),
-                  mainAxisSize: MainAxisSize.max,
-                  builder: TimelineTileBuilder.connectedFromStyle(
-                    oppositeContentsBuilder: (context, index) => Container(
-                      width: 5,
-                    ),
-                    contentsAlign: ContentsAlign.basic,
-                    contentsBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 10,
-                                  offset: Offset(5, 5))
-                            ]),
-                        child: Text(
-                          steps[index],
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              letterSpacing: 1.5),
+                ListView.builder(
+                  itemCount: steps.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, index) {
+                    return TimelineTile(
+                      // oppositeContents: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Text('opposite\ncontents'),
+                      // ),
+
+                      nodePosition: 0.05,
+                      contents: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: ScreenSize.getWidth(context),
+                          padding: EdgeInsets.all(25),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 10,
+                                    offset: Offset(5, 5))
+                              ]),
+                          child: Text(
+                            steps[index],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 18,
+                                letterSpacing: 1.5),
+                          ),
                         ),
                       ),
-                    ),
-                    connectorStyleBuilder: (context, index) =>
-                        ConnectorStyle.solidLine,
-                    indicatorStyleBuilder: (context, index) {
-                      return IndicatorStyle.outlined;
-                    },
-                    itemCount: steps.length,
-                  ),
+                      node: TimelineNode(
+                        indicator: ContainerIndicator(
+                          child: CircleAvatar(
+                            backgroundColor: kPrimaryColor,
+                            radius: 18,
+                            child: Text(
+                              (index + 1).toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        startConnector: SolidLineConnector(
+                          color: index == 0
+                              ? Colors.transparent
+                              : kLightGreenColor,
+                          thickness: 3.5,
+                        ),
+                        endConnector: SolidLineConnector(
+                          color: (index + 1) == steps.length
+                              ? Colors.transparent
+                              : kLightGreenColor,
+                          thickness: 3.5,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 50,
                 ),
               ],
             ),

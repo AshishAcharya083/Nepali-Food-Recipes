@@ -90,6 +90,7 @@ class MyDrawer extends StatelessWidget {
                           Spacer(),
                           InkWell(
                               onTap: () {
+                                Navigator.pop(context);
                                 Provider.of<AuthProvider>(context,
                                         listen: false)
                                     .signOut(context);

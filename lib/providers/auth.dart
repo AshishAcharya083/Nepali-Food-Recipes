@@ -53,6 +53,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   void signOut(BuildContext context) async {
+    print('log out tapped');
     await googleSignIn.disconnect();
     auth.signOut();
 
