@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:nepali_food_recipes/helpers/login_checker.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:nepali_food_recipes/screens/on_boarding.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -16,6 +19,11 @@ class AuthProvider with ChangeNotifier {
   // GoogleAuthCredential? user;
   GoogleSignInAccount? currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
+  // bool showOnBoarding = true;
+
+  // AuthProvider.initialize() {
+  //   loadPref();
+  // }
 
   Future signInWithGoogle(
       String email, String password, BuildContext context) async {
@@ -60,4 +68,16 @@ class AuthProvider with ChangeNotifier {
     Navigation.changeScreenWithReplacement(context, SignUpScreen());
     notifyListeners();
   }
+
+  // void loadPref() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   if (prefs.getBool('showOnBoardingScreen') ?? true) {
+  //     showOnBoarding = true;
+  //     notifyListeners();
+  //   } else {
+  //     showOnBoarding = false;
+  //     notifyListeners();
+  //   }
+  // }
 }
