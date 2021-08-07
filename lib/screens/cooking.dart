@@ -56,29 +56,26 @@ class _CookingScreenState extends State<CookingScreen> {
             flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 titlePadding: EdgeInsets.only(top: 10),
-                title: Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      /// food title
-                      Container(
-                        width: ScreenSize.getWidth(context) * 0.6,
-                        child: Center(
-                          child: Text(
-                            foodName,
-                            style:
-                                kFormHeadingStyle.copyWith(color: Colors.white),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Center(
+                        child: Text(
+                          foodName,
+                          textAlign: TextAlign.center,
+                          style:
+                              kFormHeadingStyle.copyWith(color: Colors.white),
+                          // overflow: TextOverflow.ellipsis,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
                 collapseMode: CollapseMode.parallax,
 

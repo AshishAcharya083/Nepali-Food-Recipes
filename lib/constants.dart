@@ -65,7 +65,11 @@ InputDecoration kSearchInputDecoration = InputDecoration(
     borderSide: const BorderSide(color: Color(0xFFFFc529)),
     borderRadius: BorderRadius.circular(15),
   ),
-  prefixIcon: Icon(Icons.search),
+  prefixIcon: Icon(
+    Icons.search,
+    color: kPrimaryColor,
+    size: 28,
+  ),
   hintStyle: TextStyle(color: Colors.grey, fontSize: 14, letterSpacing: 1.2),
   hintText: 'Search for Recipe',
 );

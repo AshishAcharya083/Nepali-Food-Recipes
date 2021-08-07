@@ -15,12 +15,13 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int page = 0;
   List<ItemData> data = [
-    ItemData(Colors.blue, "images/burger.png", "0", "It's Me", "Sahdeep"),
-    ItemData(Colors.deepPurpleAccent, "images/drink.png", "1", "Look At",
-        "Liquid Swipe"),
+    ItemData(
+        Colors.blue, "images/burger.png", "1500+ Recipes", "It's Me", "Ashish"),
+    ItemData(Colors.deepPurpleAccent, "images/drink.png", "Easy Search",
+        "Look At", "Liquid Swipe"),
     ItemData(
         Colors.green, "images/gallery.png", " 2Liked?", "Fork!", "Give Star!"),
-    ItemData(Colors.yellow, "images/meat.png", "3 Can be", "Used for",
+    ItemData(Colors.yellow, "images/meat.png", "Swipe to Continue", "Used for",
         "Onboarding design"),
   ];
 
@@ -57,6 +58,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         children: <Widget>[
                           Text(
                             data[index].text1,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600),
                           ),
                           Text(
                             data[index].text2,

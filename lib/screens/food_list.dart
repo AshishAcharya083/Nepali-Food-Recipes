@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/my_drawer.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'dart:core';
 import 'package:nepali_food_recipes/helpers/search.dart';
@@ -149,10 +150,14 @@ class _ListScreenState extends State<ListScreen> {
                                                       MainAxisSize.max,
                                                   children: <Widget>[
                                                     Text(docs[index]['name'],
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 2,
                                                         textAlign:
                                                             TextAlign.center,
-                                                        style:
-                                                            kFormHeadingStyle),
+                                                        style: kFormHeadingStyle
+                                                            .copyWith(
+                                                                fontSize: 18)),
                                                     // IconButton(
                                                     //     icon: Icon(
                                                     //       Icons.star,
