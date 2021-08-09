@@ -35,10 +35,11 @@ class _RecipeFormState extends State<RecipeForm> {
   bool isVeg = false;
   String category = 'Casual';
   List<bool> categoryBool = [false, false, false, true];
-
+  AuthProvider? provider;
   @override
   void initState() {
     super.initState();
+    provider = Provider.of<AuthProvider>(context, listen: false);
   }
 
   void imagePicker(ImageSource source, BuildContext context) async {
@@ -534,10 +535,8 @@ class _RecipeFormState extends State<RecipeForm> {
                       'photo': imageUrl,
                       'veg': isVeg,
                       'category': category,
-                      'chef': Provider.of<AuthProvider>(context, listen: false)
-                          .auth
-                          .currentUser!
-                          .displayName,
+                      'chefImage': provider!.auth.currentUser!.photoURL,
+                      'chef': provider!.auth.currentUser!.displayName,
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,

@@ -81,6 +81,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    print('build suggestion called');
     getSuggestionFromFirebase();
     return ListView.builder(
         itemCount: suggestionData.length,

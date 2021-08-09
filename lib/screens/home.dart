@@ -12,6 +12,7 @@ import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:nepali_food_recipes/screens/food_category_screen.dart';
 import 'package:nepali_food_recipes/screens/profile.dart';
 import 'package:nepali_food_recipes/screens/recipe_form.dart';
 import 'package:provider/provider.dart';
@@ -129,28 +130,48 @@ class _HomePageState extends State<HomePage> {
                             assetImagePath: 'images/burger.png',
                             foodCategory: 'Fast Food',
                             onTap: () {
-                              print('burger pressed');
+                              Navigation.changeScreen(
+                                  context,
+                                  FoodCategoryScreen(
+                                    imagePath: 'images/burger.png',
+                                    foodCategory: 'Fast Food',
+                                  ));
                             },
                           ),
                           IconWithNameCard(
                             assetImagePath: 'images/drink.png',
                             foodCategory: 'Drinks',
                             onTap: () {
-                              print('burger pressed');
+                              Navigation.changeScreen(
+                                  context,
+                                  FoodCategoryScreen(
+                                    imagePath: 'images/drink.png',
+                                    foodCategory: 'Drinks',
+                                  ));
                             },
                           ),
                           IconWithNameCard(
                             assetImagePath: 'images/fruit.png',
                             foodCategory: 'Fruit item',
                             onTap: () {
-                              print('fruit pressed');
+                              Navigation.changeScreen(
+                                  context,
+                                  FoodCategoryScreen(
+                                    imagePath: 'images/fruit.png',
+                                    foodCategory: 'Fruit',
+                                  ));
                             },
                           ),
                           IconWithNameCard(
                             assetImagePath: 'images/broccoli.png',
-                            foodCategory: 'Vegetable',
+                            foodCategory: 'Veg',
                             onTap: () {
-                              print('veg pressed');
+                              Navigation.changeScreen(
+                                  context,
+                                  FoodCategoryScreen(
+                                    imagePath: 'images/broccoli.png',
+                                    foodCategory: 'Veg',
+                                  ));
                             },
                           ),
                         ],
