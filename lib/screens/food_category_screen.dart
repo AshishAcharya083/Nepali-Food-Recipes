@@ -127,8 +127,15 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                                   /// food image
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
-                                    child: Image(
-                                      image: AssetImage('images/lenna.png'),
+                                    child: CachedNetworkImage(
+                                      placeholder:
+                                          (BuildContext context, photo) {
+                                        return Image(
+                                          image:
+                                              AssetImage('images/loader.gif'),
+                                        );
+                                      },
+                                      imageUrl: data[0]['photo'],
                                     ),
                                   ),
 
@@ -155,7 +162,7 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                               height: 5,
                             ),
                             Text(
-                              'Pancake Ashish Acharya ',
+                              data[index]['name'],
                               overflow: TextOverflow.ellipsis,
                               style: kFormHeadingStyle.copyWith(fontSize: 18),
                             ),
@@ -163,7 +170,7 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                               height: 5,
                             ),
                             Text(
-                              'Food. >60 mins',
+                              'Food. ${data[index]['duration']} mins',
                               style: kSecondaryTextStyle.copyWith(fontSize: 12),
                             )
                           ],
