@@ -135,7 +135,7 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                                               AssetImage('images/loader.gif'),
                                         );
                                       },
-                                      imageUrl: data[0]['photo'],
+                                      imageUrl: data[index]['photo'],
                                     ),
                                   ),
 
