@@ -36,6 +36,7 @@ class _RecipeFormState extends State<RecipeForm> {
   String category = 'Casual';
   List<bool> categoryBool = [false, false, false, true];
   AuthProvider? provider;
+  int? recipeCount;
   @override
   void initState() {
     super.initState();
@@ -53,7 +54,6 @@ class _RecipeFormState extends State<RecipeForm> {
 
   @override
   Widget build(BuildContext context) {
-    print(ingredients);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -510,6 +510,8 @@ class _RecipeFormState extends State<RecipeForm> {
                 style: kFormHeadingStyle,
               ),
               kFixedSizedBox,
+
+              /// submit button
               InkWell(
                 splashColor: kPrimaryColor,
                 onTap: () async {
@@ -521,11 +523,18 @@ class _RecipeFormState extends State<RecipeForm> {
                   });
 
                   if (_foodNameController.text.isNotEmpty && steps.length > 0) {
+                    var userDocument = _firestore
+                        .collection('users')
+                        .doc(provider!.auth.currentUser!.uid);
+
+                    /// uploading image to firebase storage and getting download URL
                     final downloadURL = await uploadAndGetImageURL(
                         image!, _foodNameController.text.toString());
                     setState(() {
                       imageUrl = downloadURL;
                     });
+
+                    /// adding recipe to fireStore
                     await _firestore.collection('recipes').add({
                       'name': _foodNameController.text,
                       'description': _descriptionController.text,
@@ -541,6 +550,17 @@ class _RecipeFormState extends State<RecipeForm> {
                         barrierDismissible: false,
                         context: context,
                         builder: (BuildContext context) {
+                          /// getting no. of recipe by user and incrementing it if he submit the new recipe
+                          userDocument.get().then((value) {
+                            setState(() {
+                              recipeCount = value.data()!['recipes'];
+                            });
+                            userDocument.set({
+                              'recipes': recipeCount! + 1,
+                            }, SetOptions(merge: true));
+                          });
+
+                          /// returning alert dialog if recipe upload is successful
                           return AlertDialog(
                             title: Text('Upload Success',
                                 textAlign: TextAlign.center,

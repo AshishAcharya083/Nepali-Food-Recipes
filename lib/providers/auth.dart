@@ -41,18 +41,27 @@ class AuthProvider with ChangeNotifier {
             .then((value) => {
                   _firestore
                       .collection('users')
-                      .doc(auth.currentUser!.uid)
-                      .set({
-                    'name': auth.currentUser!.displayName.toString(),
-                    'userId': auth.currentUser!.uid,
-                    'email': auth.currentUser!.email,
-                    'recipes': '',
-                    'followers': 0,
-                    'following': 0,
-                  }, SetOptions(merge: true)),
+                      .where('email', isEqualTo: auth.currentUser!.email)
+                      .get()
+                      .then((value) {
+                    if (value.size == 0) {
+                      _firestore
+                          .collection('users')
+                          .doc(auth.currentUser!.uid)
+                          .set({
+                        'name': auth.currentUser!.displayName.toString(),
+                        'userId': auth.currentUser!.uid,
+                        'email': auth.currentUser!.email,
+                        'recipes': 0,
+                        'followers': 0,
+                        'following': 0,
+                      }, SetOptions(merge: true));
+                    }
+                  }),
                   Navigation.changeScreenWithReplacement(
                       context, NavBarController())
                 });
+        notifyListeners();
       }
       notifyListeners();
     } catch (e) {
@@ -65,19 +74,7 @@ class AuthProvider with ChangeNotifier {
     await googleSignIn.disconnect();
     auth.signOut();
 
-    Navigation.changeScreenWithReplacement(context, SignUpScreen());
     notifyListeners();
+    Navigation.changeScreenWithReplacement(context, SignUpScreen());
   }
-
-  // void loadPref() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   if (prefs.getBool('showOnBoardingScreen') ?? true) {
-  //     showOnBoarding = true;
-  //     notifyListeners();
-  //   } else {
-  //     showOnBoarding = false;
-  //     notifyListeners();
-  //   }
-  // }
 }

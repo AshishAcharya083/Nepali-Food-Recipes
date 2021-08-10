@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/screens/cooking.dart';
 
 class FoodCategoryScreen extends StatefulWidget {
   final String? imagePath;
@@ -83,97 +85,107 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                         mainAxisSpacing: 0),
                     itemCount: data.length,
                     itemBuilder: (BuildContext ctx, index) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        margin: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            /// chef name and photo
-                            Row(
-                              children: [
-                                Container(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image(
-                                      fit: BoxFit.cover,
-                                      height: 35,
-                                      width: 35,
-                                      image: CachedNetworkImageProvider(
-                                          data[index]['chefImage']),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    data[index]['chef'],
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: kPrimaryTextColor),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              height: 150,
-                              width: 150,
-                              child: Stack(
+                      return InkWell(
+                        onTap: () {
+                          Navigation.changeScreen(
+                              context,
+                              CookingScreen(
+                                snapshot: data[index],
+                              ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// chef name and photo
+                              Row(
                                 children: [
-                                  /// food image
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: CachedNetworkImage(
-                                      placeholder:
-                                          (BuildContext context, photo) {
-                                        return Image(
-                                          image:
-                                              AssetImage('images/loader.gif'),
-                                        );
-                                      },
-                                      imageUrl: data[index]['photo'],
+                                  Container(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image(
+                                        fit: BoxFit.cover,
+                                        height: 35,
+                                        width: 35,
+                                        image: CachedNetworkImageProvider(
+                                            data[index]['chefImage']),
+                                      ),
                                     ),
                                   ),
-
-                                  /// add to fav button
-                                  Positioned(
-                                    top: 5,
-                                    right: 5,
-                                    child: Container(
-                                        padding: EdgeInsets.all(7),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        child: Icon(
-                                          Icons.favorite_border_outlined,
-                                          color: Colors.white,
-                                        )),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      data[index]['chef'],
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: kPrimaryTextColor),
+                                    ),
                                   )
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              data[index]['name'],
-                              overflow: TextOverflow.ellipsis,
-                              style: kFormHeadingStyle.copyWith(fontSize: 18),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Food. ${data[index]['duration']} mins',
-                              style: kSecondaryTextStyle.copyWith(fontSize: 12),
-                            )
-                          ],
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                height: 150,
+                                width: 150,
+                                child: Stack(
+                                  children: [
+                                    /// food image
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        placeholder:
+                                            (BuildContext context, photo) {
+                                          return Image(
+                                            image:
+                                                AssetImage('images/loader.gif'),
+                                          );
+                                        },
+                                        imageUrl: data[index]['photo'],
+                                      ),
+                                    ),
+
+                                    /// add to fav button
+                                    Positioned(
+                                      top: 5,
+                                      right: 5,
+                                      child: Container(
+                                          padding: EdgeInsets.all(7),
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  Colors.white.withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          child: Icon(
+                                            Icons.favorite_border_outlined,
+                                            color: Colors.white,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                data[index]['name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: kFormHeadingStyle.copyWith(fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Food. ${data[index]['duration']} mins',
+                                style:
+                                    kSecondaryTextStyle.copyWith(fontSize: 12),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     });
