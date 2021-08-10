@@ -9,10 +9,12 @@ import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
+  BuildContext cntxt;
+  MyDrawer(this.cntxt);
   @override
-  Widget build(BuildContext context) {
-    double width = ScreenSize.getWidth(context);
-    double height = ScreenSize.getHeight(context) - 80;
+  Widget build(cntx) {
+    double width = ScreenSize.getWidth(cntxt);
+    double height = ScreenSize.getHeight(cntxt) - 80;
 
     return Container(
       width: width * 0.7,
@@ -74,7 +76,7 @@ class MyDrawer extends StatelessWidget {
                           placeholder: (context, url) =>
                               Image.asset('images/profile_loading.gif'),
                           imageUrl:
-                              Provider.of<AuthProvider>(context, listen: false)
+                              Provider.of<AuthProvider>(cntxt, listen: false)
                                   .auth
                                   .currentUser!
                                   .photoURL!,
@@ -90,10 +92,9 @@ class MyDrawer extends StatelessWidget {
                           Spacer(),
                           InkWell(
                               onTap: () {
-                                Navigator.pop(context);
-                                Provider.of<AuthProvider>(context,
-                                        listen: false)
-                                    .signOut(context);
+                                Navigator.pop(cntxt);
+                                Provider.of<AuthProvider>(cntxt, listen: false)
+                                    .signOut(cntxt);
                                 // Navigation.changeScreenWithReplacement(
                                 //     context, SignUpScreen());
                               },

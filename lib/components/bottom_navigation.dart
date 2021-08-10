@@ -41,7 +41,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           icon: Icon(
             Icons.add_circle,
           ),
-          title: Text('Add'),
+          title: Text('Upload'),
           activeColor: kPrimaryColor,
           inactiveColor: kSecondaryColor,
           textAlign: TextAlign.center,
@@ -50,6 +50,15 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           icon: Icon(Icons.list),
           title: Text(
             'List ',
+          ),
+          activeColor: kPrimaryColor,
+          inactiveColor: kSecondaryColor,
+          textAlign: TextAlign.center,
+        ),
+        BottomNavyBarItem(
+          icon: Icon(Icons.person),
+          title: Text(
+            'Profile',
           ),
           activeColor: kPrimaryColor,
           inactiveColor: kSecondaryColor,
