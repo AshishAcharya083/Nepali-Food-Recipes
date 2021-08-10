@@ -37,6 +37,7 @@ class _RecipeFormState extends State<RecipeForm> {
   List<bool> categoryBool = [false, false, false, true];
   AuthProvider? provider;
   int? recipeCount;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -516,6 +517,7 @@ class _RecipeFormState extends State<RecipeForm> {
                 splashColor: kPrimaryColor,
                 onTap: () async {
                   setState(() {
+                    isLoading = true;
                     steps = steps.where((step) => step != '').toList();
                     ingredients = ingredients
                         .where((ingredient) => ingredient != '')
@@ -558,6 +560,10 @@ class _RecipeFormState extends State<RecipeForm> {
                             userDocument.set({
                               'recipes': recipeCount! + 1,
                             }, SetOptions(merge: true));
+
+                            setState(() {
+                              isLoading = false;
+                            });
                           });
 
                           /// returning alert dialog if recipe upload is successful
@@ -629,7 +635,8 @@ class _RecipeFormState extends State<RecipeForm> {
                   });
                 },
                 child: FlatButtonWithText(
-                    text: 'Submit', buttonColor: kPrimaryColor),
+                    text: isLoading ? 'Uploading...' : 'Submit',
+                    buttonColor: kPrimaryColor),
               ),
             ],
           ),
