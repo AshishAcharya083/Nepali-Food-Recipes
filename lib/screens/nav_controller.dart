@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/bottom_navigation.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/food_list.dart';
 import 'package:nepali_food_recipes/screens/home.dart';
 import 'package:nepali_food_recipes/screens/profile.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:nepali_food_recipes/screens/recipe_form.dart';
 import 'package:nepali_food_recipes/helpers/notification.dart';
+import 'package:provider/provider.dart';
 
 class NavBarController extends StatefulWidget {
   @override

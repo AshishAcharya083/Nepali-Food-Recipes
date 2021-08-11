@@ -26,6 +26,8 @@ class _CookingScreenState extends State<CookingScreen> {
   List ingredients = ['butter', 'chilli'];
   List steps = ['fry', ' cook it 15 minutes'];
   bool isVeg = false;
+  String chefName = '';
+  String? chefImage;
   String? imgUrl;
   @override
   void initState() {
@@ -39,6 +41,8 @@ class _CookingScreenState extends State<CookingScreen> {
     steps = recipeDetail['steps'];
     isVeg = recipeDetail['veg'];
     imgUrl = recipeDetail['photo'];
+    chefName = recipeDetail['chef'];
+    chefImage = recipeDetail['chefImage'];
   }
 
   @override
@@ -104,6 +108,42 @@ class _CookingScreenState extends State<CookingScreen> {
                   Text(
                     '${isVeg ? 'Veg' : 'Non-veg'}. ${cookingDuration.toString()} mins',
                     style: kSecondaryTextStyle,
+                  ),
+                  kFixedSizedBox,
+                  Row(
+                    children: [
+                      Container(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            imageUrl: chefImage!,
+                            placeholder: (context, url) =>
+                                Image.asset('images/profile_loading.gif'),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.network_check),
+                            fit: BoxFit.cover,
+                            height: 35,
+                            width: 35,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          chefName,
+                          overflow: TextOverflow.ellipsis,
+                          style: kFormHeadingStyle.copyWith(fontSize: 15),
+                        ),
+                      ),
+                      Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        '  273 likes',
+                        style: kFormHeadingStyle.copyWith(fontSize: 15),
+                      )
+                    ],
                   ),
                   kFixedSizedBox,
                   kDivider,

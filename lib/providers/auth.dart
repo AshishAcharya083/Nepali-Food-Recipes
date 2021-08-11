@@ -16,6 +16,7 @@ class AuthProvider with ChangeNotifier {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool isLoggedIn = false;
   bool isAdmin = false;
+  QueryDocumentSnapshot? currentUserSnapshot;
   // GoogleAuthCredential? user;
   GoogleSignInAccount? currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -44,6 +45,8 @@ class AuthProvider with ChangeNotifier {
                       .where('email', isEqualTo: auth.currentUser!.email)
                       .get()
                       .then((value) {
+                    currentUserSnapshot = value.docs[0];
+
                     if (value.size == 0) {
                       _firestore
                           .collection('users')
