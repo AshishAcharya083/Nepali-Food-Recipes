@@ -8,6 +8,7 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
   BuildContext? context;
   NotificationService([this.context]);
+
   Future<void> init() async {
     var initializationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -32,8 +33,8 @@ class NotificationService {
       const NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
 
-      await flutterLocalNotificationsPlugin.show(
-          0, 'plain title', 'plain body', platformChannelSpecifics,
+      await flutterLocalNotificationsPlugin.show(0, 'Recipe of the week',
+          'Click to open the app', platformChannelSpecifics,
           payload: 'item x');
     } catch (e) {
       print(e);

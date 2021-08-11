@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
+import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/components/toggle_box.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
@@ -38,6 +39,7 @@ class _RecipeFormState extends State<RecipeForm> {
   AuthProvider? provider;
   int? recipeCount;
   bool isLoading = false;
+  bool imageExist = false;
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,7 @@ class _RecipeFormState extends State<RecipeForm> {
     setState(() {
       image = temp;
       imageFile = File(temp!.path);
+      imageExist = true;
     });
     Navigator.pop(context);
   }
@@ -517,14 +520,18 @@ class _RecipeFormState extends State<RecipeForm> {
                 splashColor: kPrimaryColor,
                 onTap: () async {
                   setState(() {
-                    isLoading = true;
                     steps = steps.where((step) => step != '').toList();
                     ingredients = ingredients
                         .where((ingredient) => ingredient != '')
                         .toList();
                   });
 
-                  if (_foodNameController.text.isNotEmpty && steps.length > 0) {
+                  if (_foodNameController.text.isNotEmpty &&
+                      steps.length > 0 &&
+                      imageExist) {
+                    setState(() {
+                      isLoading = true;
+                    });
                     var userDocument = _firestore
                         .collection('users')
                         .doc(provider!.auth.currentUser!.uid);
@@ -622,17 +629,15 @@ class _RecipeFormState extends State<RecipeForm> {
                             ),
                           );
                         }));
+                    setState(() {
+                      ingredients = ['', ''];
+                      steps = ['', '', ''];
+                      errorText = '';
+                      cookTime = 30;
+                    });
                   } else {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('error')));
+                    showSnackBar('All Fields are mandatory', context);
                   }
-
-                  setState(() {
-                    ingredients = ['', ''];
-                    steps = ['', '', ''];
-                    errorText = '';
-                    cookTime = 30;
-                  });
                 },
                 child: FlatButtonWithText(
                     text: isLoading ? 'Uploading...' : 'Submit',
