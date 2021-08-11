@@ -171,17 +171,26 @@ class _ListScreenState extends State<ListScreen> {
                                                 flex: 4,
                                                 child: Container(
                                                   child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      child: FadeInImage(
-                                                        placeholder: AssetImage(
-                                                            'images/loader.gif'),
-                                                        image: NetworkImage(
-                                                            docs[index]
-                                                                ['photo']),
-                                                        fit: BoxFit.cover,
-                                                      )),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    child: FadeInImage(
+                                                      imageErrorBuilder:
+                                                          (BuildContext context,
+                                                              obj, trace) {
+                                                        return Icon(
+                                                          Icons.network_check,
+                                                          size: 35,
+                                                          color: Colors.red,
+                                                        );
+                                                      },
+                                                      placeholder: AssetImage(
+                                                          'images/loader.gif'),
+                                                      image: NetworkImage(
+                                                          docs[index]['photo']),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ],

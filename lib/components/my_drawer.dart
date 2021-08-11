@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/notification.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
@@ -87,7 +88,12 @@ class MyDrawer extends StatelessWidget {
                         children: [
                           DrawerTile('Home', Icons.home_filled),
                           DrawerTile('Explore', Icons.search),
-                          DrawerTile('Settings', Icons.settings),
+                          InkWell(
+                              onTap: () async {
+                                await NotificationService()
+                                    .showNotification('test');
+                              },
+                              child: DrawerTile('Settings', Icons.settings)),
                           DrawerTile('About', Icons.info),
                           Spacer(),
                           InkWell(

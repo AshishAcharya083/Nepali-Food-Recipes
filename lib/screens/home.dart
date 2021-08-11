@@ -88,9 +88,11 @@ class _HomePageState extends State<HomePage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(
+                            imageUrl: authProvider.auth.currentUser!.photoURL!,
                             placeholder: (context, url) =>
                                 Image.asset('images/profile_loading.gif'),
-                            imageUrl: authProvider.auth.currentUser!.photoURL!,
+                            errorWidget: (context, url, error) =>
+                                Image.asset('images/loader.gif'),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -401,6 +403,14 @@ class _HomePageState extends State<HomePage> {
                                                           fit: BoxFit.cover)),
                                                 );
                                               },
+                                              errorWidget:
+                                                  (BuildContext context, img,
+                                                      dyn) {
+                                                return Icon(
+                                                  Icons.network_check,
+                                                  size: 35,
+                                                );
+                                              },
                                             ),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
@@ -433,7 +443,6 @@ class _HomePageState extends State<HomePage> {
                                                     Text(
                                                       ' Save',
                                                       style: TextStyle(
-                                                          fontFamily: 'Dosis',
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     )

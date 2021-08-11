@@ -7,10 +7,12 @@ const Color kGreyColor = Color(0xFFD7D7D7);
 const Color kPinkColor = Color(0xFFFF94A1);
 
 ///new color pallets
-const Color kPrimaryColor = Color(0xFFFFC400);
+// const Color kPrimaryColor = Color(0xFFFFC400);
+const Color kPrimaryColor = Color(0xFFF6BB42);
 const Color kDarkGreenColor = Color(0xFF003C2D);
 const Color kLightGreenColor = Color(0xFF1FCC79);
 const Color kOrangeColor = Color(0xFFFF9B33);
+// Color kSecondaryColor = Colors.orange.shade400;
 const Color kSecondaryColor = Color(0xFFFD7A50);
 const Color kSecondaryTextColor = Color(0xFF9FA5C0);
 const Color kPrimaryTextColor = Color(0xFF3E5481);
