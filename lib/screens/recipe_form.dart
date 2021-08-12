@@ -555,6 +555,7 @@ class _RecipeFormState extends State<RecipeForm> {
                       'category': category,
                       'chefImage': provider!.auth.currentUser!.photoURL,
                       'chef': provider!.auth.currentUser!.displayName,
+                      'chefId': provider!.auth.currentUser!.uid,
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,

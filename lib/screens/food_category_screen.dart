@@ -5,6 +5,7 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:nepali_food_recipes/screens/profile.dart';
 
 class FoodCategoryScreen extends StatefulWidget {
   final String? imagePath;
@@ -101,33 +102,44 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                             children: [
                               /// chef name and photo
                               Expanded(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: CachedNetworkImage(
-                                          imageUrl: data[index]['chefImage'],
-                                          placeholder: (context, url) =>
-                                              Image.asset(
-                                                  'images/profile_loading.gif'),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.network_check),
-                                          fit: BoxFit.cover,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigation.changeScreen(
+                                      context,
+                                      Profile(data[index]['chefId']),
+                                    );
+                                    //TODO goto profile
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: CachedNetworkImage(
+                                            imageUrl: data[index]['chefImage'],
+                                            placeholder: (context, url) =>
+                                                Image.asset(
+                                                    'images/profile_loading.gif'),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.network_check),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(
-                                        data[index]['chef'],
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: kPrimaryTextColor),
-                                      ),
-                                    )
-                                  ],
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          data[index]['chef'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: kPrimaryTextColor),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(

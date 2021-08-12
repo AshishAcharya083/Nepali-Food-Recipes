@@ -7,8 +7,8 @@ import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
-  final QueryDocumentSnapshot? snapshot;
-  Profile([this.snapshot]);
+  final String? userID;
+  Profile([this.userID]);
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -22,17 +22,18 @@ class _ProfileState extends State<Profile> {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    print(widget.snapshot);
+    print(widget.userID);
     return SafeArea(
       child: Scaffold(
         body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
           return StreamBuilder<DocumentSnapshot>(
               stream: fireStore
                   .collection('users')
-                  .doc(authProvider.auth.currentUser!.uid)
+                  .doc(widget.userID == null
+                      ? authProvider.auth.currentUser!.uid
+                      : widget.userID)
                   .snapshots(),
               builder: (context, snapshot) {
-                print(snapshot.runtimeType);
                 if (!snapshot.hasData)
                   return Center(
                     child: CircularProgressIndicator(
@@ -46,9 +47,9 @@ class _ProfileState extends State<Profile> {
                     child: Column(
                       children: [
                         Info(
-                          imageURL: authProvider.auth.currentUser!.photoURL!,
-                          email: authProvider.auth.currentUser!.email!,
-                          name: authProvider.auth.currentUser!.displayName!,
+                          imageURL: data['photo'],
+                          email: data['email'],
+                          name: data['name'],
                         ),
                         kFixedSizedBox,
                         Row(

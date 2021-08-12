@@ -45,9 +45,8 @@ class AuthProvider with ChangeNotifier {
                       .where('email', isEqualTo: auth.currentUser!.email)
                       .get()
                       .then((value) {
-                    currentUserSnapshot = value.docs[0];
-
                     if (value.size == 0) {
+                      print('new user created');
                       _firestore
                           .collection('users')
                           .doc(auth.currentUser!.uid)
@@ -58,6 +57,7 @@ class AuthProvider with ChangeNotifier {
                         'recipes': 0,
                         'followers': 0,
                         'following': 0,
+                        'photo': auth.currentUser!.photoURL,
                       }, SetOptions(merge: true));
                     }
                   }),
