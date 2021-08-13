@@ -105,6 +105,7 @@ class _CookingScreenState extends State<CookingScreen> {
         .collection('recipes')
         .doc(docId)
         .set({'views': views! + 1}, SetOptions(merge: true));
+    setState(() {});
   }
 
   @override
