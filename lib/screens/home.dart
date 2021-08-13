@@ -308,12 +308,18 @@ class _HomePageState extends State<HomePage> {
                                                         child: Row(
                                                           children: [
                                                             Icon(
-                                                              Icons.star,
+                                                              Icons
+                                                                  .remove_red_eye,
                                                               size: 15,
                                                               color: Colors
                                                                   .deepOrange,
                                                             ),
-                                                            Text(' 4.5')
+                                                            SizedBox(
+                                                              width: 2,
+                                                            ),
+                                                            Text(recipes[index]
+                                                                    ['views']
+                                                                .toString())
                                                           ],
                                                         ),
                                                       ),
@@ -332,7 +338,13 @@ class _HomePageState extends State<HomePage> {
                                                             color: Colors.grey
                                                                 .withOpacity(
                                                                     0.45)),
-                                                        child: Text("easy"),
+
+                                                        /// difficulty of recipe
+                                                        child: Text(
+                                                            recipes[index]
+                                                                    ['isEasy']
+                                                                ? 'Easy'
+                                                                : 'Hard'),
                                                       )
                                                     ],
                                                   ),
@@ -425,28 +437,20 @@ class _HomePageState extends State<HomePage> {
                                             bottom: 10,
                                             child: InkWell(
                                               child: Container(
-                                                padding: EdgeInsets.all(4),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 5),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10),
                                                     color: Colors.white),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.favorite,
-                                                      size: 15,
-                                                      color: Colors.red,
-                                                    ),
-                                                    Text(
-                                                      ' Save',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ],
+                                                child: Text(
+                                                  recipes[index]['veg']
+                                                      ? 'veg'
+                                                      : 'non-Veg',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                               ),
                                             ))

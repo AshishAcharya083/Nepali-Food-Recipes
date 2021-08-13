@@ -58,6 +58,7 @@ class AuthProvider with ChangeNotifier {
                         'followers': 0,
                         'following': 0,
                         'photo': auth.currentUser!.photoURL,
+                        'saved': [],
                       }, SetOptions(merge: true));
                     }
                   }),

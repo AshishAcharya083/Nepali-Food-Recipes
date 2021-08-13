@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
+import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
 
 class CookingScreen extends StatefulWidget {
@@ -15,6 +19,7 @@ class CookingScreen extends StatefulWidget {
 }
 
 class _CookingScreenState extends State<CookingScreen> {
+  FirebaseFirestore _fireStore = FirebaseFirestore.instance;
   List<IndicatorStyle> indicatorValues = [
     IndicatorStyle.outlined,
     IndicatorStyle.dot
@@ -29,9 +34,14 @@ class _CookingScreenState extends State<CookingScreen> {
   String chefName = '';
   String? chefImage;
   String? imgUrl;
+  int? views;
+  String? docRefId;
+  bool isSaved = false;
   @override
   void initState() {
     super.initState();
+
+    docRefId = widget.snapshot!.reference.id;
 
     recipeDetail = widget.snapshot;
     foodName = recipeDetail['name'];
@@ -43,6 +53,58 @@ class _CookingScreenState extends State<CookingScreen> {
     imgUrl = recipeDetail['photo'];
     chefName = recipeDetail['chef'];
     chefImage = recipeDetail['chefImage'];
+    views = recipeDetail['views'];
+
+    increaseViewCount(docRefId!);
+    checkIfAlreadySavedOrNot();
+  }
+
+  void removeFromBookmark() {
+    print('remove called');
+    _fireStore
+        .collection('users')
+        .doc(Provider.of<AuthProvider>(context, listen: false)
+            .auth
+            .currentUser!
+            .uid)
+        .update({
+      'saved': FieldValue.arrayRemove([docRefId])
+    }).onError((error, stackTrace) {
+      showSnackBar('Cannot remove from bookmark', context);
+    });
+
+    setState(() {
+      isSaved = false;
+    });
+  }
+
+  void checkIfAlreadySavedOrNot() {
+    _fireStore
+        .collection('users')
+        .doc(Provider.of<AuthProvider>(context, listen: false)
+            .auth
+            .currentUser!
+            .uid)
+        .get()
+        .then(
+          (value) => {
+            if (value['saved'].contains(docRefId))
+              setState(() {
+                isSaved = true;
+              })
+            else
+              setState(() {
+                isSaved = false;
+              })
+          },
+        );
+  }
+
+  void increaseViewCount(String docId) {
+    _fireStore
+        .collection('recipes')
+        .doc(docId)
+        .set({'views': views! + 1}, SetOptions(merge: true));
   }
 
   @override
@@ -136,16 +198,61 @@ class _CookingScreenState extends State<CookingScreen> {
                         ),
                       ),
                       Icon(
-                        Icons.favorite,
+                        Icons.remove_red_eye_outlined,
                         color: Colors.red,
                       ),
                       Text(
-                        '  273 likes',
+                        '  $views views',
                         style: kFormHeadingStyle.copyWith(fontSize: 15),
                       )
                     ],
                   ),
-                  kFixedSizedBox,
+                  InkWell(
+                    onTap: isSaved
+                        ? () {
+                            removeFromBookmark();
+                          }
+                        : () async {
+                            print('save clicked');
+                            _fireStore
+                                .collection('users')
+                                .doc(Provider.of<AuthProvider>(context,
+                                        listen: false)
+                                    .auth
+                                    .currentUser!
+                                    .uid)
+                                .update(
+                              {
+                                'saved': FieldValue.arrayUnion([docRefId])
+                              },
+                            ).onError((error, stackTrace) {
+                              print(error);
+                              showSnackBar(
+                                  'Could not Save at the moment', context);
+                            });
+                            setState(() {
+                              isSaved = true;
+                            });
+                          },
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 35,
+                            width: 35,
+                            child: Icon(
+                              isSaved ? Icons.bookmark : Icons.bookmark_border,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(isSaved ? 'Bookmarked' : 'Bookmark',
+                              style: kFormHeadingStyle.copyWith(fontSize: 15))
+                        ],
+                      ),
+                    ),
+                  ),
                   kDivider,
                   Text(
                     'Description',

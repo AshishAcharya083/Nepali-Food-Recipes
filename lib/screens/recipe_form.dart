@@ -40,6 +40,7 @@ class _RecipeFormState extends State<RecipeForm> {
   int? recipeCount;
   bool isLoading = false;
   bool imageExist = false;
+  bool isEasy = true;
   @override
   void initState() {
     super.initState();
@@ -252,6 +253,43 @@ class _RecipeFormState extends State<RecipeForm> {
                     hintText: 'Tell us little more about food'),
               ),
               kFixedSizedBox,
+              Text(
+                'Difficulty',
+                style: kFormHeadingStyle,
+              ),
+
+              Center(
+                heightFactor: 1.3,
+                child: ToggleButtons(
+                    borderRadius: BorderRadius.circular(20),
+                    // splashColor: kPrimaryColor,
+                    children: [
+                      ToggleBoxButton(
+                        title: 'Easy',
+                        imgPath: 'images/snap.png',
+                        width: ScreenSize.getWidth(context) * 0.35,
+                      ),
+                      ToggleBoxButton(
+                        width: ScreenSize.getWidth(context) * 0.35,
+                        title: 'Hard',
+                        imgPath: 'images/effort.png',
+                      ),
+                    ],
+                    isSelected: [isEasy, !isEasy],
+                    onPressed: (a) {
+                      if (a == 0)
+                        setState(() {
+                          isEasy = true;
+                        });
+                      else
+                        setState(() {
+                          isEasy = false;
+                        });
+                    },
+
+                    // renderBorder: false,
+                    fillColor: isEasy ? kLightGreenColor : Colors.redAccent),
+              ),
               RichText(
                 text: TextSpan(
                   children: [
@@ -556,6 +594,8 @@ class _RecipeFormState extends State<RecipeForm> {
                       'chefImage': provider!.auth.currentUser!.photoURL,
                       'chef': provider!.auth.currentUser!.displayName,
                       'chefId': provider!.auth.currentUser!.uid,
+                      'views': 1,
+                      'isEasy': isEasy
                     }).then((value) => showDialog(
                         barrierDismissible: false,
                         context: context,
