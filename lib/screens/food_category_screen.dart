@@ -152,46 +152,26 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                                 child: Container(
                                   height: 150,
                                   width: 150,
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: CachedNetworkImage(
-                                          placeholder:
-                                              (BuildContext context, photo) {
-                                            return Image(
-                                              image: AssetImage(
-                                                  'images/loader.gif'),
-                                            );
-                                          },
-                                          imageUrl: data[index]['photo'],
-                                          errorWidget: (context, url, error) =>
-                                              Center(
-                                                  child: Icon(
-                                            Icons.network_check,
-                                            size: 35,
-                                            color: Colors.red,
-                                          )),
-                                        ),
-                                      ),
-
-                                      /// add to fav button
-                                      Positioned(
-                                        top: 5,
-                                        right: 5,
-                                        child: Container(
-                                            padding: EdgeInsets.all(7),
-                                            decoration: BoxDecoration(
-                                                color: Colors.black
-                                                    .withOpacity(0.5),
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            child: Icon(
-                                              Icons.favorite_border_outlined,
-                                              color: Colors.white,
-                                            )),
-                                      )
-                                    ],
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      placeholder:
+                                          (BuildContext context, photo) {
+                                        return Image(
+                                          image:
+                                              AssetImage('images/loader.gif'),
+                                        );
+                                      },
+                                      imageUrl: data[index]['photo'],
+                                      errorWidget: (context, url, error) =>
+                                          Center(
+                                              child: Icon(
+                                        Icons.network_check,
+                                        size: 35,
+                                        color: Colors.red,
+                                      )),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
