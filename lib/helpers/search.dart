@@ -13,17 +13,20 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Container(
-            padding: EdgeInsets.all(5),
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: kPrimaryColor),
-            child: Icon(
-              Icons.clear,
-              color: Colors.white,
-            )),
-      )
+      InkWell(
+        onTap: () {
+          query = '';
+        },
+        child: Center(
+          child: Icon(
+            Icons.clear,
+            color: Colors.grey,
+          ),
+        ),
+      ),
+      SizedBox(
+        width: 15,
+      ),
     ];
   }
 

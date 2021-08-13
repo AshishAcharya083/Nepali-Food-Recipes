@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/login_checker.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
@@ -16,7 +17,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int page = 0;
   List<ItemData> data = [
     ItemData(
-        Colors.blue, "images/burger.png", "1500+ Recipes", "It's Me", "Ashish"),
+        Colors.blue, "images/burger.png", "500+ Recipes", "It's Me", "Ashish"),
     ItemData(Colors.deepPurpleAccent, "images/drink.png", "Easy Search",
         "Look At", "Liquid Swipe"),
     ItemData(
@@ -33,7 +34,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         children: [
           LiquidSwipe.builder(
               positionSlideIcon: 0.8,
-              slideIconWidget: Icon(Icons.arrow_back_ios),
+              slideIconWidget: Icon(
+                Icons.arrow_back_ios,
+                color: kPrimaryColor,
+                size: 30,
+              ),
               onPageChangeCallback: pageChangeCallback,
               waveType: WaveType.liquidReveal,
               liquidController: liquidController,
@@ -82,10 +87,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   pageChangeCallback(int incomingPage) async {
+    print('data length ${data.length}');
+    print(liquidController.currentPage);
     if (liquidController.currentPage == (data.length - 1)) {
+      Navigation.changeScreenWithReplacement(context, LogInChecker());
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setBool('showOnBoardingScreen', false);
-      Navigation.changeScreenWithReplacement(context, LogInChecker());
     }
   }
 }

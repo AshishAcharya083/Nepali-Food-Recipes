@@ -5,17 +5,20 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/notification.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
+import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
+import 'package:nepali_food_recipes/screens/about_page.dart';
+import 'package:nepali_food_recipes/screens/setting_screen.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
-  BuildContext cntxt;
-  MyDrawer(this.cntxt);
+  final BuildContext cxt;
+  MyDrawer(this.cxt);
   @override
   Widget build(cntx) {
-    double width = ScreenSize.getWidth(cntxt);
-    double height = ScreenSize.getHeight(cntxt) - 80;
+    double width = ScreenSize.getWidth(cxt);
+    double height = ScreenSize.getHeight(cxt) - 80;
 
     return Container(
       width: width * 0.7,
@@ -77,7 +80,7 @@ class MyDrawer extends StatelessWidget {
                           placeholder: (context, url) =>
                               Image.asset('images/profile_loading.gif'),
                           imageUrl:
-                              Provider.of<AuthProvider>(cntxt, listen: false)
+                              Provider.of<AuthProvider>(cxt, listen: false)
                                   .auth
                                   .currentUser!
                                   .photoURL!,
@@ -86,21 +89,38 @@ class MyDrawer extends StatelessWidget {
                       margin: EdgeInsets.only(top: 150),
                       child: Column(
                         children: [
-                          DrawerTile('Home', Icons.home_filled),
-                          DrawerTile('Explore', Icons.search),
+                          DrawerTile('Admin', Icons.local_police),
+                          InkWell(
+                              onTap: () {
+                                Navigator.pop(cntx);
+                              },
+                              child: DrawerTile('Home', Icons.home_filled)),
+                          InkWell(
+                              onTap: () {
+                                Navigator.pop(cntx);
+                                showSearch(
+                                    context: cntx,
+                                    delegate: CustomSearchDelegate());
+                              },
+                              child: DrawerTile('Explore', Icons.search)),
                           InkWell(
                               onTap: () async {
-                                await NotificationService()
-                                    .showNotification('test');
+                                // await NotificationService()
+                                //     .showNotification('test');
+                                Navigation.changeScreen(cntx, SettingScreen());
                               },
                               child: DrawerTile('Settings', Icons.settings)),
-                          DrawerTile('About', Icons.info),
+                          InkWell(
+                              onTap: () {
+                                Navigation.changeScreen(cntx, AboutUsPage());
+                              },
+                              child: DrawerTile('About', Icons.info)),
                           Spacer(),
                           InkWell(
                               onTap: () {
-                                Navigator.pop(cntxt);
-                                Provider.of<AuthProvider>(cntxt, listen: false)
-                                    .signOut(cntxt);
+                                Navigator.pop(cxt);
+                                Provider.of<AuthProvider>(cxt, listen: false)
+                                    .signOut(cxt);
                                 // Navigation.changeScreenWithReplacement(
                                 //     context, SignUpScreen());
                               },

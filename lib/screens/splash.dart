@@ -54,12 +54,16 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   goToOnBoarding(Duration duration) async {
-    Future.delayed(duration, () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool('showOnBoardingScreen') ?? true) {
+    Future.delayed(
+      duration,
+      () async {
         Navigation.changeScreenWithReplacement(context, OnBoardingScreen());
-      } else
-        Navigation.changeScreenWithReplacement(context, LogInChecker());
-    });
+        // SharedPreferences prefs = await SharedPreferences.getInstance();
+        // if (prefs.getBool('showOnBoardingScreen') ?? true) {
+        //   Navigation.changeScreenWithReplacement(context, OnBoardingScreen());
+        // } else
+        //   Navigation.changeScreenWithReplacement(context, LogInChecker());
+      },
+    );
   }
 }
