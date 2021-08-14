@@ -20,11 +20,6 @@ class AuthProvider with ChangeNotifier {
   // GoogleAuthCredential? user;
   GoogleSignInAccount? currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
-  // bool showOnBoarding = true;
-
-  // AuthProvider.initialize() {
-  //   loadPref();
-  // }
 
   Future signInWithGoogle(
       String email, String password, BuildContext context) async {
@@ -40,6 +35,7 @@ class AuthProvider with ChangeNotifier {
               idToken: googleAuth.idToken,
             ))
             .then((value) => {
+                  isAdminFunction(),
                   _firestore
                       .collection('users')
                       .where('email', isEqualTo: auth.currentUser!.email)
@@ -73,7 +69,22 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  void isAdminFunction() {
+    print('isAdminFunction called');
+    print('the current user email is ${auth.currentUser!.email}');
+    _firestore
+        .collection('admins')
+        .where('email', isEqualTo: auth.currentUser!.email)
+        .get()
+        .then((value) => {
+              if (value.docs.length > 0)
+                {isAdmin = true, print('isAdmin = true'), notifyListeners()}
+            });
+    notifyListeners();
+  }
+
   void signOut(BuildContext context) async {
+    print('isAdmin is : $isAdmin');
     print('log out tapped');
     await googleSignIn.disconnect();
     auth.signOut();

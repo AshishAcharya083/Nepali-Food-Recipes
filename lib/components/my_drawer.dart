@@ -89,7 +89,9 @@ class MyDrawer extends StatelessWidget {
                       margin: EdgeInsets.only(top: 150),
                       child: Column(
                         children: [
-                          DrawerTile('Admin', Icons.local_police),
+                          Provider.of<AuthProvider>(cntx, listen: false).isAdmin
+                              ? DrawerTile('Admin', Icons.local_police)
+                              : Container(),
                           InkWell(
                               onTap: () {
                                 Navigator.pop(cntx);
