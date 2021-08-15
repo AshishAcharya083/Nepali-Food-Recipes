@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/food_viewer_with_name.dart';
+import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
 
@@ -55,6 +56,15 @@ class _BookMarkedFoodScreenState extends State<BookMarkedFoodScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'Bookmarked',
+          style: kFormHeadingStyle,
+        ),
+      ),
       body: GridView.builder(
           physics: BouncingScrollPhysics(),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
