@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/my_drawer.dart';
@@ -6,7 +7,10 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'dart:core';
 import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
+import 'package:nepali_food_recipes/providers/auth.dart';
+import 'package:nepali_food_recipes/screens/bookmarked_foods.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:provider/provider.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -211,9 +215,13 @@ class _ListScreenState extends State<ListScreen> {
   }
 }
 
-class CategoriesScroller extends StatelessWidget {
-  const CategoriesScroller();
+class CategoriesScroller extends StatefulWidget {
+  @override
+  State<CategoriesScroller> createState() => _CategoriesScrollerState();
+}
 
+class _CategoriesScrollerState extends State<CategoriesScroller> {
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     final double categoryHeight =
@@ -222,85 +230,116 @@ class CategoriesScroller extends StatelessWidget {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: FittedBox(
-          fit: BoxFit.fill,
-          alignment: Alignment.topCenter,
-          child: Row(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 150,
-                  margin: EdgeInsets.only(right: 20),
-                  height: categoryHeight,
-                  decoration: BoxDecoration(
-                      color: Colors.orange.shade400,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Most\nFavorites",
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'items',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
+      child: StreamBuilder<DocumentSnapshot>(
+          stream: fireStore
+              .collection('users')
+              .doc(Provider.of<AuthProvider>(context, listen: false)
+                  .auth
+                  .currentUser!
+                  .uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData)
+              return Center(
+                child: CircularProgressIndicator(
+                  color: kPrimaryColor,
                 ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 150,
-                  margin: EdgeInsets.only(right: 20),
-                  height: categoryHeight,
-                  decoration: BoxDecoration(
-                      color: Colors.blue.shade400,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Newest",
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+              );
+            else {
+              var data = snapshot.data!['saved'];
+              print(data);
+              return Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          Navigation.changeScreen(
+                              context,
+                              BookMarkedFoodScreen(
+                                recipeIds: data,
+                              ));
+                        },
+                        child: Container(
+                          width: 150,
+                          margin: EdgeInsets.only(right: 20),
+                          height: categoryHeight,
+                          decoration: BoxDecoration(
+                              color: Colors.orange.shade400,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Saved\nItems",
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'items',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "20 Items",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 150,
+                          margin: EdgeInsets.only(right: 20),
+                          height: categoryHeight,
+                          decoration: BoxDecoration(
+                              color: Colors.blue.shade400,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Newest",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "20 Items",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
+              );
+            }
+          }),
     );
   }
 }
