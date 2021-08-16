@@ -49,25 +49,32 @@ class _BookMarkedFoodScreenState extends State<BookMarkedFoodScreen> {
                       child: CircularProgressIndicator(),
                     );
                   else {
+                    QueryDocumentSnapshot? cookQueryDocumentSnapshot;
                     var temp = snapshot.data!.docs;
 
-                    /// temp will contain the list of documents which is of type QueryDocument Snapshot
-                    ///
+                    /// temp will contain the list of documents which is of type QueryDocumentSnapshot
+                    /// getting list of QueryDocument which matches the incoming saved document ID in tempList
+                    /// this seems very inefficient way of filtering data but it's working anyway
+
+                    var tempList = temp
+                        .where(
+                            (element) => element.id == widget.recipeIds![index])
+                        .toList();
                     return InkWell(
                       onTap: () {
                         Navigation.changeScreen(
                             context,
                             CookingScreen(
-                              snapshot: temp[index],
+                              snapshot: tempList[0],
                             ));
                       },
                       child: FoodViewerWithName(
-                        chefId: temp[index]['chefId'],
-                        chefImageURL: temp[index]['chefImage'],
-                        chefName: temp[index]['chef'],
-                        duration: temp[index]['duration'],
-                        foodImageURL: temp[index]['photo'],
-                        foodName: temp[index]['name'],
+                        chefId: tempList[0]['chefId'],
+                        chefImageURL: tempList[0]['chefImage'],
+                        chefName: tempList[0]['chef'],
+                        duration: tempList[0]['duration'],
+                        foodImageURL: tempList[0]['photo'],
+                        foodName: tempList[0]['name'],
                       ),
                     );
                   }
