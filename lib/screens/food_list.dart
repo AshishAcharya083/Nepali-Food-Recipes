@@ -288,7 +288,7 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'items',
+                                  '${data.length} items',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),

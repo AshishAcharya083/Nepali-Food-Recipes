@@ -17,6 +17,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  num totalViews = 0;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +28,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     print(widget.userID);
+    print('Build Called');
     return SafeArea(
       child: Scaffold(
         body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
@@ -46,57 +49,65 @@ class _ProfileState extends State<Profile> {
                 else {
                   var data = snapshot.data!;
 
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Info(
-                          imageURL: data['photo'],
-                          email: data['email'],
-                          name: data['name'],
-                        ),
-                        kFixedSizedBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            numberStringContainer(data['recipes'], 'Recipes'),
-                            // numberStringContainer(
-                            //     data['following'], 'following'),
-                            // numberStringContainer(
-                            //     data['followers'], 'followers'),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Divider(
-                            thickness: 5,
-                          ),
-                        ),
-                        StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('recipes')
-                                .where('chefId',
-                                    isEqualTo: widget.userID == null
-                                        ? authProvider.auth.currentUser!.uid
-                                        : widget.userID)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (!snapshot.hasData)
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: kPrimaryColor,
-                                  ),
-                                );
-                              else {
-                                var data = snapshot.data!.docs;
+                  return StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('recipes')
+                          .where('chefId',
+                              isEqualTo: widget.userID == null
+                                  ? authProvider.auth.currentUser!.uid
+                                  : widget.userID)
+                          .snapshots(),
+                      builder: (context, foodSnapshot) {
+                        if (!foodSnapshot.hasData)
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: kPrimaryColor,
+                            ),
+                          );
+                        else {
+                          var foodData = foodSnapshot.data!.docs;
 
-                                return GridView.builder(
+                          foodData.forEach((element) {
+                            totalViews = totalViews + element['views'];
+                          });
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Info(
+                                  imageURL: data['photo'],
+                                  email: data['email'],
+                                  name: data['name'],
+                                ),
+                                kFixedSizedBox,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    numberStringContainer(
+                                        data['recipes'], 'Recipes'),
+                                    numberStringContainer(
+                                        totalViews.toInt(), 'views'),
+                                    // numberStringContainer(
+                                    //     data['following'], 'following'),
+                                    // numberStringContainer(
+                                    //     data['followers'], 'followers'),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Divider(
+                                    thickness: 5,
+                                  ),
+                                ),
+                                GridView.builder(
                                     gridDelegate:
                                         SliverGridDelegateWithMaxCrossAxisExtent(
                                             maxCrossAxisExtent: 200,
                                             childAspectRatio: 3.5 / 4,
                                             crossAxisSpacing: 10,
                                             mainAxisSpacing: 0),
-                                    itemCount: data.length,
+                                    itemCount: foodData.length,
                                     physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (BuildContext context, index) {
@@ -105,7 +116,7 @@ class _ProfileState extends State<Profile> {
                                           Navigation.changeScreen(
                                               context,
                                               CookingScreen(
-                                                snapshot: data[index],
+                                                snapshot: foodData[index],
                                               ));
                                         },
                                         child: Container(
@@ -137,7 +148,7 @@ class _ProfileState extends State<Profile> {
                                                             'images/loader.gif'),
                                                       );
                                                     },
-                                                    imageUrl: data[index]
+                                                    imageUrl: foodData[index]
                                                         ['photo'],
                                                     errorWidget:
                                                         (context, url, error) =>
@@ -156,7 +167,7 @@ class _ProfileState extends State<Profile> {
                                               ),
                                               Text(
                                                 // data[index]['name']
-                                                data[index]['name'],
+                                                foodData[index]['name'],
                                                 overflow: TextOverflow.ellipsis,
                                                 style: kFormHeadingStyle
                                                     .copyWith(fontSize: 18),
@@ -165,7 +176,7 @@ class _ProfileState extends State<Profile> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                'Food. ${data[index]['duration']} mins',
+                                                'Food. ${foodData[index]['duration']} mins',
                                                 style: kSecondaryTextStyle
                                                     .copyWith(fontSize: 12),
                                               )
@@ -173,12 +184,12 @@ class _ProfileState extends State<Profile> {
                                           ),
                                         ),
                                       );
-                                    });
-                              }
-                            })
-                      ],
-                    ),
-                  );
+                                    })
+                              ],
+                            ),
+                          );
+                        }
+                      });
                 }
               });
         }),
