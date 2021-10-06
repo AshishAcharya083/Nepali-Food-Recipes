@@ -77,8 +77,14 @@ class MyDrawer extends StatelessWidget {
                                 )),
                           ),
                           fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              Image.asset('images/profile_loading.gif'),
+                          placeholder: (context, url) => Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage('images/loader.gif'),
+                                )),
+                          ),
                           imageUrl:
                               Provider.of<AuthProvider>(cxt, listen: false)
                                   .auth

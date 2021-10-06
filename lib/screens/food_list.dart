@@ -57,7 +57,8 @@ class _ListScreenState extends State<ListScreen> {
         body: StreamBuilder<QuerySnapshot>(
             stream: fireStore.collection('recipes').snapshots(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) return CircularProgressIndicator();
+              if (!snapshot.hasData)
+                return Center(child: CircularProgressIndicator());
               var docs = snapshot.data!.docs;
 
               return Container(

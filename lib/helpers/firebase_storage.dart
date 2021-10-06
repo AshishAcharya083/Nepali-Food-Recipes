@@ -5,11 +5,12 @@ import 'package:image_picker/image_picker.dart';
 
 Future<String> uploadAndGetImageURL(XFile image, String title) async {
   var tempName = DateTime.now().millisecond.toString().substring(0, 2);
-  String finalPath = tempName + title.trim() + '.jpg';
+  String finalPath = tempName + title + '.jpg';
   File myImage = File(image.path);
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   var url;
-  final firebaseStorageRef = firebaseStorage.ref('/images').child(finalPath);
+  final firebaseStorageRef =
+      firebaseStorage.ref('/images').child(finalPath.trim());
   try {
     final uploadTask = await firebaseStorageRef
         .putFile(myImage)

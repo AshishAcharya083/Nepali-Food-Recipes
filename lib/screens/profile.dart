@@ -65,11 +65,15 @@ class _ProfileState extends State<Profile> {
                             ),
                           );
                         else {
-                          var foodData = foodSnapshot.data!.docs;
-
+                          var foodData;
+                          foodData = foodSnapshot.data!.docs;
+                          num viewCount = 0;
                           foodData.forEach((element) {
-                            totalViews = totalViews + element['views'];
+                            viewCount = viewCount + element['views'];
+
+                            print('ViewCount : $viewCount');
                           });
+                          totalViews = viewCount;
                           return SingleChildScrollView(
                             child: Column(
                               children: [
@@ -87,10 +91,6 @@ class _ProfileState extends State<Profile> {
                                         data['recipes'], 'Recipes'),
                                     numberStringContainer(
                                         totalViews.toInt(), 'views'),
-                                    // numberStringContainer(
-                                    //     data['following'], 'following'),
-                                    // numberStringContainer(
-                                    //     data['followers'], 'followers'),
                                   ],
                                 ),
                                 Padding(

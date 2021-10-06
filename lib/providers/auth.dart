@@ -17,7 +17,6 @@ class AuthProvider with ChangeNotifier {
   bool isLoggedIn = false;
   bool isAdmin = false;
   QueryDocumentSnapshot? currentUserSnapshot;
-  // GoogleAuthCredential? user;
   GoogleSignInAccount? currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
 

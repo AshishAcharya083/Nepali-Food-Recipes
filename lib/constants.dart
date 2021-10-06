@@ -31,7 +31,7 @@ const TextStyle kTextFieldStyle =
     TextStyle(letterSpacing: 1.2, fontFamily: 'Dosis-Bold', fontSize: 18);
 
 const TextStyle kSecondaryTextStyle = TextStyle(
-    letterSpacing: 1.2,
+    letterSpacing: 0.8,
     height: 1.2,
     fontSize: 18,
     color: kSecondaryTextColor,
