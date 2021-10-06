@@ -40,10 +40,13 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () {
         showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                  title: Text('Are you sure want to quit?'),
+                  title: Text(
+                    'Are you sure want to quit?',
+                  ),
                   actions: <Widget>[
                     TextButton(
                         child: Text(
