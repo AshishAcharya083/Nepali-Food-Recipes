@@ -5,10 +5,12 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'dart:async';
 
 class CustomSearchDelegate extends SearchDelegate {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   List suggestionData = [];
+  Timer? _debounce;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -85,7 +87,10 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     print('build suggestion called');
-    getSuggestionFromFirebase();
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      getSuggestionFromFirebase();
+    });
     return ListView.builder(
         itemCount: suggestionData.length,
         itemBuilder: (BuildContext context, index) {
@@ -119,10 +124,12 @@ class CustomSearchDelegate extends SearchDelegate {
             ),
           );
         });
+
     // throw UnimplementedError();
   }
 
   Future getSuggestionFromFirebase() async {
+    print('firebase called');
     var documentCollection = await fireStore.collection('recipes').get();
     suggestionData = documentCollection.docs.where((element) {
       if (element['name'].toString().toLowerCase().trim().contains(query)) {
