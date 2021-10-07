@@ -88,7 +88,12 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     print('build suggestion called');
     if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    /// Debouncing implemented to prevent app from calling firebase
+    /// for ever single letter search
+
     _debounce = Timer(const Duration(milliseconds: 500), () {
+      /// now app will call getSuggestionFromFirebase() after 500ms of user typing
       getSuggestionFromFirebase();
     });
     return ListView.builder(

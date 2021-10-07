@@ -48,7 +48,8 @@ class _RecipeFormState extends State<RecipeForm> {
   }
 
   void imagePicker(ImageSource source, BuildContext context) async {
-    var temp = await _picker.pickImage(source: source);
+    var temp = await _picker.pickImage(
+        source: source, imageQuality: 80, maxWidth: 1280, maxHeight: 720);
     setState(() {
       image = temp;
       imageFile = File(temp!.path);
