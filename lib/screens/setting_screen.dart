@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/flat_button.dart';
+import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -43,6 +46,7 @@ class _SettingScreenState extends State<SettingScreen> {
               inactiveTrackColor: kPrimaryColor,
               value: toggleButton,
               onChanged: (b) async {
+                showSnackBar('Donn\'t worry it will work later', context);
                 setState(() {
                   toggleButton = b;
                 });
@@ -51,7 +55,19 @@ class _SettingScreenState extends State<SettingScreen> {
                 prefs.setBool('notification', toggleButton);
               },
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: InkWell(
+              onTap: () async {
+                await NotificationService()
+                    .showNotification('Try this new recipes');
+              },
+              child: FlatButtonWithText(
+                text: 'Send me a Notification',
+              ),
+            ),
+          ),
         ],
       ),
     );
