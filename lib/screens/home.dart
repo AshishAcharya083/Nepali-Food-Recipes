@@ -40,29 +40,31 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () {
         showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                  title: Text(
-                    'Are you sure want to quit?',
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                        child: Text(
-                          'Yes',
-                          style: kFormHeadingStyle.copyWith(
-                              fontSize: 16, color: Colors.red),
-                        ),
-                        onPressed: () => Navigator.of(context).pop(true)),
-                    TextButton(
-                        child: Text(
-                          'cancel',
-                          style: kFormHeadingStyle.copyWith(fontSize: 16),
-                        ),
-                        onPressed: () => Navigator.of(context).pop(false)),
-                  ]);
-            });
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                'Are you sure want to quit?',
+              ),
+              actions: <Widget>[
+                TextButton(
+                    child: Text(
+                      'Yes',
+                      style: kFormHeadingStyle.copyWith(
+                          fontSize: 16, color: Colors.red),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(true)),
+                TextButton(
+                    child: Text(
+                      'cancel',
+                      style: kFormHeadingStyle.copyWith(fontSize: 16),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(false)),
+              ],
+            );
+          },
+        );
 
         return Future.value(true);
       },
@@ -173,11 +175,12 @@ class _HomePageState extends State<HomePage> {
                                 foodCategory: 'Fast Food',
                                 onTap: () {
                                   Navigation.changeScreen(
-                                      context,
-                                      FoodCategoryScreen(
-                                        imagePath: 'images/burger.png',
-                                        foodCategory: 'Fast Food',
-                                      ));
+                                    context,
+                                    FoodCategoryScreen(
+                                      imagePath: 'images/burger.png',
+                                      foodCategory: 'Fast Food',
+                                    ),
+                                  );
                                 },
                               ),
                               IconWithNameCard(

@@ -5,10 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
+import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
+import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:timelines/timelines.dart';
+import 'package:nepali_food_recipes/helpers/delete_recipe.dart';
 
 class CookingScreen extends StatefulWidget {
   final QueryDocumentSnapshot? snapshot;
@@ -20,6 +23,8 @@ class CookingScreen extends StatefulWidget {
 
 class _CookingScreenState extends State<CookingScreen> {
   FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  bool isAdmin = false;
+  bool isOwnRecipe = false;
   List<IndicatorStyle> indicatorValues = [
     IndicatorStyle.outlined,
     IndicatorStyle.dot
@@ -40,10 +45,10 @@ class _CookingScreenState extends State<CookingScreen> {
   @override
   void initState() {
     super.initState();
-
-    docRefId = widget.snapshot!.reference.id;
-
     recipeDetail = widget.snapshot;
+    docRefId = widget.snapshot!.reference.id;
+    isAdmin = Provider.of<AuthProvider>(context, listen: false).isAdmin;
+
     foodName = recipeDetail['name'];
     cookingDuration = recipeDetail['duration'].toString();
     description = recipeDetail['description'];
@@ -57,6 +62,22 @@ class _CookingScreenState extends State<CookingScreen> {
 
     increaseViewCount(docRefId!);
     checkIfAlreadySavedOrNot();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    isThisRecipeBelongsToCurrentUser();
+  }
+
+  void isThisRecipeBelongsToCurrentUser() {
+    if (recipeDetail['chefId'] ==
+        Provider.of<AuthProvider>(context).auth.currentUser!.uid) {
+      setState(() {
+        isOwnRecipe = true;
+      });
+    }
   }
 
   void removeFromBookmark() {
@@ -174,85 +195,172 @@ class _CookingScreenState extends State<CookingScreen> {
                   ),
                   kFixedSizedBox,
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            imageUrl: chefImage!,
-                            placeholder: (context, url) =>
-                                Image.asset('images/profile_loading.gif'),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.network_check),
-                            fit: BoxFit.cover,
-                            height: 35,
-                            width: 35,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          chefName,
-                          overflow: TextOverflow.ellipsis,
-                          style: kFormHeadingStyle.copyWith(fontSize: 15),
-                        ),
-                      ),
-                      Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Colors.red,
-                      ),
-                      Text(
-                        '  $views views',
-                        style: kFormHeadingStyle.copyWith(fontSize: 15),
-                      )
-                    ],
-                  ),
-                  InkWell(
-                    onTap: isSaved
-                        ? () {
-                            removeFromBookmark();
-                          }
-                        : () async {
-                            print('save clicked');
-                            _fireStore
-                                .collection('users')
-                                .doc(Provider.of<AuthProvider>(context,
-                                        listen: false)
-                                    .auth
-                                    .currentUser!
-                                    .uid)
-                                .update(
-                              {
-                                'saved': FieldValue.arrayUnion([docRefId])
-                              },
-                            ).onError((error, stackTrace) {
-                              print(error);
-                              showSnackBar(
-                                  'Could not Save at the moment', context);
-                            });
-                            setState(() {
-                              isSaved = true;
-                            });
-                          },
-                    child: Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 35,
-                            width: 35,
-                            child: Icon(
-                              isSaved ? Icons.bookmark : Icons.bookmark_border,
-                              color: Colors.redAccent,
+                          /// Row of chef image and name
+                          Row(
+                            children: [
+                              Container(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl: chefImage!,
+                                    placeholder: (context, url) => Image.asset(
+                                        'images/profile_loading.gif'),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.network_check),
+                                    fit: BoxFit.cover,
+                                    height: 35,
+                                    width: 35,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                chefName,
+                                overflow: TextOverflow.ellipsis,
+                                style: kFormHeadingStyle.copyWith(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InkWell(
+                            onTap: isSaved
+                                ? () {
+                                    removeFromBookmark();
+                                  }
+                                : () async {
+                                    print('save clicked');
+                                    _fireStore
+                                        .collection('users')
+                                        .doc(Provider.of<AuthProvider>(context,
+                                                listen: false)
+                                            .auth
+                                            .currentUser!
+                                            .uid)
+                                        .update(
+                                      {
+                                        'saved':
+                                            FieldValue.arrayUnion([docRefId])
+                                      },
+                                    ).onError((error, stackTrace) {
+                                      print(error);
+                                      showSnackBar(
+                                          'Could not Save at the moment',
+                                          context);
+                                    });
+                                    setState(() {
+                                      isSaved = true;
+                                    });
+                                  },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  isSaved
+                                      ? Icons.bookmark
+                                      : Icons.bookmark_border,
+                                  color: Colors.redAccent,
+                                ),
+                                SizedBox(width: 10),
+                                Text(isSaved ? 'Bookmarked' : 'Bookmark',
+                                    style: kFormHeadingStyle.copyWith(
+                                        fontSize: 15))
+                              ],
                             ),
                           ),
-                          SizedBox(width: 10),
-                          Text(isSaved ? 'Bookmarked' : 'Bookmark',
-                              style: kFormHeadingStyle.copyWith(fontSize: 15))
                         ],
                       ),
-                    ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// Row of view icon and view count
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.remove_red_eye_outlined,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                '  $views views',
+                                style: kFormHeadingStyle.copyWith(fontSize: 15),
+                              )
+                            ],
+                          ),
+
+                          /// row for delete icon and text
+
+                          Provider.of<AuthProvider>(context, listen: false)
+                                      .isAdmin ||
+                                  isOwnRecipe
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              content: Text(
+                                                  'Are you sure want to delete?',
+                                                  style: kFormHeadingStyle
+                                                      .copyWith(
+                                                          fontSize: 18,
+                                                          color: Colors.red)),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      DeleteRecipe(
+                                                              imageUrl: imgUrl,
+                                                              snapshot: widget
+                                                                  .snapshot)
+                                                          .deleteDocumentFromFirebase();
+                                                      showSnackBar(
+                                                          "Deleted SuccessFully",
+                                                          context);
+                                                      Navigation
+                                                          .changeScreenWithReplacement(
+                                                              context,
+                                                              NavBarController());
+                                                    },
+                                                    child: Text('Yes')),
+                                                TextButton(
+                                                    onPressed: () {},
+                                                    child: Text('No',
+                                                        style: kFormHeadingStyle
+                                                            .copyWith(
+                                                                fontSize: 15,
+                                                                color: Colors
+                                                                    .red)))
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.delete_forever_outlined,
+                                          color: Colors.redAccent,
+                                        ),
+                                        Text(
+                                          ' Delete',
+                                          style: kFormHeadingStyle.copyWith(
+                                              fontSize: 15, color: Colors.red),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ],
                   ),
                   kDivider,
                   Text(
