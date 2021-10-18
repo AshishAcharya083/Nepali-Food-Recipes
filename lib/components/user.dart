@@ -29,8 +29,28 @@ class Info extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 CachedNetworkImage(
-                    placeholder: (context, url) =>
-                        Image.asset('images/profile_loading.png'),
+                    errorWidget: (context, url, error) => Center(
+                            child: Icon(
+                          Icons.network_check,
+                          size: 80,
+                          color: Colors.red,
+                        )),
+                    placeholder: (context, url) => Container(
+                          margin: EdgeInsets.only(bottom: defaultSize), //10
+                          height: defaultSize * 14, //140
+                          width: defaultSize * 14,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: defaultSize * 0.8, //8
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('images/profile_loading.gif'),
+                            ),
+                          ),
+                        ),
                     imageBuilder: (context, imageProvider) => Container(
                           margin: EdgeInsets.only(bottom: defaultSize), //10
                           height: defaultSize * 14, //140

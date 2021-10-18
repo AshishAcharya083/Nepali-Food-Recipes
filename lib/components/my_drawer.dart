@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/notification.dart';
@@ -11,14 +13,41 @@ import 'package:nepali_food_recipes/screens/about_page.dart';
 import 'package:nepali_food_recipes/screens/setting_screen.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   final BuildContext cxt;
-  MyDrawer(this.cxt);
+
+  MyDrawer(
+    this.cxt,
+  );
+
+  @override
+  _MyDrawerState createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  @override
+  void initState() {
+    super.initState();
+    initializeIsAdminPrefs();
+  }
+
+  bool isAdmin = false;
+  void initializeIsAdminPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('isAdmin') ?? false == true) {
+      setState(() {
+        isAdmin = true;
+      });
+    }
+  }
+
   @override
   Widget build(cntx) {
-    double width = ScreenSize.getWidth(cxt);
-    double height = ScreenSize.getHeight(cxt) - 80;
+    print('The isAdmin in drawer is $isAdmin');
+    double width = ScreenSize.getWidth(widget.cxt);
+    double height = ScreenSize.getHeight(widget.cxt) - 80;
 
     return Container(
       width: width * 0.7,
@@ -68,6 +97,16 @@ class MyDrawer extends StatelessWidget {
                         right: 200,
                         top: 30,
                         child: CachedNetworkImage(
+                          errorWidget: (context, url, error) => Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image:
+                                      AssetImage('images/profile_loading.gif'),
+                                )),
+                          ),
                           imageBuilder: (context, imageProvider) => Container(
                             height: 100,
                             decoration: BoxDecoration(
@@ -82,20 +121,25 @@ class MyDrawer extends StatelessWidget {
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image: AssetImage('images/loader.gif'),
+                                  fit: BoxFit.cover,
+                                  image:
+                                      AssetImage('images/profile_loading.gif'),
                                 )),
                           ),
-                          imageUrl:
-                              Provider.of<AuthProvider>(cxt, listen: false)
-                                  .auth
-                                  .currentUser!
-                                  .photoURL!,
+                          imageUrl: Provider.of<AuthProvider>(widget.cxt,
+                                  listen: false)
+                              .auth
+                              .currentUser!
+                              .photoURL!,
                         )),
                     Container(
                       margin: EdgeInsets.only(top: 150),
                       child: Column(
                         children: [
-                          Provider.of<AuthProvider>(cntx, listen: false).isAdmin
+                          // Provider.of<AuthProvider>(cntx, listen: false).isAdmin
+                          //     ?
+
+                          isAdmin
                               ? DrawerTile('Admin', Icons.local_police)
                               : Container(),
                           InkWell(
@@ -126,9 +170,10 @@ class MyDrawer extends StatelessWidget {
                           Spacer(),
                           InkWell(
                               onTap: () {
-                                Navigator.pop(cxt);
-                                Provider.of<AuthProvider>(cxt, listen: false)
-                                    .signOut(cxt);
+                                Navigator.pop(widget.cxt);
+                                Provider.of<AuthProvider>(widget.cxt,
+                                        listen: false)
+                                    .signOut(widget.cxt);
                                 // Navigation.changeScreenWithReplacement(
                                 //     context, SignUpScreen());
                               },

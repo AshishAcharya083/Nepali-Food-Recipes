@@ -122,11 +122,12 @@ class _CookingScreenState extends State<CookingScreen> {
   }
 
   void increaseViewCount(String docId) {
-    _fireStore
-        .collection('recipes')
-        .doc(docId)
-        .set({'views': views! + 1}, SetOptions(merge: true));
-    setState(() {});
+    _fireStore.collection('recipes').doc(docId).update(
+      {'views': views! + 1},
+    );
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

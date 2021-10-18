@@ -68,26 +68,35 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  void isAdminFunction() {
+  void isAdminFunction() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     print('isAdminFunction called');
     print('the current user email is ${auth.currentUser!.email}');
-    _firestore
+    await _firestore
         .collection('admins')
         .where('email', isEqualTo: auth.currentUser!.email)
         .get()
         .then((value) => {
               if (value.docs.length > 0)
-                {isAdmin = true, print('isAdmin = true'), notifyListeners()}
+                {
+                  prefs.setBool('isAdmin', true),
+                  print('isAdmin : TRUE'),
+                  notifyListeners(),
+                }
             });
     notifyListeners();
   }
 
   void signOut(BuildContext context) async {
-    print('isAdmin is : $isAdmin');
     print('log out tapped');
-    await googleSignIn.disconnect();
+    await googleSignIn.disconnect().catchError((onError) {
+      print("ERROR is catched in signOut function");
+      print(onError);
+    });
     auth.signOut();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isAdmin', false);
+    print('isAdmin is : ${prefs.getBool('isAdmin')}');
     notifyListeners();
     Navigation.changeScreenWithReplacement(context, SignUpScreen());
   }

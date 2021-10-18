@@ -100,10 +100,19 @@ class _HomePageState extends State<HomePage> {
                             child: CachedNetworkImage(
                               imageUrl:
                                   authProvider.auth.currentUser!.photoURL!,
-                              placeholder: (context, url) =>
-                                  Image.asset('images/profile_loading.gif'),
-                              errorWidget: (context, url, error) =>
-                                  Image.asset('images/loader.gif'),
+                              placeholder: (context, url) => Image.asset(
+                                'images/profile_loading.gif',
+                                fit: BoxFit.cover,
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.white,
+                                child: Center(
+                                    child: Icon(
+                                  Icons.network_check,
+                                  size: 35,
+                                  color: Colors.red,
+                                )),
+                              ),
                               fit: BoxFit.cover,
                             ),
                           ),
