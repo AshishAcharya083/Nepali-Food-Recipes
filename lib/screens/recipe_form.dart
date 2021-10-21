@@ -17,6 +17,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 class RecipeForm extends StatefulWidget {
+  final bool isEditing;
+  final QueryDocumentSnapshot? editingSnapshot;
+  RecipeForm({this.isEditing = false, this.editingSnapshot});
   @override
   _RecipeFormState createState() => _RecipeFormState();
 }
@@ -44,6 +47,7 @@ class _RecipeFormState extends State<RecipeForm> {
   @override
   void initState() {
     super.initState();
+    if (widget.isEditing) {}
     provider = Provider.of<AuthProvider>(context, listen: false);
   }
 
@@ -643,7 +647,8 @@ class _RecipeFormState extends State<RecipeForm> {
                           'chef': provider!.auth.currentUser!.displayName,
                           'chefId': provider!.auth.currentUser!.uid,
                           'views': 1,
-                          'isEasy': isEasy
+                          'isEasy': isEasy,
+                          'status': 'pending',
                         }).then((value) => showDialog(
                             barrierDismissible: false,
                             context: context,

@@ -16,12 +16,12 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int page = 0;
   List<ItemData> data = [
+    ItemData(Colors.red.shade400, "images/logo.png", "500+",
+        " Indian & Nepali Recipes", "In One Place"),
+    ItemData(Colors.deepPurpleAccent, "images/upload.png", "Upload Your own ",
+        "Recipe", "& share with Friends"),
     ItemData(
-        Colors.blue, "images/burger.png", "500+ Recipes", "It's Me", "Ashish"),
-    ItemData(Colors.deepPurpleAccent, "images/drink.png", "Easy Search",
-        "Look At", "Liquid Swipe"),
-    ItemData(
-        Colors.green, "images/gallery.png", " 2Liked?", "Fork!", "Give Star!"),
+        Colors.green, "images/chef.png", "Be", "Your Own Chef", "Give Star!"),
     ItemData(Colors.yellow, "images/meat.png", "Swipe to Continue", "Used for",
         "Onboarding design"),
   ];
@@ -54,26 +54,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     children: <Widget>[
                       Image.asset(
                         data[index].image,
+                        height: 300,
                         fit: BoxFit.cover,
                       ),
                       Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10),
                       ),
                       Column(
                         children: <Widget>[
                           Text(
                             data[index].text1,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 40,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
-                            data[index].text2,
-                          ),
-                          Text(
-                            data[index].text3,
-                          ),
+                          Text(data[index].text2,
+                              style: TextStyle(
+                                  fontSize: 40,
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.w600)),
+                          Text(data[index].text3,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600)),
                         ],
                       ),
                     ],

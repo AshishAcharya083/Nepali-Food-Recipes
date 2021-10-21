@@ -148,32 +148,6 @@ class _ListScreenState extends State<ListScreen> {
                                             children: <Widget>[
                                               Expanded(
                                                 flex: 3,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: <Widget>[
-                                                    Text(docs[index]['name'],
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 2,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: kFormHeadingStyle
-                                                            .copyWith(
-                                                                fontSize: 18)),
-                                                    // IconButton(
-                                                    //     icon: Icon(
-                                                    //       Icons.star,
-                                                    //       color: Colors.red,
-                                                    //     ),
-                                                    //     onPressed: () {})
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 4,
                                                 child: Container(
                                                   child: ClipRRect(
                                                     borderRadius:
@@ -196,6 +170,32 @@ class _ListScreenState extends State<ListScreen> {
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: <Widget>[
+                                                    Text(docs[index]['name'],
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 2,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: kFormHeadingStyle
+                                                            .copyWith(
+                                                                fontSize: 18)),
+                                                    // IconButton(
+                                                    //     icon: Icon(
+                                                    //       Icons.star,
+                                                    //       color: Colors.red,
+                                                    //     ),
+                                                    //     onPressed: () {})
+                                                  ],
                                                 ),
                                               ),
                                             ],

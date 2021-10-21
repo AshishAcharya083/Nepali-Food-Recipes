@@ -10,6 +10,7 @@ import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/search.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/about_page.dart';
+import 'package:nepali_food_recipes/screens/admin_screen.dart';
 import 'package:nepali_food_recipes/screens/setting_screen.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +141,15 @@ class _MyDrawerState extends State<MyDrawer> {
                           //     ?
 
                           isAdmin
-                              ? DrawerTile('Admin', Icons.local_police)
+                              ? InkWell(
+                                  onTap: () {
+                                    Navigation.changeScreen(
+                                      context,
+                                      AdminScreen(),
+                                    );
+                                  },
+                                  child:
+                                      DrawerTile('Admin', Icons.local_police))
                               : Container(),
                           InkWell(
                               onTap: () {

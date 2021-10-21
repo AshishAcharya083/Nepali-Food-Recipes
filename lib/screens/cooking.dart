@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
@@ -10,6 +11,7 @@ import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelines/timelines.dart';
 import 'package:nepali_food_recipes/helpers/delete_recipe.dart';
 
@@ -47,7 +49,7 @@ class _CookingScreenState extends State<CookingScreen> {
     super.initState();
     recipeDetail = widget.snapshot;
     docRefId = widget.snapshot!.reference.id;
-    isAdmin = Provider.of<AuthProvider>(context, listen: false).isAdmin;
+    // isAdmin = Provider.of<AuthProvider>(context, listen: false).isAdmin;
 
     foodName = recipeDetail['name'];
     cookingDuration = recipeDetail['duration'].toString();
@@ -59,7 +61,7 @@ class _CookingScreenState extends State<CookingScreen> {
     chefName = recipeDetail['chef'];
     chefImage = recipeDetail['chefImage'];
     views = recipeDetail['views'];
-
+    initializeIsAdminPrefs();
     increaseViewCount(docRefId!);
     checkIfAlreadySavedOrNot();
   }
@@ -69,6 +71,15 @@ class _CookingScreenState extends State<CookingScreen> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     isThisRecipeBelongsToCurrentUser();
+  }
+
+  void initializeIsAdminPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('isAdmin') ?? false == true) {
+      setState(() {
+        isAdmin = true;
+      });
+    }
   }
 
   void isThisRecipeBelongsToCurrentUser() {
@@ -297,9 +308,7 @@ class _CookingScreenState extends State<CookingScreen> {
 
                           /// row for delete icon and text
 
-                          Provider.of<AuthProvider>(context, listen: false)
-                                      .isAdmin ||
-                                  isOwnRecipe
+                          isAdmin || isOwnRecipe
                               ? Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: InkWell(
@@ -332,7 +341,9 @@ class _CookingScreenState extends State<CookingScreen> {
                                                     },
                                                     child: Text('Yes')),
                                                 TextButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
                                                     child: Text('No',
                                                         style: kFormHeadingStyle
                                                             .copyWith(
@@ -363,6 +374,12 @@ class _CookingScreenState extends State<CookingScreen> {
                       ),
                     ],
                   ),
+                  kFixedSizedBox,
+                  isAdmin || isOwnRecipe
+                      ? FlatButtonWithText(
+                          text: 'Edit Recipe',
+                        )
+                      : Container(),
                   kDivider,
                   Text(
                     'Description',
