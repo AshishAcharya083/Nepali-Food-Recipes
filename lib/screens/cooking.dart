@@ -10,6 +10,7 @@ import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:nepali_food_recipes/screens/recipe_form.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelines/timelines.dart';
@@ -376,8 +377,18 @@ class _CookingScreenState extends State<CookingScreen> {
                   ),
                   kFixedSizedBox,
                   isAdmin || isOwnRecipe
-                      ? FlatButtonWithText(
-                          text: 'Edit Recipe',
+                      ? InkWell(
+                          onTap: () {
+                            Navigation.changeScreen(
+                                context,
+                                RecipeForm(
+                                  isEditing: true,
+                                  editingSnapshot: widget.snapshot,
+                                ));
+                          },
+                          child: FlatButtonWithText(
+                            text: 'Edit Recipe',
+                          ),
                         )
                       : Container(),
                   kDivider,

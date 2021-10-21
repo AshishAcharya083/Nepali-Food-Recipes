@@ -25,8 +25,8 @@ class RecipeForm extends StatefulWidget {
 }
 
 class _RecipeFormState extends State<RecipeForm> {
-  List<String> ingredients = ['', ''];
-  List<String> steps = ['', '', ''];
+  List<dynamic> ingredients = ['', ''];
+  List<dynamic> steps = ['', '', ''];
   String? errorText;
   double cookTime = 20;
   XFile? image;
@@ -44,10 +44,21 @@ class _RecipeFormState extends State<RecipeForm> {
   bool isLoading = false;
   bool imageExist = false;
   bool isEasy = true;
+  var data;
   @override
   void initState() {
     super.initState();
-    if (widget.isEditing) {}
+    if (widget.isEditing) {
+      data = widget.editingSnapshot!.data();
+      _descriptionController = TextEditingController(text: data['description']);
+      _foodNameController = TextEditingController(text: data['name']);
+      isVeg = data['veg'];
+      category = data['category'];
+      isEasy = data['isEasy'];
+      cookTime = double.parse(data['duration']).toDouble();
+      ingredients = data['ingredients'];
+      steps = data['steps'];
+    }
     provider = Provider.of<AuthProvider>(context, listen: false);
   }
 
@@ -150,25 +161,35 @@ class _RecipeFormState extends State<RecipeForm> {
                       margin: EdgeInsets.symmetric(vertical: 20),
                       height: 180,
                       width: ScreenSize.getWidth(context),
-                      child: imageFile == null
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image(image: AssetImage('images/gallery.png')),
-                                Text(
-                                  'Add Cover Photo',
-                                  style:
-                                      kFormHeadingStyle.copyWith(fontSize: 18),
-                                ),
-                              ],
-                            )
-                          : ClipRRect(
+                      child: widget.isEditing && imageFile == null
+                          ? ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.file(
-                                imageFile!,
+                              child: Image.network(
+                                data['photo'],
                                 fit: BoxFit.cover,
                               ),
-                            ),
+                            )
+                          : imageFile == null
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                        image:
+                                            AssetImage('images/gallery.png')),
+                                    Text(
+                                      'Add Cover Photo',
+                                      style: kFormHeadingStyle.copyWith(
+                                          fontSize: 18),
+                                    ),
+                                  ],
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.file(
+                                    imageFile!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(20)),
