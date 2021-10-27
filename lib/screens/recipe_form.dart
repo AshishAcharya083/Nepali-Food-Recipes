@@ -448,11 +448,13 @@ class _RecipeFormState extends State<RecipeForm> {
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          key: UniqueKey(),
+                          key: new ObjectKey(ingredients[index]),
                           onDismissed: (direction) {
-                            setState(() {
-                              ingredients.removeAt(index);
-                            });
+                            if (ingredients.contains(ingredients[index])) {
+                              setState(() {
+                                ingredients.removeAt(index);
+                              });
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -543,7 +545,7 @@ class _RecipeFormState extends State<RecipeForm> {
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          key: UniqueKey(),
+                          key: new ObjectKey(steps[index]),
                           onDismissed: (direction) {
                             setState(() {
                               steps.removeAt(index);
