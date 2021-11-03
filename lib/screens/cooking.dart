@@ -103,7 +103,7 @@ class _CookingScreenState extends State<CookingScreen> {
         .update({
       'saved': FieldValue.arrayRemove([docRefId])
     }).onError((error, stackTrace) {
-      showSnackBar('Cannot remove from bookmark', context);
+      showSnackBar('Cannot remove from bookmark', context, Icons.error_outline);
     });
 
     setState(() {
@@ -267,7 +267,8 @@ class _CookingScreenState extends State<CookingScreen> {
                                       print(error);
                                       showSnackBar(
                                           'Could not Save at the moment',
-                                          context);
+                                          context,
+                                          Icons.error_outline);
                                     });
                                     setState(() {
                                       isSaved = true;
@@ -334,7 +335,9 @@ class _CookingScreenState extends State<CookingScreen> {
                                                           .deleteDocumentFromFirebase();
                                                       showSnackBar(
                                                           "Deleted SuccessFully",
-                                                          context);
+                                                          context,
+                                                          Icons
+                                                              .delete_forever_outlined);
                                                       Navigation
                                                           .changeScreenWithReplacement(
                                                               context,

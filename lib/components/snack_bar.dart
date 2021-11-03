@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
-    String snackText, BuildContext context) {
+    String snackText, BuildContext context, IconData myIcon) {
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     backgroundColor: kPrimaryColor,
     shape: RoundedRectangleBorder(
@@ -11,7 +11,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(
     behavior: SnackBarBehavior.floating,
     content: ListTile(
       leading: Icon(
-        Icons.warning,
+        myIcon,
         color: kSecondaryColor,
       ),
       title: Text(

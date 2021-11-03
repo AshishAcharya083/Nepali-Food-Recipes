@@ -137,8 +137,8 @@ class _AdminScreenState extends State<AdminScreen> {
                                                 'status': 'approved'
                                               }, SetOptions(merge: true)).then(
                                                       (value) {
-                                                showSnackBar(
-                                                    'Approved', context);
+                                                showSnackBar('Approved',
+                                                    context, Icons.done);
                                               });
                                             } catch (e) {
                                               print(e);

@@ -686,7 +686,8 @@ class _RecipeFormState extends State<RecipeForm> {
                             'isEasy': isEasy,
                             'status': 'pending',
                           }).then((value) {
-                            showSnackBar('Edited SuccessFully 😊', context);
+                            showSnackBar(
+                                'Edited SuccessFully 😊', context, Icons.edit);
                             Navigator.pop(context);
                           });
                         } else {
@@ -808,7 +809,8 @@ class _RecipeFormState extends State<RecipeForm> {
                           cookTime = 30;
                         });
                       } else {
-                        showSnackBar('All Fields are mandatory', context);
+                        showSnackBar('All Fields are mandatory', context,
+                            Icons.error_outline);
                       }
                     },
                     child: FlatButtonWithText(

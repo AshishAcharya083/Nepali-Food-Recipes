@@ -46,7 +46,8 @@ class _SettingScreenState extends State<SettingScreen> {
               inactiveTrackColor: kPrimaryColor,
               value: toggleButton,
               onChanged: (b) async {
-                showSnackBar('Donn\'t worry it will work later', context);
+                showSnackBar('Donn\'t worry it will work later', context,
+                    Icons.timelapse);
                 setState(() {
                   toggleButton = b;
                 });

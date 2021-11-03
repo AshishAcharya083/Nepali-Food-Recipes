@@ -129,7 +129,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 drawer: MyDrawer(context),
                 body: StreamBuilder<QuerySnapshot>(
-                  stream: fireStore.collection('recipes').snapshots(),
+                  stream: fireStore
+                      .collection('recipes')
+                      .where('status', isEqualTo: 'approved')
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData)
                       return Center(
@@ -154,6 +157,8 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
+
+                        /// search bar
                         Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: TextField(
@@ -174,6 +179,8 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 18,
                         ),
+
+                        /// chip tiles for categories
                         Container(
                           height: 45,
                           child: ListView(
