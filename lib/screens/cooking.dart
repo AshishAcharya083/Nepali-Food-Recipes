@@ -170,6 +170,8 @@ class _CookingScreenState extends State<CookingScreen> {
                         child: Text(
                           foodName,
                           textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style:
                               kFormHeadingStyle.copyWith(color: Colors.white),
                           // overflow: TextOverflow.ellipsis,
@@ -201,6 +203,16 @@ class _CookingScreenState extends State<CookingScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  kFixedSizedBox,
+                  foodName.length > 40
+                      ? Text(
+                          " ' $foodName ' ",
+                          // textAlign: TextAlign.center,
+
+                          style: kFormHeadingStyle.copyWith(fontSize: 18),
+                          // overflow: TextOverflow.ellipsis,
+                        )
+                      : Container(),
                   kFixedSizedBox,
                   Text(
                     '${isVeg ? 'Veg' : 'Non-veg'}. ${cookingDuration.toString()} mins',

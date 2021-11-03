@@ -256,7 +256,10 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          height: ScreenSize.getHeight(context) * 0.45,
+                          height: 330,
+
+                          ///most outer container's height
+                          // height: ScreenSize.getHeight(context) * 0.45,
                           child: ListView.builder(
                               itemCount: recipes.length,
                               scrollDirection: Axis.horizontal,
@@ -278,10 +281,12 @@ class _HomePageState extends State<HomePage> {
                                       child: Stack(
                                         alignment: Alignment.bottomCenter,
                                         children: [
+                                          /// container having name and description
                                           Positioned(
                                             height: 220,
                                             width: 180,
-                                            bottom: 20,
+                                            top: 80,
+                                            // bottom: 20,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -305,13 +310,7 @@ class _HomePageState extends State<HomePage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    SizedBox(
-                                                      height:
-                                                          (ScreenSize.getHeight(
-                                                                  context) *
-                                                              0.17 /
-                                                              2.2),
-                                                    ),
+                                                    SizedBox(height: 50),
                                                     Text(
                                                       recipes[index]['name']
                                                           .toString(),
@@ -321,7 +320,7 @@ class _HomePageState extends State<HomePage> {
                                                           fontFamily: 'Dosis',
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          fontSize: 18),
+                                                          fontSize: 24),
                                                     ),
                                                     Row(
                                                       children: [
@@ -422,13 +421,16 @@ class _HomePageState extends State<HomePage> {
                                           ///food image
                                           Positioned(
                                             right: 10,
-                                            height:
-                                                ScreenSize.getHeight(context) *
-                                                    0.17,
-                                            width:
-                                                ScreenSize.getWidth(context) *
-                                                    0.35,
-                                            top: 10,
+                                            height: 140,
+                                            width: 140,
+                                            // height:
+                                            //     ScreenSize.getHeight(context) *
+                                            //         0.17,
+
+                                            // width:
+                                            //     ScreenSize.getWidth(context) *
+                                            //         0.35,
+                                            top: 0,
                                             child: Container(
                                               child: CachedNetworkImage(
                                                 imageBuilder:
@@ -467,36 +469,54 @@ class _HomePageState extends State<HomePage> {
                                                 },
                                               ),
                                               decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: kCardColors[
+                                                                index % 4]
+                                                            .withOpacity(0.4),
+                                                        blurRadius: 12,
+                                                        offset: Offset(4, 4),
+                                                        spreadRadius: 0)
+                                                  ],
                                                   border: Border.all(
                                                       color: Colors.white,
                                                       width: 5),
-                                                  color: Colors.red,
+                                                  // color: Colors.red,
                                                   shape: BoxShape.circle),
                                             ),
                                           ),
                                           Positioned(
-                                              right: 10,
-                                              bottom: 10,
-                                              child: InkWell(
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5,
-                                                      vertical: 5),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      color: Colors.white),
-                                                  child: Text(
-                                                    recipes[index]['veg']
-                                                        ? 'veg'
-                                                        : 'non-Veg',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
+                                            right: 10,
+                                            bottom: 18,
+                                            child: InkWell(
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 5, vertical: 5),
+                                                decoration: BoxDecoration(
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: kCardColors[
+                                                                  index % 4]
+                                                              .withOpacity(0.4),
+                                                          blurRadius: 12,
+                                                          offset: Offset(4, 4),
+                                                          spreadRadius: 0)
+                                                    ],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    color: Colors.white),
+                                                child: Text(
+                                                  recipes[index]['veg']
+                                                      ? 'veg'
+                                                      : 'non-Veg',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                              ))
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
