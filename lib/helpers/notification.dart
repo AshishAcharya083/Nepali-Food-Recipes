@@ -20,6 +20,12 @@ class NotificationService {
         onSelectNotification: onSelectNotification);
   }
 
+  void cancelAllNotification() async {
+    await flutterLocalNotificationsPlugin
+        .cancelAll()
+        .whenComplete(() => print('All notification cancelled'));
+  }
+
   Future showNotification(String data) async {
     try {
       const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -33,9 +39,11 @@ class NotificationService {
       const NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
 
-      await flutterLocalNotificationsPlugin.show(0, 'Recipe of the week',
-          'Click to open the app', platformChannelSpecifics,
-          payload: 'item x');
+      await flutterLocalNotificationsPlugin
+          .periodicallyShow(0, 'Recipe of the week', 'Click to open the app',
+              RepeatInterval.weekly, platformChannelSpecifics,
+              payload: 'item x')
+          .whenComplete(() => print('Notification scheduled'));
     } catch (e) {
       print(e);
       return null;

@@ -11,7 +11,22 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool toggleButton = true;
+  bool? toggleButton = true;
+
+  void getTogglePrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      toggleButton = prefs.getBool('notification') ?? true;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTogglePrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,39 +51,52 @@ class _SettingScreenState extends State<SettingScreen> {
                   color: Colors.black),
             ),
             leading: Icon(
-              toggleButton ? Icons.notifications_active : Icons.notifications,
-              color: toggleButton ? Colors.red : kPrimaryColor,
+              toggleButton! ? Icons.notifications_active : Icons.notifications,
+              color: toggleButton! ? Colors.red : kPrimaryColor,
             ),
             trailing: Switch(
               activeColor: kPrimaryColor,
               activeTrackColor: Colors.red,
               inactiveThumbColor: kPrimaryColor,
               inactiveTrackColor: kPrimaryColor,
-              value: toggleButton,
+              value: toggleButton!,
               onChanged: (b) async {
-                showSnackBar('Donn\'t worry it will work later', context,
-                    Icons.timelapse);
+                showSnackBar(
+                    'Notification ${b ? 'Enabled' : 'Disabled'}',
+                    context,
+                    b
+                        ? Icons.notifications_active_outlined
+                        : Icons.notifications_off_outlined);
+
                 setState(() {
                   toggleButton = b;
                 });
                 print(b);
+                if (b) {
+                  await NotificationService()
+                      .showNotification('Try this new Recipe');
+                } else if (!b) {
+                  NotificationService().cancelAllNotification();
+                }
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('notification', toggleButton);
+                prefs.setBool('notification', toggleButton!);
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () async {
-                await NotificationService()
-                    .showNotification('Try this new recipes');
-              },
-              child: FlatButtonWithText(
-                text: 'Send me a Notification',
-              ),
-            ),
-          ),
+
+          /// button for notification testing onclick
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: InkWell(
+          //     onTap: () async {
+          //       await NotificationService()
+          //           .showNotification('Try this new recipes');
+          //     },
+          //     child: FlatButtonWithText(
+          //       text: 'Send me a Notification',
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
