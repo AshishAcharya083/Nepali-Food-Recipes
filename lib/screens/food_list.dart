@@ -55,7 +55,10 @@ class _ListScreenState extends State<ListScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: StreamBuilder<QuerySnapshot>(
-            stream: fireStore.collection('recipes').snapshots(),
+            stream: fireStore
+                .collection('recipes')
+                .where('status', isEqualTo: 'approved')
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return Center(child: CircularProgressIndicator());
