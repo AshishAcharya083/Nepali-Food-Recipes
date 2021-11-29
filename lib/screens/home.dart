@@ -133,7 +133,11 @@ class _HomePageState extends State<HomePage> {
                 body: StreamBuilder<QuerySnapshot>(
                   stream: fireStore
                       .collection('recipes')
-                      .where('status', isEqualTo: 'approved')
+                      .orderBy('views', descending: true)
+                      .where(
+                        'status',
+                        isEqualTo: 'approved',
+                      )
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData)

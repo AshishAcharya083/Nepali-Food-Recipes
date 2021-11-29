@@ -11,7 +11,7 @@ import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
-import 'package:nepali_food_recipes/screens/home.dart';
+
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -685,6 +685,7 @@ class _RecipeFormState extends State<RecipeForm> {
                             'views': data['views'],
                             'isEasy': isEasy,
                             'status': 'pending',
+                            'date': DateTime.now().toLocal(),
                           }).then((value) {
                             showSnackBar(
                                 'Edited SuccessFully 😊', context, Icons.edit);
@@ -711,6 +712,7 @@ class _RecipeFormState extends State<RecipeForm> {
                             'views': 1,
                             'isEasy': isEasy,
                             'status': 'pending',
+                            'date': DateTime.now().toLocal()
                           }).then(
                             (value) => showDialog(
                               barrierDismissible: false,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/notification.dart';
@@ -51,14 +50,16 @@ class _SettingScreenState extends State<SettingScreen> {
                   color: Colors.black),
             ),
             leading: Icon(
-              toggleButton! ? Icons.notifications_active : Icons.notifications,
+              toggleButton!
+                  ? Icons.notifications_active
+                  : Icons.notifications_off,
               color: toggleButton! ? Colors.red : kPrimaryColor,
             ),
             trailing: Switch(
               activeColor: kPrimaryColor,
               activeTrackColor: Colors.red,
-              inactiveThumbColor: kPrimaryColor,
-              inactiveTrackColor: kPrimaryColor,
+              inactiveThumbColor: Colors.grey,
+              inactiveTrackColor: kGreyColor,
               value: toggleButton!,
               onChanged: (b) async {
                 showSnackBar(
