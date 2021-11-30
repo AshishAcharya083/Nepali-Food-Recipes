@@ -9,8 +9,7 @@ class CustomAlertDialog {
       {String titleString = 'Upload Success',
       bool showButton = true,
       String imagePath = 'images/party.png',
-      String descriptionText =
-          "Your Recipe has been uploaded,\nyou can see it on your profile"}) {
+      String descriptionText = "Your Recipe is submitted to Admin,"}) {
     return AlertDialog(
       title: Text(titleString,
           textAlign: TextAlign.center,

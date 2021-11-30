@@ -12,11 +12,11 @@ import 'package:nepali_food_recipes/helpers/firebase_storage.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
-
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RecipeForm extends StatefulWidget {
   final bool isEditing;
@@ -27,6 +27,7 @@ class RecipeForm extends StatefulWidget {
 }
 
 class _RecipeFormState extends State<RecipeForm> {
+  SharedPreferences? prefs;
   List<dynamic> ingredients = ['', ''];
   List<dynamic> steps = ['', '', ''];
   String? errorText;
@@ -50,6 +51,7 @@ class _RecipeFormState extends State<RecipeForm> {
   @override
   void initState() {
     super.initState();
+    loadSharedPref();
     if (widget.isEditing) {
       data = widget.editingSnapshot!.data();
       _descriptionController = TextEditingController(text: data['description']);
@@ -62,6 +64,10 @@ class _RecipeFormState extends State<RecipeForm> {
       steps = data['steps'];
     }
     provider = Provider.of<AuthProvider>(context, listen: false);
+  }
+
+  void loadSharedPref() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   void imagePicker(ImageSource source, BuildContext context) async {
@@ -698,7 +704,9 @@ class _RecipeFormState extends State<RecipeForm> {
                             'chefId': provider!.auth.currentUser!.uid,
                             'views': data['views'],
                             'isEasy': isEasy,
-                            'status': 'pending',
+                            'status': prefs!.getBool('isAdmin') ?? false
+                                ? 'approved'
+                                : 'pending',
                             'date': DateTime.now().toLocal(),
                           }).then((value) {
                             showSnackBar(
@@ -725,7 +733,9 @@ class _RecipeFormState extends State<RecipeForm> {
                             'chefId': provider!.auth.currentUser!.uid,
                             'views': 1,
                             'isEasy': isEasy,
-                            'status': 'pending',
+                            'status': prefs!.getBool('isAdmin') ?? false
+                                ? 'approved'
+                                : 'pending',
                             'date': DateTime.now().toLocal()
                           }).then(
                             (value) => showDialog(

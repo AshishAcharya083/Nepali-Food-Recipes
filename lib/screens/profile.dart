@@ -128,10 +128,11 @@ class _ProfileState extends State<Profile> {
                                       return InkWell(
                                         onTap: () {
                                           Navigation.changeScreen(
-                                              context,
-                                              CookingScreen(
-                                                snapshot: foodData[index],
-                                              ));
+                                            context,
+                                            CookingScreen(
+                                              snapshot: foodData[index],
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
