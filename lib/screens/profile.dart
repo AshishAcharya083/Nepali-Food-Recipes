@@ -7,6 +7,7 @@ import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -31,6 +32,19 @@ class _ProfileState extends State<Profile> {
     print('Build Called');
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigation.changeScreenWithReplacement(
+                  context, NavBarController());
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+          iconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
+        ),
         body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
           return StreamBuilder<DocumentSnapshot>(
               stream: fireStore

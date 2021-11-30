@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_food_recipes/components/alert_dialog.dart';
 import 'package:nepali_food_recipes/components/flat_button.dart';
 import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/components/toggle_box.dart';
@@ -646,6 +647,19 @@ class _RecipeFormState extends State<RecipeForm> {
                         setState(() {
                           isLoading = true;
                         });
+                        isLoading
+                            ? showDialog(
+                                context: this.context,
+                                builder: (BuildContext context) {
+                                  return CustomAlertDialog(this.context)
+                                      .alertDialogWithImage(
+                                          showButton: false,
+                                          titleString: 'Uploading! Please wait',
+                                          imagePath: 'images/waiting.png',
+                                          descriptionText:
+                                              'Recipe upload in progress');
+                                })
+                            : Container();
                         var userDocument = _firestore
                             .collection('users')
                             .doc(provider!.auth.currentUser!.uid);
@@ -742,61 +756,8 @@ class _RecipeFormState extends State<RecipeForm> {
                                 );
 
                                 /// returning alert dialog if recipe upload is successful
-                                return AlertDialog(
-                                  title: Text('Upload Success',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          letterSpacing: 1.2,
-                                          fontWeight: FontWeight.bold,
-                                          color: kLightGreenColor)),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const Image(
-                                        image: AssetImage('images/party.png'),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 10.0),
-                                        child: Text(
-                                          'Your Recipe has been uploaded,\nyou can see it on your profile',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontFamily: 'Dosis-Bold',
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        child: Container(
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                              color: kLightGreenColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Center(
-                                            child: Text(
-                                              'Back to Home',
-                                              style: kFormHeadingStyle.copyWith(
-                                                  color: Colors.yellow),
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NavBarController(),
-                                              ),
-                                              (route) => false);
-                                          // Navigation.changeScreen(context, Home());
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                return CustomAlertDialog(context)
+                                    .alertDialogWithImage();
                               },
                             ),
                           );
