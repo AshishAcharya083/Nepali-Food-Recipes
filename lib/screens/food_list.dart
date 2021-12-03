@@ -10,6 +10,7 @@ import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/bookmarked_foods.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
+import 'package:nepali_food_recipes/screens/newest_item_screen.dart';
 import 'package:provider/provider.dart';
 
 class ListScreen extends StatefulWidget {
@@ -372,7 +373,9 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigation.changeScreen(context, NewestItemsScreen());
+                        },
                         child: Container(
                           width: 150,
                           margin: EdgeInsets.only(right: 20),
@@ -388,7 +391,7 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    "Newest",
+                                    "Newest\nItems",
                                     style: TextStyle(
                                         fontSize: 25,
                                         color: Colors.white,
