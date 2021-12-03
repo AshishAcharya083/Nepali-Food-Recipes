@@ -455,7 +455,9 @@ class _RecipeFormState extends State<RecipeForm> {
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          key: new ObjectKey(ingredients[index]),
+                          key: widget.isEditing
+                              ? new ObjectKey(ingredients[index])
+                              : UniqueKey(),
                           onDismissed: (direction) {
                             if (ingredients.contains(ingredients[index])) {
                               setState(() {
@@ -552,7 +554,9 @@ class _RecipeFormState extends State<RecipeForm> {
                                 color: Colors.red,
                                 borderRadius: BorderRadius.circular(20)),
                           ),
-                          key: new ObjectKey(steps[index]),
+                          key: widget.isEditing
+                              ? new ObjectKey(steps[index])
+                              : UniqueKey(),
                           onDismissed: (direction) {
                             setState(() {
                               steps.removeAt(index);
