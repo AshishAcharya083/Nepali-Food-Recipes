@@ -69,6 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
       () async {
         // Navigation.changeScreenWithReplacement(context, OnBoardingScreen());
         SharedPreferences prefs = await SharedPreferences.getInstance();
+        Navigation.changeScreenWithReplacement(context, OnBoardingScreen());
         if (prefs.getBool('showOnBoardingScreen') ?? true) {
           Navigation.changeScreenWithReplacement(context, OnBoardingScreen());
         } else

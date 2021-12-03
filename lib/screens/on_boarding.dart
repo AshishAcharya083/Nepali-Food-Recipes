@@ -17,13 +17,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int page = 0;
   List<ItemData> data = [
     ItemData(Colors.red.shade400, "images/logo.png", "500+",
-        " Indian & Nepali Recipes", "In One Place"),
+        " Nepali Food Recipes", "In One Place"),
     ItemData(Colors.deepPurpleAccent, "images/upload.png", "Upload Your own ",
         "Recipe", "& share with Friends"),
-    ItemData(
-        Colors.green, "images/chef.png", "Be", "Your Own Chef", "Give Star!"),
-    ItemData(Colors.yellow, "images/meat.png", "Swipe to Continue", "Used for",
-        "Onboarding design"),
+    ItemData(Colors.orange.shade400, "images/flag.png", "Be Your Own ", "Chef",
+        "Swipe to Continue.."),
   ];
 
   LiquidController liquidController = LiquidController();
@@ -95,7 +93,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   pageChangeCallback(int incomingPage) async {
     print('data length ${data.length}');
     print(liquidController.currentPage);
+
     if (liquidController.currentPage == (data.length - 1)) {
+      setState(() {
+        data[0].text1 = "WELCOME";
+        data[0].text2 = "To";
+        data[0].text3 = "Nepali Food Recipes";
+      });
       Navigation.changeScreenWithReplacement(context, LogInChecker());
       SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setBool('showOnBoardingScreen', false);
@@ -104,11 +108,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 }
 
 class ItemData {
-  final Color color;
-  final String image;
-  final String text1;
-  final String text2;
-  final String text3;
+  Color color;
+  String image;
+  String text1;
+  String text2;
+  String text3;
 
   ItemData(this.color, this.image, this.text1, this.text2, this.text3);
 }

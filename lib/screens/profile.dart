@@ -45,8 +45,9 @@ class _ProfileState extends State<Profile> {
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
         ),
-        body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
-          return StreamBuilder<DocumentSnapshot>(
+        body: Consumer<AuthProvider>(
+          builder: (context, authProvider, child) {
+            return StreamBuilder<DocumentSnapshot>(
               stream: fireStore
                   .collection('users')
                   .doc(widget.userID == null
@@ -115,99 +116,102 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                                 GridView.builder(
-                                    gridDelegate:
-                                        SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: 200,
-                                            childAspectRatio: 3.5 / 4,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 0),
-                                    itemCount: foodData.length,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemBuilder: (BuildContext context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigation.changeScreen(
-                                            context,
-                                            CookingScreen(
-                                              snapshot: foodData[index],
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 200,
+                                          childAspectRatio: 3.5 / 4,
+                                          crossAxisSpacing: 10,
+                                          mainAxisSpacing: 0),
+                                  itemCount: foodData.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (BuildContext context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigation.changeScreen(
+                                          context,
+                                          CookingScreen(
+                                            snapshot: foodData[index],
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            /// chef name and photo
+
+                                            SizedBox(
+                                              height: 5,
                                             ),
-                                          );
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              /// chef name and photo
 
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-
-                                              ///food image
-                                              Container(
-                                                height: 150,
-                                                width: 150,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                  child: CachedNetworkImage(
-                                                    placeholder:
-                                                        (BuildContext context,
-                                                            photo) {
-                                                      return Image(
-                                                        image: AssetImage(
-                                                            'images/loader.gif'),
-                                                      );
-                                                    },
-                                                    imageUrl: foodData[index]
-                                                        ['photo'],
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Center(
-                                                                child: Icon(
-                                                      Icons.network_check,
-                                                      size: 35,
-                                                      color: Colors.red,
-                                                    )),
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                            ///food image
+                                            Container(
+                                              height: 150,
+                                              width: 150,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                child: CachedNetworkImage(
+                                                  placeholder:
+                                                      (BuildContext context,
+                                                          photo) {
+                                                    return Image(
+                                                      image: AssetImage(
+                                                          'images/loader.gif'),
+                                                    );
+                                                  },
+                                                  imageUrl: foodData[index]
+                                                      ['photo'],
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Center(
+                                                              child: Icon(
+                                                    Icons.network_check,
+                                                    size: 35,
+                                                    color: Colors.red,
+                                                  )),
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                // data[index]['name']
-                                                foodData[index]['name'],
-                                                overflow: TextOverflow.ellipsis,
-                                                style: kFormHeadingStyle
-                                                    .copyWith(fontSize: 18),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                'Food. ${foodData[index]['duration']} mins',
-                                                style: kSecondaryTextStyle
-                                                    .copyWith(fontSize: 12),
-                                              )
-                                            ],
-                                          ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              // data[index]['name']
+                                              foodData[index]['name'],
+                                              overflow: TextOverflow.ellipsis,
+                                              style: kFormHeadingStyle.copyWith(
+                                                  fontSize: 18),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              'Food. ${foodData[index]['duration']} mins',
+                                              style: kSecondaryTextStyle
+                                                  .copyWith(fontSize: 12),
+                                            )
+                                          ],
                                         ),
-                                      );
-                                    })
+                                      ),
+                                    );
+                                  },
+                                )
                               ],
                             ),
                           );
                         }
                       });
                 }
-              });
-        }),
+              },
+            );
+          },
+        ),
       ),
     );
   }

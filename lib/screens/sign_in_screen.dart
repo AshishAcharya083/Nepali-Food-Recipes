@@ -40,9 +40,9 @@ class SignUpScreen extends StatelessWidget {
             ),
             Expanded(
               child: Image(
-                height: 200,
-                width: 200,
-                image: AssetImage('images/recipe-book.png'),
+                height: 300,
+                width: 300,
+                image: AssetImage('images/logo.png'),
               ),
             ),
             SizedBox(
