@@ -176,29 +176,99 @@ class _ListScreenState extends State<ListScreen> {
                                                 ),
                                               ),
                                               Expanded(
-                                                flex: 3,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: <Widget>[
-                                                    Text(docs[index]['name'],
+                                                flex: 4,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        docs[index]['name']
+                                                            .toString()
+                                                            .toUpperCase(),
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         maxLines: 2,
-                                                        textAlign:
-                                                            TextAlign.center,
                                                         style: kFormHeadingStyle
                                                             .copyWith(
-                                                                fontSize: 18)),
-                                                    // IconButton(
-                                                    //     icon: Icon(
-                                                    //       Icons.star,
-                                                    //       color: Colors.red,
-                                                    //     ),
-                                                    //     onPressed: () {})
-                                                  ],
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 18),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .access_time_filled,
+                                                            size: 20,
+                                                            color:
+                                                                kPrimaryColor,
+                                                          ),
+                                                          Text(
+                                                            ' ' +
+                                                                docs[index][
+                                                                        'duration']
+                                                                    .toString() +
+                                                                ' min.',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 16),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text('Difficulty: '),
+                                                          Text(
+                                                            docs[index]['isEasy']
+                                                                        .toString() ==
+                                                                    'true'
+                                                                ? 'EASY'
+                                                                : 'HARD',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                                fontSize: 14),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text('Type: '),
+                                                          Text(
+                                                            docs[index]['veg']
+                                                                        .toString() ==
+                                                                    'true'
+                                                                ? 'VEG'
+                                                                : 'NON-VEG',
+                                                            style: TextStyle(
+                                                                color: docs[index]['veg']
+                                                                            .toString() ==
+                                                                        'true'
+                                                                    ? Colors
+                                                                        .green
+                                                                    : Colors
+                                                                        .red,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 14),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],
