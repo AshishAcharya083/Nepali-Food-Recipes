@@ -56,7 +56,6 @@ class _BookMarkedFoodScreenState extends State<BookMarkedFoodScreen> {
                           child: CircularProgressIndicator(),
                         );
                       else {
-                        QueryDocumentSnapshot? cookQueryDocumentSnapshot;
                         var temp = snapshot.data!.docs;
 
                         /// temp will contain the list of documents which is of type QueryDocumentSnapshot

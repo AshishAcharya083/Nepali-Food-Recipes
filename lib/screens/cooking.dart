@@ -63,7 +63,7 @@ class _CookingScreenState extends State<CookingScreen> {
     chefImage = recipeDetail['chefImage'];
     views = recipeDetail['views'];
     initializeIsAdminPrefs();
-    increaseViewCount(docRefId!);
+
     checkIfAlreadySavedOrNot();
   }
 
@@ -71,6 +71,7 @@ class _CookingScreenState extends State<CookingScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+    increaseViewCount(docRefId!);
     isThisRecipeBelongsToCurrentUser();
   }
 

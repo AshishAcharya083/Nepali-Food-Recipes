@@ -18,17 +18,17 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'Newest Items',
-          style: kFormHeadingStyle,
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Text(
+            'Newest Items',
+            style: kFormHeadingStyle,
+          ),
         ),
-      ),
-      body: GridView.builder(
+        body: GridView.builder(
           physics: BouncingScrollPhysics(),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
@@ -39,43 +39,41 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
           itemBuilder: (BuildContext ctx, index) {
             /// return InkWell here
             return StreamBuilder<QuerySnapshot>(
-                stream: _fireStore
-                    .collection('recipes')
-                    .orderBy('date', descending: true)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData)
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  else {
-                    QueryDocumentSnapshot? cookQueryDocumentSnapshot;
-                    var temp = snapshot.data!.docs;
+              stream: _fireStore
+                  .collection('recipes')
+                  .orderBy('date', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                else {
+                  var temp = snapshot.data!.docs;
 
-                    /// temp will contain the list of documents which is of type QueryDocumentSnapshot
-                    /// getting list of QueryDocument which matches the incoming saved document ID in tempList
-                    /// this seems very inefficient way of filtering data but it's working anyway
-
-                    return InkWell(
-                      onTap: () {
-                        Navigation.changeScreen(
-                            context,
-                            CookingScreen(
-                              snapshot: temp[index],
-                            ));
-                      },
-                      child: FoodViewerWithName(
-                        chefId: temp[index]['chefId'],
-                        chefImageURL: temp[index]['chefImage'],
-                        chefName: temp[index]['chef'],
-                        duration: temp[index]['duration'],
-                        foodImageURL: temp[index]['photo'],
-                        foodName: temp[index]['name'],
-                      ),
-                    );
-                  }
-                });
-          }),
-    ));
+                  return InkWell(
+                    onTap: () {
+                      Navigation.changeScreen(
+                          context,
+                          CookingScreen(
+                            snapshot: temp[index],
+                          ));
+                    },
+                    child: FoodViewerWithName(
+                      chefId: temp[index]['chefId'],
+                      chefImageURL: temp[index]['chefImage'],
+                      chefName: temp[index]['chef'],
+                      duration: temp[index]['duration'],
+                      foodImageURL: temp[index]['photo'],
+                      foodName: temp[index]['name'],
+                    ),
+                  );
+                }
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }
