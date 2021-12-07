@@ -35,7 +35,7 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
               childAspectRatio: 3 / 4,
               crossAxisSpacing: 10,
               mainAxisSpacing: 0),
-          itemCount: 15,
+          itemCount: 5,
           itemBuilder: (BuildContext ctx, index) {
             /// return InkWell here
             return StreamBuilder<QuerySnapshot>(
@@ -51,23 +51,29 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
                 else {
                   var temp = snapshot.data!.docs;
 
-                  return InkWell(
-                    onTap: () {
-                      Navigation.changeScreen(
+                  if (temp.length < 1)
+                    return Center(
+                      child: Text("no items to show"),
+                    );
+                  else
+                    return InkWell(
+                      onTap: () {
+                        Navigation.changeScreen(
                           context,
                           CookingScreen(
                             snapshot: temp[index],
-                          ));
-                    },
-                    child: FoodViewerWithName(
-                      chefId: temp[index]['chefId'],
-                      chefImageURL: temp[index]['chefImage'],
-                      chefName: temp[index]['chef'],
-                      duration: temp[index]['duration'],
-                      foodImageURL: temp[index]['photo'],
-                      foodName: temp[index]['name'],
-                    ),
-                  );
+                          ),
+                        );
+                      },
+                      child: FoodViewerWithName(
+                        chefId: temp[index]['chefId'],
+                        chefImageURL: temp[index]['chefImage'],
+                        chefName: temp[index]['chef'],
+                        duration: temp[index]['duration'],
+                        foodImageURL: temp[index]['photo'],
+                        foodName: temp[index]['name'],
+                      ),
+                    );
                 }
               },
             );
