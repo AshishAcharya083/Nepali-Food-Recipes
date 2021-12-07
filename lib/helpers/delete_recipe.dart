@@ -8,6 +8,7 @@ class DeleteRecipe {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   DeleteRecipe({this.snapshot, this.imageUrl});
   void deleteDocumentFromFirebase() async {
+    dynamic refId = snapshot!.reference.id;
     try {
       await _firebaseFirestore
           .runTransaction((Transaction myTransaction) async {
@@ -18,12 +19,26 @@ class DeleteRecipe {
             .where('saved', arrayContains: snapshot!.reference.id);
         final usersSnap = usersCollection.get();
 
-        usersSnap.then((value) {
-          print("\n\n The saved Item: ");
-          print(value.docs.length);
-          print(value.docs[0]['saved']);
-        });
+        try {
+          /// this will remove deleted recipe from bookmark
+          await usersSnap.then(
+            (value) {
+              value.docs.forEach(
+                (element) {
+                  List tempList = element.data()['saved'];
+                  // print("MY LIST IS:");
+                  // print(tempList);
+                  final filteredList =
+                      tempList.where((element) => element != refId).toList();
 
+                  element.reference.update({'saved': filteredList});
+                },
+              );
+            },
+          );
+        } catch (e) {
+          print("SAVED ITEM ERROR $e");
+        }
         myTransaction.delete(snapshot!.reference);
       });
     } catch (e) {

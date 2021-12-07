@@ -28,34 +28,33 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
             style: kFormHeadingStyle,
           ),
         ),
-        body: GridView.builder(
-          physics: BouncingScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 0),
-          itemCount: 5,
-          itemBuilder: (BuildContext ctx, index) {
-            /// return InkWell here
-            return StreamBuilder<QuerySnapshot>(
-              stream: _fireStore
-                  .collection('recipes')
-                  .orderBy('date', descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                else {
-                  var temp = snapshot.data!.docs;
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _fireStore
+                .collection('recipes')
+                .orderBy('date', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              var temp = snapshot.data!.docs;
+              if (temp.length < 1)
+                return Center(
+                  child: Text("no items to show"),
+                );
+              else
+                return GridView.builder(
+                  physics: BouncingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 4,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 0),
+                  itemCount: temp.length > 14 ? 15 : temp.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    /// return InkWell here
 
-                  if (temp.length < 1)
-                    return Center(
-                      child: Text("no items to show"),
-                    );
-                  else
                     return InkWell(
                       onTap: () {
                         Navigation.changeScreen(
@@ -74,11 +73,9 @@ class _NewestItemsScreenState extends State<NewestItemsScreen> {
                         foodName: temp[index]['name'],
                       ),
                     );
-                }
-              },
-            );
-          },
-        ),
+                  },
+                );
+            }),
       ),
     );
   }
