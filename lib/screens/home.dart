@@ -549,12 +549,7 @@ class _HomePageState extends State<HomePage> {
                               Navigation.changeScreen(
                                   context,
                                   CookingScreen(
-                                    snapshot: recipes[recipes.length >= 32
-                                        ? recipes.length -
-                                            DateTime.now().day.toInt()
-                                        : (recipes.length < 6
-                                            ? 1
-                                            : DateTime.now().weekday)],
+                                    snapshot: recipes[recipes.length % 1],
                                   ));
                             },
                             child: Container(
@@ -565,7 +560,8 @@ class _HomePageState extends State<HomePage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: CachedNetworkImage(
-                                  imageUrl: recipes[0]["photo"],
+                                  imageUrl: recipes[recipes.length % 1]
+                                      ["photo"],
                                   fit: BoxFit.cover,
                                 ),
                               ),

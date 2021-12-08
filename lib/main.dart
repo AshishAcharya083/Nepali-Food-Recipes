@@ -1,7 +1,6 @@
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nepali_food_recipes/helpers/firebase_analytics.dart';
+import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/notification.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
@@ -25,28 +24,31 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  // static FirebaseAnalytics analytics = FirebaseAnalytics();
+  // static FirebaseAnalyticsObserver observer =
+  //     FirebaseAnalyticsObserver(analytics: analytics);
   @override
   Widget build(BuildContext context) {
-    Analytics myAnalytics = Analytics(analytics: analytics, observer: observer);
-    myAnalytics.sendAnalyticsEvent();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
       ],
       child: MaterialApp(
-          navigatorObservers: <NavigatorObserver>[observer],
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            fontFamily: 'Dosis',
-            // accentColor: kPrimaryColor,
-            primaryIconTheme: IconThemeData(
-              color: Colors.black,
-            ),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          splashColor: kPrimaryColor.withOpacity(0.5),
+          highlightColor: kPrimaryColor.withOpacity(0.2),
+          fontFamily: 'Dosis',
+          accentColor: kPrimaryColor,
+          // accentColor: kPrimaryColor,
+          primaryIconTheme: IconThemeData(
+            color: Colors.black,
           ),
-          home: SplashScreen()),
+        ),
+        home: SplashScreen(),
+      ),
     );
   }
 }

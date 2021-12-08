@@ -6,6 +6,7 @@ import 'package:nepali_food_recipes/components/user.dart';
 import 'package:nepali_food_recipes/constants.dart';
 import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
+import 'package:nepali_food_recipes/screens/bookmarked_foods.dart';
 import 'package:nepali_food_recipes/screens/cooking.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
 import 'package:provider/provider.dart';
@@ -108,7 +109,18 @@ class _ProfileState extends State<Profile> {
                                     numberStringContainer(
                                         totalViews.toInt(), 'views'),
                                     widget.userID == null
-                                        ? numberStringContainer(20, "Bookmarks")
+                                        ? InkWell(
+                                            onTap: () {
+                                              Navigation.changeScreen(
+                                                  context,
+                                                  BookMarkedFoodScreen(
+                                                      recipeIds:
+                                                          data['saved']));
+                                            },
+                                            child: numberStringContainer(
+                                                data['saved'].length,
+                                                "Bookmarks"),
+                                          )
                                         : Container(),
                                   ],
                                 ),

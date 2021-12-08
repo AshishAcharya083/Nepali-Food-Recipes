@@ -14,6 +14,7 @@ import 'package:nepali_food_recipes/screens/admin_screen.dart';
 import 'package:nepali_food_recipes/screens/setting_screen.dart';
 import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -176,6 +177,13 @@ class _MyDrawerState extends State<MyDrawer> {
                                 Navigation.changeScreen(cntx, AboutUsPage());
                               },
                               child: DrawerTile('About', Icons.info)),
+                          InkWell(
+                            onTap: () {
+                              Share.share(
+                                  'https://play.google.com/store/apps/details?id=com.whatsapp');
+                            },
+                            child: DrawerTile('Share', Icons.share),
+                          ),
                           Spacer(),
                           InkWell(
                               onTap: () {

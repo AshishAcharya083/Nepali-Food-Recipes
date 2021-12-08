@@ -32,7 +32,6 @@ class NotificationService {
           AndroidNotificationDetails(
         '1',
         'test',
-        'your channel description',
         importance: Importance.max,
         priority: Priority.high,
       );
@@ -41,7 +40,7 @@ class NotificationService {
 
       await flutterLocalNotificationsPlugin
           .periodicallyShow(0, 'Recipe of the week', 'Click to open the app',
-              RepeatInterval.weekly, platformChannelSpecifics,
+              RepeatInterval.daily, platformChannelSpecifics,
               payload: 'item x')
           .whenComplete(() => print('Notification scheduled'));
     } catch (e) {

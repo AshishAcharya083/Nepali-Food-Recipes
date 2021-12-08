@@ -713,9 +713,14 @@ class _RecipeFormState extends State<RecipeForm> {
                                 : 'pending',
                             'date': DateTime.now().toLocal(),
                           }).then((value) {
+                            setState(() {
+                              isLoading = false;
+                            });
                             showSnackBar(
                                 'Edited SuccessFully 😊', context, Icons.edit);
-                            Navigator.pop(context);
+                            Navigation.changeScreenWithReplacement(
+                                context, NavBarController());
+                            print('POPPED');
                           });
                         } else {
                           final downloadURL = await uploadAndGetImageURL(

@@ -457,10 +457,14 @@ class _CookingScreenState extends State<CookingScreen> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text(
-                          ingredients[index],
-                          style: TextStyle(
-                              fontFamily: 'Dosis-SemiBold', letterSpacing: 1.1),
+                        Container(
+                          width: ScreenSize.getWidth(context) * 0.8,
+                          child: Text(
+                            ingredients[index],
+                            style: TextStyle(
+                                fontFamily: 'Dosis-SemiBold',
+                                letterSpacing: 1.1),
+                          ),
                         )
                       ],
                     ),
