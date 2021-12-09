@@ -1,33 +1,49 @@
 {
   "project_info": {
-    "project_number": "622943046917",
-    "project_id": "nepali-food-recipes-1ece6",
-    "storage_bucket": "nepali-food-recipes-1ece6.appspot.com"
+    "project_number": "708078117284",
+    "project_id": "nepali-food-recipes-f44fa",
+    "storage_bucket": "nepali-food-recipes-f44fa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:622943046917:android:d7f06985b538dcbd807b6c",
+        "mobilesdk_app_id": "1:708078117284:android:75d5d3c8072b5688a06131",
         "android_client_info": {
-          "package_name": "com.example.nepali_food_recipes"
+          "package_name": "com.nepali_food_recipes"
         }
       },
       "oauth_client": [
         {
-          "client_id": "622943046917-ccl2gnecmege0hcsmcaink9ofrh6v6vg.apps.googleusercontent.com",
+          "client_id": "708078117284-7mbp9n4f6n3m8lv0k3amqd3s47rtjdqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nepali_food_recipes",
+            "certificate_hash": "082a9fb51c65b9105289c4437a9c366a0dcabb30"
+          }
+        },
+        {
+          "client_id": "708078117284-rctdc5barb3qnos1hgsbe3ccd2avte6g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nepali_food_recipes",
+            "certificate_hash": "ccdc42136c1f96c3052bc2115c25c233ba34237d"
+          }
+        },
+        {
+          "client_id": "708078117284-hrlgfojkp5fehb79qttp8igfepdkthhk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDrVpP_3H5HpFpT0Fu61zvs9t7dKmVNKuo"
+          "current_key": "AIzaSyCyoMJHb6jISzxUSY0fQVAqRcNDzesreT0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "622943046917-ccl2gnecmege0hcsmcaink9ofrh6v6vg.apps.googleusercontent.com",
+              "client_id": "708078117284-hrlgfojkp5fehb79qttp8igfepdkthhk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
