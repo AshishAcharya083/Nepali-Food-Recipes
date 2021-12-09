@@ -194,62 +194,60 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           /// chip tiles for categories
-                          Container(
-                            height: 45,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                IconWithNameCard(
-                                  assetImagePath: 'images/burger.png',
-                                  foodCategory: 'Fast Food',
-                                  onTap: () {
-                                    Navigation.changeScreen(
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: [
+                              IconWithNameCard(
+                                assetImagePath: 'images/burger.png',
+                                foodCategory: 'Fast Food',
+                                onTap: () {
+                                  Navigation.changeScreen(
+                                    context,
+                                    FoodCategoryScreen(
+                                      imagePath: 'images/burger.png',
+                                      foodCategory: 'Fast Food',
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconWithNameCard(
+                                assetImagePath: 'images/drink.png',
+                                foodCategory: 'Drinks',
+                                onTap: () {
+                                  Navigation.changeScreen(
                                       context,
                                       FoodCategoryScreen(
-                                        imagePath: 'images/burger.png',
-                                        foodCategory: 'Fast Food',
-                                      ),
-                                    );
-                                  },
-                                ),
-                                IconWithNameCard(
-                                  assetImagePath: 'images/drink.png',
-                                  foodCategory: 'Drinks',
-                                  onTap: () {
-                                    Navigation.changeScreen(
-                                        context,
-                                        FoodCategoryScreen(
-                                          imagePath: 'images/drink.png',
-                                          foodCategory: 'Drinks',
-                                        ));
-                                  },
-                                ),
-                                IconWithNameCard(
-                                  assetImagePath: 'images/fruit.png',
-                                  foodCategory: 'Fruit item',
-                                  onTap: () {
-                                    Navigation.changeScreen(
-                                        context,
-                                        FoodCategoryScreen(
-                                          imagePath: 'images/fruit.png',
-                                          foodCategory: 'Fruit',
-                                        ));
-                                  },
-                                ),
-                                IconWithNameCard(
-                                  assetImagePath: 'images/broccoli.png',
-                                  foodCategory: 'Veg',
-                                  onTap: () {
-                                    Navigation.changeScreen(
-                                        context,
-                                        FoodCategoryScreen(
-                                          imagePath: 'images/broccoli.png',
-                                          foodCategory: 'Veg',
-                                        ));
-                                  },
-                                ),
-                              ],
-                            ),
+                                        imagePath: 'images/drink.png',
+                                        foodCategory: 'Drinks',
+                                      ));
+                                },
+                              ),
+                              IconWithNameCard(
+                                assetImagePath: 'images/fruit.png',
+                                foodCategory: 'Fruit item',
+                                onTap: () {
+                                  Navigation.changeScreen(
+                                      context,
+                                      FoodCategoryScreen(
+                                        imagePath: 'images/fruit.png',
+                                        foodCategory: 'Fruit',
+                                      ));
+                                },
+                              ),
+                              IconWithNameCard(
+                                assetImagePath: 'images/casual_food.png',
+                                foodCategory: 'Casual',
+                                onTap: () {
+                                  Navigation.changeScreen(
+                                    context,
+                                    FoodCategoryScreen(
+                                      imagePath: 'images/casual_food.png',
+                                      foodCategory: 'Casual',
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 18,

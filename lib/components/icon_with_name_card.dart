@@ -16,10 +16,9 @@ class IconWithNameCard extends StatelessWidget {
       splashColor: kPrimaryColor,
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        margin: EdgeInsets.symmetric(
-          horizontal: 5,
-        ),
+        width: 120,
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         decoration: BoxDecoration(
           border: Border.all(color: kPrimaryColor.withOpacity(0.5), width: 3),
           borderRadius: BorderRadius.circular(10),

@@ -312,7 +312,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         ToggleBoxButton(
                             width: ScreenSize.getWidth(context) * 0.2,
                             title: 'Casual',
-                            imgPath: 'images/casual-food.png')
+                            imgPath: 'images/casual_food.png')
                       ],
                     ),
                   ),

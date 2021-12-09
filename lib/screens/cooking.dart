@@ -515,7 +515,7 @@ class _CookingScreenState extends State<CookingScreen> {
                             steps[index],
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 color: Colors.black,
                                 fontSize: 18,
                                 letterSpacing: 1.5),

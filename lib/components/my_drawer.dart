@@ -177,13 +177,15 @@ class _MyDrawerState extends State<MyDrawer> {
                                 Navigation.changeScreen(cntx, AboutUsPage());
                               },
                               child: DrawerTile('About', Icons.info)),
-                          InkWell(
-                            onTap: () {
-                              Share.share(
-                                  'https://play.google.com/store/apps/details?id=com.whatsapp');
-                            },
-                            child: DrawerTile('Share', Icons.share),
-                          ),
+
+                          ///app share button
+                          // InkWell(
+                          //   onTap: () {
+                          //     Share.share(
+                          //         'https://play.google.com/store/apps/details?id=com.whatsapp');
+                          //   },
+                          //   child: DrawerTile('Share', Icons.share),
+                          // ),
                           Spacer(),
                           InkWell(
                               onTap: () {

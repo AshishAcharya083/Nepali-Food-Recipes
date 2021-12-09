@@ -92,7 +92,7 @@ class CustomSearchDelegate extends SearchDelegate {
     /// Debouncing implemented to prevent app from calling firebase
     /// for ever single letter search
 
-    _debounce = Timer(const Duration(milliseconds: 500), () {
+    _debounce = Timer(const Duration(milliseconds: 100), () {
       /// now app will call getSuggestionFromFirebase() after 500ms of user typing
       getSuggestionFromFirebase();
     });

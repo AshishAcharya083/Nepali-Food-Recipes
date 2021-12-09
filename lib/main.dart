@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/constants.dart';
@@ -36,19 +38,30 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        scrollBehavior: MyCustomScrollBehavior(),
         title: 'Flutter Demo',
         theme: ThemeData(
           splashColor: kPrimaryColor.withOpacity(0.5),
           highlightColor: kPrimaryColor.withOpacity(0.2),
           fontFamily: 'Dosis',
-          accentColor: kPrimaryColor,
           // accentColor: kPrimaryColor,
           primaryIconTheme: IconThemeData(
             color: Colors.black,
           ),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: kPrimaryColor),
         ),
         home: SplashScreen(),
       ),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.unknown,
+      };
 }
