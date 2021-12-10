@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         scrollBehavior: MyCustomScrollBehavior(),
         title: 'Flutter Demo',
         theme: ThemeData(

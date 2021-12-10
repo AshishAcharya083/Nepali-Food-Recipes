@@ -81,33 +81,38 @@ class _FoodCategoryScreenState extends State<FoodCategoryScreen> {
                 /// sample to retrieve data
 
                 // data[index]['chefId']
-                return GridView.builder(
-                    physics: BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 4,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 0),
-                    itemCount: data.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigation.changeScreen(
-                              context,
-                              CookingScreen(
-                                snapshot: data[index],
-                              ));
-                        },
-                        child: FoodViewerWithName(
-                          chefId: data[index]['chefId'],
-                          chefImageURL: data[index]['chefImage'],
-                          chefName: data[index]['chef'],
-                          duration: data[index]['duration'].toString(),
-                          foodImageURL: data[index]['photo'],
-                          foodName: data[index]['name'],
-                        ),
-                      );
-                    });
+                if (data.length < 1) {
+                  return Center(
+                    child: Text('No Items'),
+                  );
+                } else
+                  return GridView.builder(
+                      physics: BouncingScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 3 / 4,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 0),
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigation.changeScreen(
+                                context,
+                                CookingScreen(
+                                  snapshot: data[index],
+                                ));
+                          },
+                          child: FoodViewerWithName(
+                            chefId: data[index]['chefId'],
+                            chefImageURL: data[index]['chefImage'],
+                            chefName: data[index]['chef'],
+                            duration: data[index]['duration'].toString(),
+                            foodImageURL: data[index]['photo'],
+                            foodName: data[index]['name'],
+                          ),
+                        );
+                      });
               }
             }),
       ),

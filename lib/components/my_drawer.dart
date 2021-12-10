@@ -76,8 +76,9 @@ class _MyDrawerState extends State<MyDrawer> {
                       child: Container(
                         height: height * 0.55,
                         decoration: BoxDecoration(
-                            color: kPrimaryColor.withAlpha(50),
-                            shape: BoxShape.circle),
+                          color: kPrimaryColor.withAlpha(50),
+                          shape: BoxShape.circle,
+                        ),
                       ),
                       left: -width * 0.45, // -200
                       right: 0,
@@ -95,45 +96,45 @@ class _MyDrawerState extends State<MyDrawer> {
                       top: -width * 0.2,
                     ),
                     Positioned(
-                        left: 15,
-                        right: 200,
-                        top: 30,
-                        child: CachedNetworkImage(
-                          errorWidget: (context, url, error) => Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage('images/profile_loading.gif'),
-                                )),
+                      left: 15,
+                      right: 200,
+                      top: 30,
+                      child: CachedNetworkImage(
+                        errorWidget: (context, url, error) => Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('images/profile_loading.gif'),
+                              )),
+                        ),
+                        imageBuilder: (context, imageProvider) => Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                            ),
                           ),
-                          imageBuilder: (context, imageProvider) => Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: imageProvider,
-                                )),
-                          ),
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      AssetImage('images/profile_loading.gif'),
-                                )),
-                          ),
-                          imageUrl: Provider.of<AuthProvider>(widget.cxt,
-                                  listen: false)
-                              .auth
-                              .currentUser!
-                              .photoURL!,
-                        )),
+                        ),
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('images/profile_loading.gif'),
+                              )),
+                        ),
+                        imageUrl:
+                            Provider.of<AuthProvider>(widget.cxt, listen: false)
+                                .auth
+                                .currentUser!
+                                .photoURL!,
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 150),
                       child: Column(

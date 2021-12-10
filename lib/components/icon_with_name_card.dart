@@ -9,6 +9,7 @@ class IconWithNameCard extends StatelessWidget {
       {this.assetImagePath = 'images/burger.png',
       this.foodCategory = '',
       this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

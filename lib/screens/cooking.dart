@@ -71,8 +71,9 @@ class _CookingScreenState extends State<CookingScreen> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    increaseViewCount(docRefId!);
+
     isThisRecipeBelongsToCurrentUser();
+    increaseViewCount(docRefId!);
   }
 
   void initializeIsAdminPrefs() async {
