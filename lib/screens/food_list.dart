@@ -299,8 +299,8 @@ class _CategoriesScrollerState extends State<CategoriesScroller> {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    final double categoryHeight =
-        MediaQuery.of(context).size.height * 0.30 - 50;
+    final double categoryHeight = MediaQuery.of(context).size.height * 0.2;
+    // MediaQuery.of(context).size.height * 0.30 - 50;
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
