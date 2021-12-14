@@ -14,8 +14,9 @@ class _LogInCheckerState extends State<LogInChecker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<AuthProvider>(builder: (context, authProvider, child) {
-        return StreamBuilder<User?>(
+      body: Consumer<AuthProvider>(
+        builder: (context, authProvider, child) {
+          return StreamBuilder<User?>(
             stream: authProvider.auth.authStateChanges(),
             builder: (
               context,
@@ -25,8 +26,10 @@ class _LogInCheckerState extends State<LogInChecker> {
                 return NavBarController();
               else
                 return SignUpScreen();
-            });
-      }),
+            },
+          );
+        },
+      ),
     );
   }
 }
