@@ -32,6 +32,7 @@ dependencies:
   flutter_local_notifications: ^9.1.5
   firebase_analytics: ^9.0.3
   share: ^2.0.4
+  firebase_messaging: ^11.2.3
 
 
 

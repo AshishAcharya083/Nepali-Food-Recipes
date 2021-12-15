@@ -6,7 +6,6 @@ import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/screens/on_boarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:nepali_food_recipes/helpers/notification.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -23,13 +22,13 @@ class _SplashScreenState extends State<SplashScreen>
     controller = AnimationController(vsync: this);
   }
 
-  void activateNotification() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await NotificationService().showNotification('Notification activated');
-    if (preferences.getBool('notification') == null) {
-      preferences.setBool('notification', true);
-    }
-  }
+  // void activateNotification() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   await NotificationService().showNotification('Notification activated');
+  //   if (preferences.getBool('notification') == null) {
+  //     preferences.setBool('notification', true);
+  //   }
+  // }
 
   @override
   void dispose() {

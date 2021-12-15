@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_food_recipes/components/snack_bar.dart';
 import 'package:nepali_food_recipes/constants.dart';
-import 'package:nepali_food_recipes/helpers/notification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -74,10 +73,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 });
                 print(b);
                 if (b) {
-                  await NotificationService()
-                      .showNotification('Try this new Recipe');
+                  // await NotificationService()
+                  //     .showNotification('Try this new Recipe');
                 } else if (!b) {
-                  NotificationService().cancelAllNotification();
+                  // NotificationService().cancelAllNotification();
                 }
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setBool('notification', toggleButton!);
