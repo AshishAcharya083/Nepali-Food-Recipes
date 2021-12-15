@@ -660,6 +660,7 @@ class _RecipeFormState extends State<RecipeForm> {
                         isLoading
                             ? showDialog(
                                 context: this.context,
+                                barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return CustomAlertDialog(this.context)
                                       .alertDialogWithImage(
