@@ -10,6 +10,7 @@ import 'package:nepali_food_recipes/helpers/navigation.dart';
 import 'package:nepali_food_recipes/helpers/screen_size.dart';
 import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/nav_controller.dart';
+import 'package:nepali_food_recipes/screens/profile.dart';
 import 'package:nepali_food_recipes/screens/recipe_form.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +43,7 @@ class _CookingScreenState extends State<CookingScreen> {
   String chefName = '';
   String? chefImage;
   String? imgUrl;
+  String? chefID;
   int? views;
   String? docRefId;
   bool isSaved = false;
@@ -51,7 +53,7 @@ class _CookingScreenState extends State<CookingScreen> {
     recipeDetail = widget.snapshot;
     docRefId = widget.snapshot!.reference.id;
     // isAdmin = Provider.of<AuthProvider>(context, listen: false).isAdmin;
-
+    chefID = recipeDetail['chefId'];
     foodName = recipeDetail['name'];
     cookingDuration = recipeDetail['duration'].toString();
     description = recipeDetail['description'];
@@ -230,30 +232,41 @@ class _CookingScreenState extends State<CookingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           /// Row of chef image and name
-                          Row(
-                            children: [
-                              Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: CachedNetworkImage(
-                                    imageUrl: chefImage!,
-                                    placeholder: (context, url) => Image.asset(
-                                        'images/profile_loading.gif'),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.network_check),
-                                    fit: BoxFit.cover,
-                                    height: 35,
-                                    width: 35,
+                          InkWell(
+                            onTap: () {
+                              Navigation.changeScreen(
+                                context,
+                                Profile(chefID),
+                              );
+                              //TODO goto profile
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: CachedNetworkImage(
+                                      imageUrl: chefImage!,
+                                      placeholder: (context, url) =>
+                                          Image.asset(
+                                              'images/profile_loading.gif'),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.network_check),
+                                      fit: BoxFit.cover,
+                                      height: 35,
+                                      width: 35,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                chefName,
-                                overflow: TextOverflow.ellipsis,
-                                style: kFormHeadingStyle.copyWith(fontSize: 15),
-                              ),
-                            ],
+                                SizedBox(width: 10),
+                                Text(
+                                  chefName,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                      kFormHeadingStyle.copyWith(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 10,
