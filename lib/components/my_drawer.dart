@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nepali_food_recipes/components/drawer_tile.dart';
 import 'package:nepali_food_recipes/constants.dart';
 
@@ -12,7 +11,6 @@ import 'package:nepali_food_recipes/providers/auth.dart';
 import 'package:nepali_food_recipes/screens/about_page.dart';
 import 'package:nepali_food_recipes/screens/admin_screen.dart';
 import 'package:nepali_food_recipes/screens/setting_screen.dart';
-import 'package:nepali_food_recipes/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -180,13 +178,13 @@ class _MyDrawerState extends State<MyDrawer> {
                               child: DrawerTile('About', Icons.info)),
 
                           ///app share button
-                          // InkWell(
-                          //   onTap: () {
-                          //     Share.share(
-                          //         'https://play.google.com/store/apps/details?id=com.whatsapp');
-                          //   },
-                          //   child: DrawerTile('Share', Icons.share),
-                          // ),
+                          InkWell(
+                            onTap: () {
+                              Share.share(
+                                  'https://play.google.com/store/apps/details?id=com.nepali_food_recipes');
+                            },
+                            child: DrawerTile('Share', Icons.share),
+                          ),
                           Spacer(),
                           InkWell(
                               onTap: () {
