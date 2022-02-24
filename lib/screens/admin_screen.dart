@@ -22,6 +22,7 @@ class _AdminScreenState extends State<AdminScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
