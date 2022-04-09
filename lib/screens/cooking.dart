@@ -164,6 +164,7 @@ class _CookingScreenState extends State<CookingScreen> {
                   centerTitle: true,
                   titlePadding: EdgeInsets.only(top: 10),
                   title: Wrap(
+                    /// TODO: Wrap is cropping title of long food names
                     // mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
