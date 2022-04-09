@@ -76,6 +76,7 @@ InputDecoration kSearchInputDecoration = InputDecoration(
   hintText: 'Search for Recipe',
 );
 
+/// this is main change
 InputDecoration kTextFieldInputDecoration(
         {String? hintText, String? errorText}) =>
     InputDecoration(
